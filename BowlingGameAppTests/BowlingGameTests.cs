@@ -11,25 +11,6 @@ namespace BowlingGameAppTests
             game = new BowlingGame();
         }
 
-        private void RollMany(int pins, int rolls)
-        {
-            for (var roll = 0; roll < rolls; roll++)
-            {
-                game.Roll(pins);
-            }
-        }
-
-        private void RollSpare()
-        {
-            game.Roll(5);
-            game.Roll(5);
-        }
-
-        private void RollStrike()
-        {
-            game.Roll(10);
-        }
-
         [Fact]
         public void ZeroPoints_IfGutterGame()
         {
@@ -80,6 +61,25 @@ namespace BowlingGameAppTests
             RollList(Rolls);
 
             Assert.Equal(149, game.Score());
+        }
+
+        private void RollMany(int pins, int rolls)
+        {
+            for (var roll = 0; roll < rolls; roll++)
+            {
+                game.Roll(pins);
+            }
+        }
+
+        private void RollSpare()
+        {
+            game.Roll(5);
+            game.Roll(5);
+        }
+
+        private void RollStrike()
+        {
+            game.Roll(10);
         }
 
         private void RollList(List<int> Rolls)
