@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace BowlingGameApp.Model
 {
@@ -23,7 +21,7 @@ namespace BowlingGameApp.Model
                 if (IsStrike(frameIndex))
                 {
                     score += 10;
-                    score += Rolls[frameIndex + 1] + Rolls[frameIndex + 2];
+                    score += StrikeBonus(frameIndex);
                     frameIndex += 1;
                     continue;
                 }
@@ -48,14 +46,19 @@ namespace BowlingGameApp.Model
             return Rolls[frameIndex] == 10;
         }
 
-        private int SpareBonus(int frameIndex)
-        {
-            return Rolls[frameIndex + 2];
-        }  
-
         private bool IsSpare(int rollIndex)
         {
             return Rolls[rollIndex] + Rolls[rollIndex + 1] == 10;
         }
+
+        private int StrikeBonus(int frameIndex)
+        {
+            return Rolls[frameIndex + 1] + Rolls[frameIndex + 2];
+        }
+
+        private int SpareBonus(int frameIndex)
+        {
+            return Rolls[frameIndex + 2];
+        }  
     }
 }

@@ -25,6 +25,11 @@ namespace BowlingGameAppTests
             game.Roll(5);
         }
 
+        private void RollStrike()
+        {
+            game.Roll(10);
+        }
+
         [Fact]
         public void ZeroPoints_IfGutterGame()
         {
@@ -52,7 +57,7 @@ namespace BowlingGameAppTests
         [Fact]
         public void AddStrikeBonus_IfStrikeInGame()
         {
-            game.Roll(10);
+            RollStrike();
             game.Roll(3);
             game.Roll(4);
             RollMany(0, 17);
