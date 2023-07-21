@@ -15,24 +15,29 @@ namespace BowlingGameApp.Model
         public int Score()
         {
             int score = 0;
-            int rollIndex = 0;
+            int frameIndex = 0;
 
             for (int frame = 0; frame < 10; frame++)
             {
-                if (IsSpare(rollIndex))
+                if (IsSpare(frameIndex))
                 {
                     score += 10;
-                    score += Rolls[rollIndex + 2];
-                    rollIndex += 2;
+                    score += SpareBonus(frameIndex);
+                    frameIndex += 2;
                     continue;
                 }
 
-                score += Rolls[rollIndex] + Rolls[rollIndex + 1];
-                rollIndex += 2;
+                score += Rolls[frameIndex] + Rolls[frameIndex + 1];
+                frameIndex += 2;
             }
 
             return score;
         }
+
+        private int SpareBonus(int frameIndex)
+        {
+            return Rolls[frameIndex + 2];
+        }  
 
         private bool IsSpare(int rollIndex)
         {

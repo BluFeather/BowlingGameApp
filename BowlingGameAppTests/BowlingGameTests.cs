@@ -19,6 +19,12 @@ namespace BowlingGameAppTests
             }
         }
 
+        private void RollSpare()
+        {
+            game.Roll(5);
+            game.Roll(5);
+        }
+
         [Fact]
         public void ZeroPoints_IfGutterGame()
         {
@@ -36,8 +42,7 @@ namespace BowlingGameAppTests
         [Fact]
         public void AddSpareBonus_IfSpareInGame()
         {
-            game.Roll(5);
-            game.Roll(5);
+            RollSpare();
             game.Roll(3);
             RollMany(0, 17);
 
