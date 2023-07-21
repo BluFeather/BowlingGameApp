@@ -64,5 +64,13 @@ namespace BowlingGameAppTests
 
             Assert.Equal(24, game.Score());
         }
+
+        [Fact]
+        public void ThreeHundredPoints_IfPerfectGame()
+        {
+            RollMany(10, 12);
+
+            Assert.Equal(300, game.Score());
+        }
     }
 }
