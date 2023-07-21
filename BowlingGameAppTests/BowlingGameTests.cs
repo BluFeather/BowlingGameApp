@@ -4,27 +4,32 @@ namespace BowlingGameAppTests
 {
     public class BowlingGameTests
     {
+        private readonly BowlingGame game;
+
+        public BowlingGameTests()
+        {
+            game = new BowlingGame();
+        }
+
+        private void RollMany(int pins, int rolls)
+        {
+            for (var roll = 0; roll < rolls; roll++)
+            {
+                game.Roll(pins);
+            }
+        }
+
         [Fact]
         public void ZeroPoints_IfGutterGame()
         {
-            var game = new BowlingGame();
-            for (var roll = 0; roll < 20; roll++)
-            {
-                game.Roll(0);
-            }
-
+            RollMany(0, 20);
             Assert.Equal(0, game.Score());
         }
 
         [Fact]
         public void TwentyPoints_IfOnesGame()
         {
-            var game = new BowlingGame();
-            for (var roll = 0; roll < 20; roll++)
-            {
-                game.Roll(1);
-            }
-
+            RollMany(1, 20);
             Assert.Equal(20, game.Score());
         }
     }
