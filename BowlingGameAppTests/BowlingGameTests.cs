@@ -48,5 +48,16 @@ namespace BowlingGameAppTests
 
             Assert.Equal(16, game.Score());
         }
+
+        [Fact]
+        public void AddStrikeBonus_IfStrikeInGame()
+        {
+            game.Roll(10);
+            game.Roll(3);
+            game.Roll(4);
+            RollMany(0, 17);
+
+            Assert.Equal(24, game.Score());
+        }
     }
 }
