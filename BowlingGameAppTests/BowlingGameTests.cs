@@ -32,5 +32,16 @@ namespace BowlingGameAppTests
             RollMany(1, 20);
             Assert.Equal(20, game.Score());
         }
+
+        [Fact]
+        public void AddSpareBonus_IfSpareInGame()
+        {
+            game.Roll(5);
+            game.Roll(5);
+            game.Roll(3);
+            RollMany(0, 17);
+
+            Assert.Equal(16, game.Score());
+        }
     }
 }

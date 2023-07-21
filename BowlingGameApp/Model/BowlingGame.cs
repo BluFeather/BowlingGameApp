@@ -14,7 +14,29 @@ namespace BowlingGameApp.Model
 
         public int Score()
         {
-            return Rolls.Sum();
+            int score = 0;
+            int rollIndex = 0;
+
+            for (int frame = 0; frame < 10; frame++)
+            {
+                if (IsSpare(rollIndex))
+                {
+                    score += 10;
+                    score += Rolls[rollIndex + 2];
+                    rollIndex += 2;
+                    continue;
+                }
+
+                score += Rolls[rollIndex] + Rolls[rollIndex + 1];
+                rollIndex += 2;
+            }
+
+            return score;
+        }
+
+        private bool IsSpare(int rollIndex)
+        {
+            return Rolls[rollIndex] + Rolls[rollIndex + 1] == 10;
         }
     }
 }
