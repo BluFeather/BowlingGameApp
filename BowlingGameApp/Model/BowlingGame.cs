@@ -4,7 +4,7 @@ namespace BowlingGameApp.Model
 {
     public class BowlingGame
     {
-        List<int> Rolls = new List<int>();
+        public List<int> Rolls { get; protected set; } = new List<int>();
 
         public void Roll(int value)
         {
