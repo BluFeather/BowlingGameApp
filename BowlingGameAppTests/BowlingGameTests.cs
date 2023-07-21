@@ -60,7 +60,7 @@ namespace BowlingGameAppTests
             RollStrike();
             game.Roll(3);
             game.Roll(4);
-            RollMany(0, 17);
+            RollMany(0, 16);
 
             Assert.Equal(24, game.Score());
         }
