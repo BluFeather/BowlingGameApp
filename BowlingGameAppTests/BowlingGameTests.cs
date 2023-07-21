@@ -77,13 +77,17 @@ namespace BowlingGameAppTests
         public void OneHundredFourtyNinePoints_IfExampleGame()
         {
             List<int> Rolls = new List<int>() { 8, 2, 5, 4, 9, 0, 10, 10, 5, 5, 5, 3, 6, 3, 9, 1, 9, 1, 10 };
+            RollList(Rolls);
 
+            Assert.Equal(149, game.Score());
+        }
+
+        private void RollList(List<int> Rolls)
+        {
             foreach (var roll in Rolls)
             {
                 game.Roll(roll);
             }
-
-            Assert.Equal(149, game.Score());
         }
     }
 }
