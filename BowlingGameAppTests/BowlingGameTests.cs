@@ -197,6 +197,14 @@ namespace BowlingGameAppTests
             Frame? frameTwo = GetFrame(1);
             Assert.Equal(4, frameTwo?.RunningValue);
         }
+
+        [Fact]
+        public void FrameFourIsOneHundredTwentyPoints_IfHalfPerfectGame()
+        {
+            RollMany(10, 6);
+            Frame? frameFour = GetFrame(3);
+            Assert.Equal(120, frameFour?.RunningValue);
+        }
         #endregion
 
         private void TestConsistentGame(int ValuePerRoll, int ValuePerFrame, int ExpectedFinalScore)
