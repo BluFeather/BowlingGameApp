@@ -9,6 +9,8 @@ namespace BowlingGameAppTests
 
         private readonly BowlingGame game;
 
+        private readonly List<int> exampleGameList = new List<int>() { 8, 2, 5, 4, 9, 0, 10, 10, 5, 5, 5, 3, 6, 3, 9, 1, 9, 1, 10 };
+
         public BowlingGameTests(ITestOutputHelper output)
         {
             this.output = output;
@@ -59,8 +61,7 @@ namespace BowlingGameAppTests
         [Fact]
         public void OneHundredFourtyNinePoints_IfExampleGame()
         {
-            List<int> Rolls = new List<int>() { 8, 2, 5, 4, 9, 0, 10, 10, 5, 5, 5, 3, 6, 3, 9, 1, 9, 1, 10 };
-            RollList(Rolls);
+            RollList(exampleGameList);
             Assert.Equal(149, game.CalculateFinalScore());
         }
 
@@ -99,6 +100,74 @@ namespace BowlingGameAppTests
             int ExpectedFinalScore = 300;
 
             TestConsistentGame(ValuePerRoll, ValuePerFrame, ExpectedFinalScore);
+        }
+
+        [Fact]
+        public void ExpectedRolls_ExpectedFrameScore_OneHundredFourtyNineScore_IfExampleGame()
+        {
+            int ExpectedFinalScore = 149;
+
+            RollList(exampleGameList);
+            var frames = GetFrames();
+            for (int frame = 0; frame < frames.Count; frame++)
+            {
+                switch (frame)
+                {
+                    case 0:
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(8, frames[frame].Scores[0]);
+                        Assert.Equal(2, frames[frame].Scores[1]);
+                        continue;
+                    case 1:
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(5, frames[frame].Scores[0]);
+                        Assert.Equal(4, frames[frame].Scores[1]);
+                        continue;
+                    case 2:
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(9, frames[frame].Scores[0]);
+                        Assert.Equal(0, frames[frame].Scores[1]);
+                        continue;
+                    case 3:
+                        Assert.Single(frames[frame].Scores);
+                        Assert.Equal(10, frames[frame].Scores[0]);
+                        continue;
+                    case 4:
+                        Assert.Single(frames[frame].Scores);
+                        Assert.Equal(10, frames[frame].Scores[0]);
+                        continue;
+                    case 5:
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(5, frames[frame].Scores[0]);
+                        Assert.Equal(5, frames[frame].Scores[1]);
+                        continue;
+                    case 6:
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(5, frames[frame].Scores[0]);
+                        Assert.Equal(3, frames[frame].Scores[1]);
+                        continue;
+                    case 7:
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(6, frames[frame].Scores[0]);
+                        Assert.Equal(3, frames[frame].Scores[1]);
+                        continue;
+                    case 8:
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(9, frames[frame].Scores[0]);
+                        Assert.Equal(1, frames[frame].Scores[1]);
+                        continue;
+                    case 9:
+                        Assert.Equal(3, frames[frame].Scores.Count);
+                        Assert.Equal(9, frames[frame].Scores[0]);
+                        Assert.Equal(1, frames[frame].Scores[1]);
+                        Assert.Equal(10, frames[frame].Scores[2]);
+                        continue;
+                    default:
+                        Assert.Fail($"Frame {frame} is unexpected!");
+                        continue;
+                }
+            }
+            Assert.Equal(ExpectedFinalScore, GetFinalScore());
         }
 
         private void TestConsistentGame(int ValuePerRoll, int ValuePerFrame, int ExpectedFinalScore)
