@@ -20,12 +20,7 @@ namespace BowlingGameApp.Model
         /// </summary>
         public void ResetGame()
         {
-            Frames.Clear();
-            for (int frame = 0; frame < 10; frame++)
-            {
-                Frames.Add(new Frame());
-            }
-
+            ResetFrames();
             frameIndex = 0;
         }
 
@@ -35,16 +30,16 @@ namespace BowlingGameApp.Model
         /// <param name="points">Number of pins knocked down.</param>
         public void AddRoll(int points)
         {
-            GetCurrentFrame().Scores.Add(points);
+            GetCurrentFrame().AddRoll(points);
 
             foreach (var frame in Frames)
             {
-                frame.AddMissingBonus(points);
+                frame.AddBonusPoints(points);
             }
 
             if (!FrameIsCompleted(points)) return;
             if (IsFinalFrame()) return;
-            frameIndex++;
+            GoToNextFrame();
         }
 
         /// <summary>
@@ -82,6 +77,20 @@ namespace BowlingGameApp.Model
         }
 
         private int frameIndex = 0;
+
+        private void ResetFrames()
+        {
+            Frames.Clear();
+            for (int frame = 0; frame < 10; frame++)
+            {
+                Frames.Add(new Frame());
+            }
+        }
+
+        private void GoToNextFrame()
+        {
+            frameIndex++;
+        }
 
         private Frame GetCurrentFrame()
         {

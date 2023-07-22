@@ -29,10 +29,19 @@ namespace BowlingGameApp.Model
         }
 
         /// <summary>
+        /// Adds the value of a roll to this frame.
+        /// </summary>
+        /// <param name="rollValue">Points to be added for the roll.</param>
+        public void AddRoll(int rollValue)
+        {
+            Scores.Add(rollValue);
+        }
+
+        /// <summary>
         /// Adds rollValue to this frame's score if it needs bonus points for a spare or strike.
         /// </summary>
         /// <param name="rollValue">bonus points to be added to this frame's value.</param>
-        public void AddMissingBonus(int rollValue)
+        public void AddBonusPoints(int rollValue)
         {
             if (!NeedsBonusPoints()) return;
             Bonuses.Add(rollValue);
