@@ -69,6 +69,10 @@ namespace BowlingGameApp.Model
             Bonuses.Add(rollValue);
         }
 
+        /// <summary>
+        /// Verbose string describing the contents of this Frame. Useful for debug outputs.
+        /// </summary>
+        /// <returns>string describing the contents of this Frame.</returns>
         public override string ToString()
         {
             return $"Roll values: {string.Join(", ", Scores)} | Frame Value: {Value} | Frame Running Value: {RunningValue}";
