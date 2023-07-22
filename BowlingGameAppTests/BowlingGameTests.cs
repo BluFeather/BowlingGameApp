@@ -81,7 +81,7 @@ namespace BowlingGameAppTests
                 {
                     Assert.Equal(0, roll);
                 }
-                Assert.Equal(0, frame.Score);
+                Assert.Equal(0, frame.Score());
             }
         }
 
@@ -95,7 +95,21 @@ namespace BowlingGameAppTests
                 {
                     Assert.Equal(1, roll);
                 }
-                Assert.Equal(2, frame.Score);
+                Assert.Equal(2, frame.Score());
+            }
+        }
+
+        [Fact]
+        public void TenHits_ThirtyPoints_EachFrame_IfPerfectGame()
+        {
+            RollMany(10, 12);
+            foreach (var frame in GetFrames())
+            {
+                foreach (var roll in frame.Hits)
+                {
+                    Assert.Equal(10, roll);
+                }
+                Assert.Equal(30, frame.Score());
             }
         }
 
@@ -129,6 +143,11 @@ namespace BowlingGameAppTests
         private List<Frame> GetFrames()
         {
             return game.Frames;
+        }
+
+        private List<int> GetRolls()
+        {
+            return game.Rolls;
         }
     }
 }

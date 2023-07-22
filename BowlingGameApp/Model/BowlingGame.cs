@@ -23,6 +23,12 @@ namespace BowlingGameApp.Model
         public void Roll(int value)
         {
             GetCurrentFrame().Hits.Add(value);
+
+            foreach (var frame in Frames)
+            {
+                frame.AddMissingBonus(value);
+            }
+
             if (!FrameIsCompleted(value)) return;
             if (IsFinalFrame()) return;
             frameIndex++;
