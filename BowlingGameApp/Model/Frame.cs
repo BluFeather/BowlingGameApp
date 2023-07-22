@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace BowlingGameApp.Model
 {
@@ -10,6 +11,12 @@ namespace BowlingGameApp.Model
 
         public List<int> Hits { get; protected set; } = new List<int>();
 
-        public int Score { get; protected set; }
+        public int Score
+        {
+            get
+            {
+                return Hits.Sum();
+            }
+        }
     }
 }
