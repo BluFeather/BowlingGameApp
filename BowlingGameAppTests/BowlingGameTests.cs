@@ -175,7 +175,12 @@ namespace BowlingGameAppTests
         #endregion
 
         #region Realtime Scoring Tests
-
+        [Fact]
+        public void CanGetScoreMidGame()
+        {
+            game.AddRoll(5);
+            game.CalculateFinalScore();
+        }
         #endregion
 
         private void TestConsistentGame(int ValuePerRoll, int ValuePerFrame, int ExpectedFinalScore)

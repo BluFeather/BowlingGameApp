@@ -69,7 +69,7 @@ namespace BowlingGameApp.Model
                     continue;
                 }
 
-                score += Rolls[rollIndex] + Rolls[rollIndex + 1];
+                score += GetRollScore(rollIndex) + GetRollScore(rollIndex + 1);
                 rollIndex += 2;
             }
 
@@ -101,24 +101,29 @@ namespace BowlingGameApp.Model
             return Frames[frameIndex];
         }
 
+        private int GetRollScore(int rollIndex)
+        {
+            return Rolls.ElementAtOrDefault(rollIndex);
+        }
+
         private bool IsStrike(int rollIndex)
         {
-            return Rolls[rollIndex] == 10;
+            return GetRollScore(rollIndex) == 10;
         }
 
         private bool IsSpare(int rollIndex)
         {
-            return Rolls[rollIndex] + Rolls[rollIndex + 1] == 10;
+            return GetRollScore(rollIndex) + GetRollScore(rollIndex + 1) == 10;
         }
 
         private int StrikeBonus(int rollIndex)
         {
-            return Rolls[rollIndex + 1] + Rolls[rollIndex + 2];
+            return GetRollScore(rollIndex + 1) + GetRollScore(rollIndex + 2);
         }
 
         private int SpareBonus(int rollIndex)
         {
-            return Rolls[rollIndex + 2];
+            return GetRollScore(rollIndex + 2);
         }
 
         private List<int> GetRollsFromFrames(List<Frame> frames)
