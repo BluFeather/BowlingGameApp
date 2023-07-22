@@ -181,6 +181,14 @@ namespace BowlingGameAppTests
             game.AddRoll(5);
             game.CalculateFinalScore();
         }
+
+        [Fact]
+        public void FrameTwoIsZeroPoints_IfHalfGutterGame()
+        {
+            RollMany(0, 10);
+            Frame? frameTwo = GetFrame(2);
+            Assert.Equal(0, frameTwo?.Value);
+        }
         #endregion
 
         private void TestConsistentGame(int ValuePerRoll, int ValuePerFrame, int ExpectedFinalScore)
@@ -227,6 +235,11 @@ namespace BowlingGameAppTests
         private List<Frame> GetFrames()
         {
             return game.Frames;
+        }
+
+        private Frame? GetFrame(int frameIndex)
+        {
+            return GetFrames().ElementAtOrDefault(frameIndex);
         }
 
         private List<int> GetRolls()
