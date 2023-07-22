@@ -30,12 +30,12 @@ namespace BowlingGameApp.Model
         /// <param name="points">Number of pins knocked down.</param>
         public void AddRoll(int points)
         {
-            GetCurrentFrame().AddRoll(points);
-
             foreach (var frame in Frames)
             {
                 frame.AddBonusPoints(points);
             }
+
+            GetCurrentFrame().AddRoll(points);
 
             if (!FrameIsCompleted(points)) return;
             if (IsFinalFrame()) return;

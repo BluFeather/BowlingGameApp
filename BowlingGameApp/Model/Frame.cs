@@ -69,6 +69,11 @@ namespace BowlingGameApp.Model
             Bonuses.Add(rollValue);
         }
 
+        public override string ToString()
+        {
+            return $"Roll values: {string.Join(", ", Scores)} | Frame Value: {Value} | Frame Running Value: {RunningValue}";
+        }
+
         private readonly Frame? previousFrame;
 
         private List<int> Bonuses { get; set; } = new List<int>();
