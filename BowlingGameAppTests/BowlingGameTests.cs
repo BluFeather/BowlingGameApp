@@ -1,5 +1,5 @@
 using BowlingGameApp.Model;
-using Microsoft.VisualStudio.TestPlatform.Utilities;
+using System.Reflection;
 using Xunit.Abstractions;
 
 namespace BowlingGameAppTests
@@ -47,7 +47,7 @@ namespace BowlingGameAppTests
             game.Roll(3);
             game.Roll(4);
             RollMany(0, 16);
-
+            output.WriteLine($"Rolls: {game.Rolls}");
             Assert.Equal(24, game.Score());
         }
 
@@ -71,17 +71,22 @@ namespace BowlingGameAppTests
         [Fact]
         public void CanGetFramesList()
         {
-            List<Frame> frames = game.GetFrames();
+            RollMany(0, 20);
+            List<Frame> frames = game.Frames;
             Assert.Equal(10, frames.Count);
         }
 
         [Fact]
         public void ZeroPointsEachFrame_IfGutterGame()
         {
-            List<Frame> frames = game.GetFrames();
             RollMany(0, 20);
+            List<Frame> frames = game.Frames;
             foreach (var frame in frames)
             {
+                foreach(var roll in frame.Hits)
+                {
+                    Assert.Equal(0, roll);
+                }
                 Assert.Equal(0, frame.Score);
             }
         }
@@ -89,10 +94,14 @@ namespace BowlingGameAppTests
         [Fact]
         public void TwoPointsEachFrame_IfSinglesGame()
         {
-            List<Frame> frames = game.GetFrames();
             RollMany(1, 20);
+            List<Frame> frames = game.Frames;
             foreach (var frame in frames)
             {
+                foreach (var roll in frame.Hits)
+                {
+                    Assert.Equal(1, roll);
+                }
                 Assert.Equal(2, frame.Score);
             }
         }
