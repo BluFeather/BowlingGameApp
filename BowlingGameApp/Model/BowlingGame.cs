@@ -5,35 +5,52 @@ namespace BowlingGameApp.Model
 {
     public class BowlingGame
     {
+        /// <summary>
+        /// List containing the values of each played roll.
+        /// </summary>
         public List<int> Rolls => GetRollsFromFrames(Frames);
 
+        /// <summary>
+        /// Contains objects representing a single turn.
+        /// </summary>
         public List<Frame> Frames { get; protected set; } = new List<Frame>();
 
-        public int frameIndex = 0;
-
-        private Frame GetCurrentFrame()
+        /// <summary>
+        /// Resets the state of the game.
+        /// </summary>
+        public void ResetGame()
         {
-            if (Frames.ElementAtOrDefault(frameIndex) == null)
+            Frames.Clear();
+            for (int frame = 0; frame < 10; frame++)
             {
                 Frames.Add(new Frame());
             }
-            return Frames[frameIndex];
+
+            frameIndex = 0;
         }
 
-        public void Roll(int value)
+        /// <summary>
+        /// Adds the result of a roll to the game's score.
+        /// </summary>
+        /// <param name="points">Number of pins knocked down.</param>
+        public void AddRoll(int points)
         {
-            GetCurrentFrame().Hits.Add(value);
+            GetCurrentFrame().Scores.Add(points);
 
             foreach (var frame in Frames)
             {
-                frame.AddMissingBonus(value);
+                frame.AddMissingBonus(points);
             }
 
-            if (!FrameIsCompleted(value)) return;
+            if (!FrameIsCompleted(points)) return;
             if (IsFinalFrame()) return;
             frameIndex++;
         }
 
+        /// <summary>
+        /// Calculates the game's final score.
+        /// </summary>
+        /// <returns>Integer representation of the game's final score.</returns>
         public int CalculateFinalScore()
         {
             int score = 0;
@@ -64,6 +81,17 @@ namespace BowlingGameApp.Model
             return score;
         }
 
+        private int frameIndex = 0;
+
+        private Frame GetCurrentFrame()
+        {
+            if (Frames.ElementAtOrDefault(frameIndex) == null)
+            {
+                Frames.Add(new Frame());
+            }
+            return Frames[frameIndex];
+        }
+
         private bool IsStrike(int rollIndex)
         {
             return Rolls[rollIndex] == 10;
@@ -84,28 +112,19 @@ namespace BowlingGameApp.Model
             return Rolls[rollIndex + 2];
         }
 
-        public void ResetGame()
-        {
-            Frames.Clear();
-            for (int frame = 0; frame < 10; frame++)
-            {
-                Frames.Add(new Frame());
-            }
-        }
-
         private List<int> GetRollsFromFrames(List<Frame> frames)
         {
             List<int> rolls = new List<int>();
             foreach (Frame frame in frames)
             {
-                rolls.AddRange(frame.Hits);
+                rolls.AddRange(frame.Scores);
             }
             return rolls;
         }
 
         private bool FrameIsCompleted(int value)
         {
-            return Frames[frameIndex].Hits.Count >= 2 || value == 10;
+            return Frames[frameIndex].Scores.Count >= 2 || value == 10;
         }
 
         private bool IsFinalFrame()

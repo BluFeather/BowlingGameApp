@@ -33,7 +33,7 @@ namespace BowlingGameAppTests
         public void AddSpareBonus_IfSpareInGame()
         {
             RollSpare();
-            game.Roll(3);
+            game.AddRoll(3);
             RollMany(0, 17);
 
             Assert.Equal(16, game.CalculateFinalScore());
@@ -43,8 +43,8 @@ namespace BowlingGameAppTests
         public void AddStrikeBonus_IfStrikeInGame()
         {
             RollStrike();
-            game.Roll(3);
-            game.Roll(4);
+            game.AddRoll(3);
+            game.AddRoll(4);
             RollMany(0, 16);
             Assert.Equal(24, game.CalculateFinalScore());
         }
@@ -106,11 +106,11 @@ namespace BowlingGameAppTests
             RollMany(ValuePerRoll, 20);
             foreach (var frame in GetFrames())
             {
-                foreach (var roll in frame.Hits)
+                foreach (var roll in frame.Scores)
                 {
                     Assert.Equal(ValuePerRoll, roll);
                 }
-                Assert.Equal(ValuePerFrame, frame.Score());
+                Assert.Equal(ValuePerFrame, frame.Value);
             }
             Assert.Equal(ExpectedFinalScore, GetFinalScore());
         }
@@ -119,26 +119,26 @@ namespace BowlingGameAppTests
         {
             for (var roll = 0; roll < rolls; roll++)
             {
-                game.Roll(pins);
+                game.AddRoll(pins);
             }
         }
 
         private void RollSpare()
         {
-            game.Roll(5);
-            game.Roll(5);
+            game.AddRoll(5);
+            game.AddRoll(5);
         }
 
         private void RollStrike()
         {
-            game.Roll(10);
+            game.AddRoll(10);
         }
 
         private void RollList(List<int> Rolls)
         {
             foreach (var roll in Rolls)
             {
-                game.Roll(roll);
+                game.AddRoll(roll);
             }
         }
 
@@ -156,7 +156,5 @@ namespace BowlingGameAppTests
         {
             return game.CalculateFinalScore();
         }
-
-
     }
 }

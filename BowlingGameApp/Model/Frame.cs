@@ -3,44 +3,60 @@ using System.Linq;
 
 namespace BowlingGameApp.Model
 {
+    /// <summary>
+    /// Represents a single turn in bowling.
+    /// </summary>
     public class Frame
     {
-        public List<int> Hits { get; protected set; } = new List<int>();
-
-        public List<int> Bonuses { get; protected set; } = new List<int>();
-
-        public int Score()
+        /// <summary>
+        /// Roll scores determining the base value of this frame.
+        /// </summary>
+        public List<int> Scores { get; protected set; } = new List<int>();
+        
+        /// <summary>
+        /// Overall value of this frame, including bonuses.
+        /// </summary>
+        public int Value
         {
-            if (Hits.Count > 2) // Can only happen in 10th frame.
+            get
             {
-                return 10 + Bonuses.Sum();
-            }
-            return Hits.Sum() + Bonuses.Sum();
+                if (Scores.Count > 2) // Can only happen in 10th frame.
+                {
+                    return 10 + Bonuses.Sum();
+                }
+                return Scores.Sum() + Bonuses.Sum();
+            } 
         }
 
-        public bool IsStrike()
+        /// <summary>
+        /// Adds rollValue to this frame's score if it needs bonus points for a spare or strike.
+        /// </summary>
+        /// <param name="rollValue">bonus points to be added to this frame's value.</param>
+        public void AddMissingBonus(int rollValue)
         {
-            return Hits.ElementAtOrDefault(0) == 10;
+            if (!NeedsBonusPoints()) return;
+            Bonuses.Add(rollValue);
         }
 
-        public bool IsSpare()
+        private List<int> Bonuses { get; set; } = new List<int>();
+
+        private bool IsStrike()
+        {
+            return Scores.ElementAtOrDefault(0) == 10;
+        }
+
+        private bool IsSpare()
         {
             if (IsStrike()) return false;
-            return Hits.ElementAtOrDefault(0) + Hits.ElementAtOrDefault(1) == 10;
+            return Scores.ElementAtOrDefault(0) + Scores.ElementAtOrDefault(1) == 10;
         }
 
-        public bool NeedsBonusPoints()
+        private bool NeedsBonusPoints()
         {
-            if (!IsSpare() && !IsStrike()) return false; 
+            if (!IsSpare() && !IsStrike()) return false;
             if (IsSpare() && Bonuses.Count >= 1) return false;
             if (IsStrike() && Bonuses.Count >= 2) return false;
             return true;
-        }
-
-        public void AddMissingBonus(int bonusPoints)
-        {
-            if (!NeedsBonusPoints()) return;
-            Bonuses.Add(bonusPoints);
         }
     }
 }
