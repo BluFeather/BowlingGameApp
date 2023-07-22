@@ -9,65 +9,58 @@ namespace BowlingGameApp.Model
 
         public List<Frame> Frames { get; protected set; } = new List<Frame>();
 
-        public int currentFrame = 0;
+        public int frameIndex = 0;
 
-        public void Roll(int value)
+        private Frame GetCurrentFrame()
         {
-            if (Frames.ElementAtOrDefault(currentFrame) == null)
+            if (Frames.ElementAtOrDefault(frameIndex) == null)
             {
                 Frames.Add(new Frame());
             }
-
-            Frames[currentFrame].Hits.Add(value);
-
-            if (currentFrame >= 9) return;
-
-            if (value == 10)
-            {
-                currentFrame++;
-                return;
-            }
-
-            if (Frames[currentFrame].Hits.Count >= 2)
-            {
-                currentFrame++;
-                return;
-            }
+            return Frames[frameIndex];
         }
 
-        public int Score()
+        public void Roll(int value)
+        {
+            GetCurrentFrame().Hits.Add(value);
+            if (!FrameIsCompleted(value)) return;
+            if (IsFinalFrame()) return;
+            frameIndex++;
+        }
+
+        public int CalculateFinalScore()
         {
             int score = 0;
-            int frameIndex = 0;
+            int rollIndex = 0;
 
             for (int frame = 0; frame < 10; frame++)
             {
-                if (IsStrike(frameIndex))
+                if (IsStrike(rollIndex))
                 {
                     score += 10;
-                    score += StrikeBonus(frameIndex);
-                    frameIndex += 1;
+                    score += StrikeBonus(rollIndex);
+                    rollIndex += 1;
                     continue;
                 }
 
-                if (IsSpare(frameIndex))
+                if (IsSpare(rollIndex))
                 {
                     score += 10;
-                    score += SpareBonus(frameIndex);
-                    frameIndex += 2;
+                    score += SpareBonus(rollIndex);
+                    rollIndex += 2;
                     continue;
                 }
 
-                score += Rolls[frameIndex] + Rolls[frameIndex + 1];
-                frameIndex += 2;
+                score += Rolls[rollIndex] + Rolls[rollIndex + 1];
+                rollIndex += 2;
             }
 
             return score;
         }
 
-        private bool IsStrike(int frameIndex)
+        private bool IsStrike(int rollIndex)
         {
-            return Rolls[frameIndex] == 10;
+            return Rolls[rollIndex] == 10;
         }
 
         private bool IsSpare(int rollIndex)
@@ -75,14 +68,14 @@ namespace BowlingGameApp.Model
             return Rolls[rollIndex] + Rolls[rollIndex + 1] == 10;
         }
 
-        private int StrikeBonus(int frameIndex)
+        private int StrikeBonus(int rollIndex)
         {
-            return Rolls[frameIndex + 1] + Rolls[frameIndex + 2];
+            return Rolls[rollIndex + 1] + Rolls[rollIndex + 2];
         }
 
-        private int SpareBonus(int frameIndex)
+        private int SpareBonus(int rollIndex)
         {
-            return Rolls[frameIndex + 2];
+            return Rolls[rollIndex + 2];
         }
 
         public void ResetGame()
@@ -102,6 +95,16 @@ namespace BowlingGameApp.Model
                 rolls.AddRange(frame.Hits);
             }
             return rolls;
+        }
+
+        private bool FrameIsCompleted(int value)
+        {
+            return Frames[frameIndex].Hits.Count >= 2 || value == 10;
+        }
+
+        private bool IsFinalFrame()
+        {
+            return frameIndex >= 9;
         }
     }
 }

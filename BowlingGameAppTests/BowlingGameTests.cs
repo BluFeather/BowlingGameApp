@@ -1,5 +1,4 @@
 using BowlingGameApp.Model;
-using System.Reflection;
 using Xunit.Abstractions;
 
 namespace BowlingGameAppTests
@@ -20,14 +19,14 @@ namespace BowlingGameAppTests
         public void ZeroPoints_IfGutterGame()
         {
             RollMany(0, 20);
-            Assert.Equal(0, game.Score());
+            Assert.Equal(0, game.CalculateFinalScore());
         }
 
         [Fact]
         public void TwentyPoints_IfOnesGame()
         {
             RollMany(1, 20);
-            Assert.Equal(20, game.Score());
+            Assert.Equal(20, game.CalculateFinalScore());
         }
 
         [Fact]
@@ -37,7 +36,7 @@ namespace BowlingGameAppTests
             game.Roll(3);
             RollMany(0, 17);
 
-            Assert.Equal(16, game.Score());
+            Assert.Equal(16, game.CalculateFinalScore());
         }
 
         [Fact]
@@ -47,16 +46,14 @@ namespace BowlingGameAppTests
             game.Roll(3);
             game.Roll(4);
             RollMany(0, 16);
-            output.WriteLine($"Rolls: {game.Rolls}");
-            Assert.Equal(24, game.Score());
+            Assert.Equal(24, game.CalculateFinalScore());
         }
 
         [Fact]
         public void ThreeHundredPoints_IfPerfectGame()
         {
             RollMany(10, 12);
-
-            Assert.Equal(300, game.Score());
+            Assert.Equal(300, game.CalculateFinalScore());
         }
 
         [Fact]
@@ -64,24 +61,21 @@ namespace BowlingGameAppTests
         {
             List<int> Rolls = new List<int>() { 8, 2, 5, 4, 9, 0, 10, 10, 5, 5, 5, 3, 6, 3, 9, 1, 9, 1, 10 };
             RollList(Rolls);
-
-            Assert.Equal(149, game.Score());
+            Assert.Equal(149, game.CalculateFinalScore());
         }
 
         [Fact]
         public void CanGetFramesList()
         {
             RollMany(0, 20);
-            List<Frame> frames = game.Frames;
-            Assert.Equal(10, frames.Count);
+            Assert.Equal(10, GetFrames().Count);
         }
 
         [Fact]
-        public void ZeroPointsEachFrame_IfGutterGame()
+        public void ZeroHits_ZeroPoints_EachFrame_IfGutterGame()
         {
             RollMany(0, 20);
-            List<Frame> frames = game.Frames;
-            foreach (var frame in frames)
+            foreach (var frame in GetFrames())
             {
                 foreach(var roll in frame.Hits)
                 {
@@ -92,11 +86,10 @@ namespace BowlingGameAppTests
         }
 
         [Fact]
-        public void TwoPointsEachFrame_IfSinglesGame()
+        public void SingleHits_TwoPoints_EachFrame_IfSinglesGame()
         {
             RollMany(1, 20);
-            List<Frame> frames = game.Frames;
-            foreach (var frame in frames)
+            foreach (var frame in GetFrames())
             {
                 foreach (var roll in frame.Hits)
                 {
@@ -131,6 +124,11 @@ namespace BowlingGameAppTests
             {
                 game.Roll(roll);
             }
+        }
+
+        private List<Frame> GetFrames()
+        {
+            return game.Frames;
         }
     }
 }
