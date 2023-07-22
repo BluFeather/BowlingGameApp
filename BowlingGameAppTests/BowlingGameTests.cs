@@ -72,45 +72,47 @@ namespace BowlingGameAppTests
         }
 
         [Fact]
-        public void ZeroHits_ZeroPoints_EachFrame_IfGutterGame()
+        public void ZeroRolls_ZeroFrameScore_ZeroFinalScore_IfGutterGame()
         {
-            RollMany(0, 20);
-            foreach (var frame in GetFrames())
-            {
-                foreach(var roll in frame.Hits)
-                {
-                    Assert.Equal(0, roll);
-                }
-                Assert.Equal(0, frame.Score());
-            }
+            int ValuePerRoll = 0;
+            int ValuePerFrame = 0;
+            int ExpectedFinalScore = 0;
+
+            TestConsistentGame(ValuePerRoll, ValuePerFrame, ExpectedFinalScore);
         }
 
         [Fact]
-        public void SingleHits_TwoPoints_EachFrame_IfSinglesGame()
+        public void SingleRolls_TwoFrameScore_TwentyFinalScore_IfSinglesGame()
         {
-            RollMany(1, 20);
+            int ValuePerRoll = 1;
+            int ValuePerFrame = 2;
+            int ExpectedFinalScore = 20;
+
+            TestConsistentGame(ValuePerRoll, ValuePerFrame, ExpectedFinalScore);
+        }
+
+        [Fact]
+        public void TenRolls_ThirtyFrameScore_ThreeHundredScore_IfPerfectGame()
+        {
+            int ValuePerRoll = 10;
+            int ValuePerFrame = 30;
+            int ExpectedFinalScore = 300;
+
+            TestConsistentGame(ValuePerRoll, ValuePerFrame, ExpectedFinalScore);
+        }
+
+        private void TestConsistentGame(int ValuePerRoll, int ValuePerFrame, int ExpectedFinalScore)
+        {
+            RollMany(ValuePerRoll, 20);
             foreach (var frame in GetFrames())
             {
                 foreach (var roll in frame.Hits)
                 {
-                    Assert.Equal(1, roll);
+                    Assert.Equal(ValuePerRoll, roll);
                 }
-                Assert.Equal(2, frame.Score());
+                Assert.Equal(ValuePerFrame, frame.Score());
             }
-        }
-
-        [Fact]
-        public void TenHits_ThirtyPoints_EachFrame_IfPerfectGame()
-        {
-            RollMany(10, 12);
-            foreach (var frame in GetFrames())
-            {
-                foreach (var roll in frame.Hits)
-                {
-                    Assert.Equal(10, roll);
-                }
-                Assert.Equal(30, frame.Score());
-            }
+            Assert.Equal(ExpectedFinalScore, GetFinalScore());
         }
 
         private void RollMany(int pins, int rolls)
@@ -149,5 +151,12 @@ namespace BowlingGameAppTests
         {
             return game.Rolls;
         }
+
+        private int GetFinalScore()
+        {
+            return game.CalculateFinalScore();
+        }
+
+
     }
 }
