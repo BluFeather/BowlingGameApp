@@ -63,6 +63,13 @@ namespace BowlingGameAppTests
             Assert.Equal(149, game.Score());
         }
 
+        [Fact]
+        public void CanGetFramesList()
+        {
+            List<Frame> frames = game.GetFrames();
+            Assert.Equal(10, frames.Count);
+        }
+
         private void RollMany(int pins, int rolls)
         {
             for (var roll = 0; roll < rolls; roll++)

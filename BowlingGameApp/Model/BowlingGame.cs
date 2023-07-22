@@ -59,6 +59,6 @@ namespace BowlingGameApp.Model
         private int SpareBonus(int frameIndex)
         {
             return Rolls[frameIndex + 2];
-        }  
+        }
     }
 }
