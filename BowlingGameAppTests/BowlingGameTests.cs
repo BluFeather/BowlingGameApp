@@ -76,10 +76,13 @@ namespace BowlingGameAppTests
         }
 
         [Fact]
-        public void ZeroPointsAcrossTenFrames_IfGutterGame()
+        public void ZeroPointsEachFrame_IfGutterGame()
         {
             List<Frame> frames = game.GetFrames();
-            Assert.Equal(0, frames.Sum(x => x.Score));
+            foreach (var frame in frames)
+            {
+                Assert.Equal(0, frame.Score);
+            }
         }
 
         private void RollMany(int pins, int rolls)
