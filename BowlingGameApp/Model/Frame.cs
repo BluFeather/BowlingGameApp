@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace BowlingGameApp.Model
 {
@@ -9,11 +8,18 @@ namespace BowlingGameApp.Model
     /// </summary>
     public class Frame
     {
+        /// <summary>
+        /// Frame that will contain a running total of only this frame's values. This is expected to be the first Frame in a collection of Frames.
+        /// </summary>
         public Frame() : this(null)
         {
 
         }
 
+        /// <summary>
+        /// Frame that will contain a running total consisting of this frame's value on top of the previous frame's value.
+        /// </summary>
+        /// <param name="previousFrame">Frame to refer to when calculating a running total.</param>
         public Frame(Frame? previousFrame)
         {
             this.previousFrame = previousFrame;
