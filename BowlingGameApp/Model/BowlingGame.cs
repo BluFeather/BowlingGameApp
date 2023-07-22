@@ -96,7 +96,8 @@ namespace BowlingGameApp.Model
         {
             if (Frames.ElementAtOrDefault(frameIndex) == null)
             {
-                Frames.Add(new Frame());
+                var previousFrame = Frames.ElementAtOrDefault(frameIndex - 1);
+                Frames.Add(new Frame(previousFrame));
             }
             return Frames[frameIndex];
         }

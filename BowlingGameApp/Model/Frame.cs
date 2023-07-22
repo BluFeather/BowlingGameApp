@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace BowlingGameApp.Model
 {
@@ -8,6 +9,16 @@ namespace BowlingGameApp.Model
     /// </summary>
     public class Frame
     {
+        public Frame() : this(null)
+        {
+
+        }
+
+        public Frame(Frame? previousFrame)
+        {
+            this.previousFrame = previousFrame;
+        }
+
         /// <summary>
         /// Roll scores determining the base value of this frame.
         /// </summary>
@@ -29,6 +40,17 @@ namespace BowlingGameApp.Model
         }
 
         /// <summary>
+        /// Overall points awarded by this frame in the game.
+        /// </summary>
+        public int RunningValue
+        {
+            get
+            {
+                return previousFrame != null ? Value + previousFrame.RunningValue : Value;
+            }
+        }
+
+        /// <summary>
         /// Adds the value of a roll to this frame.
         /// </summary>
         /// <param name="rollValue">Points to be added for the roll.</param>
@@ -46,6 +68,8 @@ namespace BowlingGameApp.Model
             if (!NeedsBonusPoints()) return;
             Bonuses.Add(rollValue);
         }
+
+        private readonly Frame? previousFrame;
 
         private List<int> Bonuses { get; set; } = new List<int>();
 

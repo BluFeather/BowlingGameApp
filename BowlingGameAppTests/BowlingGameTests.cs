@@ -186,8 +186,16 @@ namespace BowlingGameAppTests
         public void FrameTwoIsZeroPoints_IfHalfGutterGame()
         {
             RollMany(0, 10);
-            Frame? frameTwo = GetFrame(2);
-            Assert.Equal(0, frameTwo?.Value);
+            Frame? frameTwo = GetFrame(1);
+            Assert.Equal(0, frameTwo?.RunningValue);
+        }
+
+        [Fact]
+        public void FrameTwoIsFourPoints_IfHalfSinglesGame()
+        {
+            RollMany(1, 10);
+            Frame? frameTwo = GetFrame(1);
+            Assert.Equal(4, frameTwo?.RunningValue);
         }
         #endregion
 
