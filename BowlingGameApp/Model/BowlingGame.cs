@@ -30,12 +30,12 @@ namespace BowlingGameApp.Model
         /// <param name="points">Number of pins knocked down.</param>
         public void AddRoll(int points)
         {
-            GetCurrentFrame().AddRoll(points);
-
             foreach (var frame in Frames)
             {
                 frame.AddBonusPoints(points);
             }
+
+            GetCurrentFrame().AddRoll(points);
 
             if (!FrameIsCompleted(points)) return;
             if (IsFinalFrame()) return;
@@ -69,7 +69,7 @@ namespace BowlingGameApp.Model
                     continue;
                 }
 
-                score += Rolls[rollIndex] + Rolls[rollIndex + 1];
+                score += GetRollScore(rollIndex) + GetRollScore(rollIndex + 1);
                 rollIndex += 2;
             }
 
@@ -96,29 +96,35 @@ namespace BowlingGameApp.Model
         {
             if (Frames.ElementAtOrDefault(frameIndex) == null)
             {
-                Frames.Add(new Frame());
+                var previousFrame = Frames.ElementAtOrDefault(frameIndex - 1);
+                Frames.Add(new Frame(previousFrame));
             }
             return Frames[frameIndex];
         }
 
+        private int GetRollScore(int rollIndex)
+        {
+            return Rolls.ElementAtOrDefault(rollIndex);
+        }
+
         private bool IsStrike(int rollIndex)
         {
-            return Rolls[rollIndex] == 10;
+            return GetRollScore(rollIndex) == 10;
         }
 
         private bool IsSpare(int rollIndex)
         {
-            return Rolls[rollIndex] + Rolls[rollIndex + 1] == 10;
+            return GetRollScore(rollIndex) + GetRollScore(rollIndex + 1) == 10;
         }
 
         private int StrikeBonus(int rollIndex)
         {
-            return Rolls[rollIndex + 1] + Rolls[rollIndex + 2];
+            return GetRollScore(rollIndex + 1) + GetRollScore(rollIndex + 2);
         }
 
         private int SpareBonus(int rollIndex)
         {
-            return Rolls[rollIndex + 2];
+            return GetRollScore(rollIndex + 2);
         }
 
         private List<int> GetRollsFromFrames(List<Frame> frames)

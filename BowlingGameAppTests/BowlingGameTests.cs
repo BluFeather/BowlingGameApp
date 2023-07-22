@@ -17,6 +17,7 @@ namespace BowlingGameAppTests
             game = new BowlingGame();
         }
 
+        #region Algorithm Tests
         [Fact]
         public void ZeroPoints_IfGutterGame()
         {
@@ -64,7 +65,9 @@ namespace BowlingGameAppTests
             RollList(exampleGameList);
             Assert.Equal(149, game.CalculateFinalScore());
         }
+        #endregion
 
+        #region Frame Object Tests
         [Fact]
         public void CanGetFramesList()
         {
@@ -169,6 +172,115 @@ namespace BowlingGameAppTests
             }
             Assert.Equal(ExpectedFinalScore, GetFinalScore());
         }
+        #endregion
+
+        #region Realtime Scoring Tests
+        [Fact]
+        public void CanGetScoreMidGame()
+        {
+            game.AddRoll(5);
+            game.CalculateFinalScore();
+        }
+
+        [Fact]
+        public void FrameTwoIsZeroPoints_IfHalfGutterGame()
+        {
+            RollMany(0, 10);
+
+            output.WriteLine($"Final Score: {GetFinalScore()}");
+
+            foreach (var frame in GetFrames())
+            {
+                output.WriteLine(frame?.ToString());
+            }
+
+            Frame? frameTwo = GetFrame(1);
+            Assert.Equal(0, frameTwo?.RunningValue);
+        }
+
+        [Fact]
+        public void FrameTwoIsFourPoints_IfHalfSinglesGame()
+        {
+            RollMany(1, 10);
+            output.WriteLine($"Final Score: {GetFinalScore()}");
+
+            foreach (var frame in GetFrames())
+            {
+                output.WriteLine(frame?.ToString());
+            }
+
+            Frame? frameTwo = GetFrame(1);
+            Assert.Equal(4, frameTwo?.RunningValue);
+        }
+
+        [Fact]
+        public void FrameFourIsOneHundredTwentyPoints_IfHalfPerfectGame()
+        {
+            RollMany(10, 6);
+            output.WriteLine($"Final Score: {GetFinalScore()}");
+
+            foreach (var frame in GetFrames())
+            {
+                output.WriteLine(frame?.ToString());
+            }
+
+            Frame? frameFour = GetFrame(3);
+            Assert.Equal(120, frameFour?.RunningValue);
+        }
+
+        [Fact]
+        public void FramesAreExpectedPoints_IfExampleGame()
+        {
+            RollList(exampleGameList);
+            output.WriteLine($"Final Score: {GetFinalScore()}");
+            
+            foreach (var frame in GetFrames())
+            {
+                output.WriteLine(frame?.ToString());
+            }
+
+            for (int frame = 0; frame < 10; frame++)
+            {
+                Frame? currentFrame = GetFrame(frame);
+                switch (frame)
+                {
+                    case 0:
+                        Assert.Equal(15, currentFrame?.RunningValue);
+                        continue;
+                    case 1:
+                        Assert.Equal(24, currentFrame?.RunningValue);
+                        continue;
+                    case 2:
+                        Assert.Equal(33, currentFrame?.RunningValue);
+                        continue;
+                    case 3:
+                        Assert.Equal(58, currentFrame?.RunningValue);
+                        continue;
+                    case 4:
+                        Assert.Equal(78, currentFrame?.RunningValue);
+                        continue;
+                    case 5:
+                        Assert.Equal(93, currentFrame?.RunningValue);
+                        continue;
+                    case 6:
+                        Assert.Equal(101, currentFrame?.RunningValue);
+                        continue;
+                    case 7:
+                        Assert.Equal(110, currentFrame?.RunningValue);
+                        continue;
+                    case 8:
+                        Assert.Equal(129, currentFrame?.RunningValue);
+                        continue;
+                    case 9:
+                        Assert.Equal(149, currentFrame?.RunningValue);
+                        continue;
+                    default:
+                        Assert.Fail($"Frame {frame} is unexpected!");
+                        continue;
+                }
+            }
+        }
+        #endregion
 
         private void TestConsistentGame(int ValuePerRoll, int ValuePerFrame, int ExpectedFinalScore)
         {
@@ -214,6 +326,11 @@ namespace BowlingGameAppTests
         private List<Frame> GetFrames()
         {
             return game.Frames;
+        }
+
+        private Frame? GetFrame(int frameIndex)
+        {
+            return GetFrames().ElementAtOrDefault(frameIndex);
         }
 
         private List<int> GetRolls()
