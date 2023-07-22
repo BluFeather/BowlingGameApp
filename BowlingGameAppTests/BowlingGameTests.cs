@@ -1,13 +1,18 @@
 using BowlingGameApp.Model;
+using Microsoft.VisualStudio.TestPlatform.Utilities;
+using Xunit.Abstractions;
 
 namespace BowlingGameAppTests
 {
     public class BowlingGameTests
     {
+        public ITestOutputHelper output { get; private set; }
+
         private readonly BowlingGame game;
 
-        public BowlingGameTests()
+        public BowlingGameTests(ITestOutputHelper output)
         {
+            this.output = output;
             game = new BowlingGame();
         }
 
@@ -68,6 +73,13 @@ namespace BowlingGameAppTests
         {
             List<Frame> frames = game.GetFrames();
             Assert.Equal(10, frames.Count);
+        }
+
+        [Fact]
+        public void ZeroPointsAcrossTenFrames_IfGutterGame()
+        {
+            List<Frame> frames = game.GetFrames();
+            Assert.Equal(0, frames.Sum(x => x.Score));
         }
 
         private void RollMany(int pins, int rolls)
