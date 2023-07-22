@@ -17,6 +17,7 @@ namespace BowlingGameAppTests
             game = new BowlingGame();
         }
 
+        #region Algorithm Tests
         [Fact]
         public void ZeroPoints_IfGutterGame()
         {
@@ -64,7 +65,9 @@ namespace BowlingGameAppTests
             RollList(exampleGameList);
             Assert.Equal(149, game.CalculateFinalScore());
         }
+        #endregion
 
+        #region Frame Object Tests
         [Fact]
         public void CanGetFramesList()
         {
@@ -169,6 +172,11 @@ namespace BowlingGameAppTests
             }
             Assert.Equal(ExpectedFinalScore, GetFinalScore());
         }
+        #endregion
+
+        #region Realtime Scoring Tests
+
+        #endregion
 
         private void TestConsistentGame(int ValuePerRoll, int ValuePerFrame, int ExpectedFinalScore)
         {
