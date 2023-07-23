@@ -1,15 +1,20 @@
 ﻿using BowlingGameApp.ViewModel;
-using Xunit.Abstractions;
 
 namespace BowlingGameAppTests
 {
     public class ViewModelTests
     {
+        public ViewModelTests()
+        {
+            ViewModel = new BowlingGameViewModel();
+        }
+
+        public BowlingGameViewModel ViewModel { get; }
+
         [Fact]
         public void ViewModelContainsTenFrames()
         {
-            BowlingGameViewModel bowlingGameVM = new BowlingGameViewModel();
-            Assert.Equal(10, bowlingGameVM.Frames.Count);
+            Assert.Equal(10, ViewModel.Frames.Count);
         }
     }
 }
