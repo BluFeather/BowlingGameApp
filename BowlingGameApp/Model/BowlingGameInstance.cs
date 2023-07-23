@@ -5,7 +5,7 @@
         static BowlingGameInstance()
         {
             GameInstance = new BowlingGame();
-            GameInstance.ResetGame();
+            GameInstance.NewGame();
         }
 
         public static BowlingGame GameInstance { get; }

@@ -22,14 +22,14 @@ namespace BowlingGameAppTests
         public void ZeroPoints_IfGutterGame()
         {
             RollMany(0, 20);
-            Assert.Equal(0, game.CalculateFinalScore());
+            Assert.Equal(0, game.Score());
         }
 
         [Fact]
         public void TwentyPoints_IfOnesGame()
         {
             RollMany(1, 20);
-            Assert.Equal(20, game.CalculateFinalScore());
+            Assert.Equal(20, game.Score());
         }
 
         [Fact]
@@ -39,7 +39,7 @@ namespace BowlingGameAppTests
             game.AddRoll(3);
             RollMany(0, 17);
 
-            Assert.Equal(16, game.CalculateFinalScore());
+            Assert.Equal(16, game.Score());
         }
 
         [Fact]
@@ -49,21 +49,21 @@ namespace BowlingGameAppTests
             game.AddRoll(3);
             game.AddRoll(4);
             RollMany(0, 16);
-            Assert.Equal(24, game.CalculateFinalScore());
+            Assert.Equal(24, game.Score());
         }
 
         [Fact]
         public void ThreeHundredPoints_IfPerfectGame()
         {
             RollMany(10, 12);
-            Assert.Equal(300, game.CalculateFinalScore());
+            Assert.Equal(300, game.Score());
         }
 
         [Fact]
         public void OneHundredFourtyNinePoints_IfExampleGame()
         {
             RollList(exampleGameList);
-            Assert.Equal(149, game.CalculateFinalScore());
+            Assert.Equal(149, game.Score());
         }
         #endregion
 
@@ -177,7 +177,7 @@ namespace BowlingGameAppTests
         public void FramesContainExpectedValues_IfGameAfterReset()
         {
             RollMany(5, 6);
-            game.ResetGame();
+            game.NewGame();
 
             int ExpectedFinalScore = 149;
 
@@ -250,7 +250,7 @@ namespace BowlingGameAppTests
         public void CanGetScoreMidGame()
         {
             game.AddRoll(5);
-            game.CalculateFinalScore();
+            game.Score();
         }
 
         [Fact]
@@ -385,7 +385,7 @@ namespace BowlingGameAppTests
             List<int> testRolls = new List<int>() { 5, 5, 5, 6, 11, -1, 5 };
             RollList(testRolls);
 
-            List<int> rollList = game.Rolls;
+            List<int> rollList = game.PlayedRolls;
             Assert.DoesNotContain(6, rollList);
             Assert.DoesNotContain(11, rollList);
             Assert.DoesNotContain(-1, rollList);
@@ -405,9 +405,9 @@ namespace BowlingGameAppTests
             Roll(-4);
             Roll(12);
             RollMany(5, 12);
-            Assert.Equal(150, game.CalculateFinalScore());
-            Assert.Equal(21, game.Rolls.Count);
-            foreach (var roll in game.Rolls)
+            Assert.Equal(150, game.Score());
+            Assert.Equal(21, game.PlayedRolls.Count);
+            foreach (var roll in game.PlayedRolls)
             {
                 Assert.Equal(5, roll);
             }
@@ -479,12 +479,12 @@ namespace BowlingGameAppTests
 
         private List<int> GetRolls()
         {
-            return game.Rolls;
+            return game.PlayedRolls;
         }
 
         private int GetFinalScore()
         {
-            return game.CalculateFinalScore();
+            return game.Score();
         }
     }
 }

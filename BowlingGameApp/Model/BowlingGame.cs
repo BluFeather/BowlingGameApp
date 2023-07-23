@@ -7,13 +7,13 @@ namespace BowlingGameApp.Model
     {
         public BowlingGame()
         {
-            ResetGame();
+            NewGame();
         }
 
         /// <summary>
         /// List containing the values of each played roll.
         /// </summary>
-        public List<int> Rolls => GetRollsFromFrames(Frames);
+        public List<int> PlayedRolls => GetRollsFromFrames(Frames);
 
         /// <summary>
         /// Contains objects representing a single turn.
@@ -21,14 +21,14 @@ namespace BowlingGameApp.Model
         public List<Frame> Frames { get; protected set; } = new List<Frame>();
 
         /// <summary>
-        /// Returns number of pins remaining this turn.
+        /// Returns number of remaining pins in this frame.
         /// </summary>
-        public int RemainingPinsThisFrame => GetCurrentFrame().RemainingPins;
+        public int RemainingPins => GetCurrentFrame().RemainingPins;
 
         /// <summary>
-        /// Resets the state of the game.
+        /// Readies this game for a new match.
         /// </summary>
-        public void ResetGame()
+        public void NewGame()
         {
             ResetFrames();
             currentFrame = 0;
@@ -59,7 +59,7 @@ namespace BowlingGameApp.Model
         /// Calculates the game's final score.
         /// </summary>
         /// <returns>Integer representation of the game's final score.</returns>
-        public int CalculateFinalScore() => GetCurrentFrame().RunningValue;
+        public int Score() => GetCurrentFrame().RunningValue;
 
         private int currentFrame = 0;
 
@@ -81,7 +81,7 @@ namespace BowlingGameApp.Model
 
         private int GetRollScore(int rollIndex)
         {
-            return Rolls.ElementAtOrDefault(rollIndex);
+            return PlayedRolls.ElementAtOrDefault(rollIndex);
         }
 
         private bool IsStrike(int rollIndex)
