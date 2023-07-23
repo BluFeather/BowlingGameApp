@@ -22,14 +22,14 @@ namespace BowlingGameAppTests
         public void ZeroPoints_IfGutterGame()
         {
             RollMany(0, 20);
-            Assert.Equal(0, game.Score());
+            Assert.Equal(0, game.Score);
         }
 
         [Fact]
         public void TwentyPoints_IfOnesGame()
         {
             RollMany(1, 20);
-            Assert.Equal(20, game.Score());
+            Assert.Equal(20, game.Score);
         }
 
         [Fact]
@@ -39,7 +39,7 @@ namespace BowlingGameAppTests
             game.AddRoll(3);
             RollMany(0, 17);
 
-            Assert.Equal(16, game.Score());
+            Assert.Equal(16, game.Score);
         }
 
         [Fact]
@@ -49,21 +49,21 @@ namespace BowlingGameAppTests
             game.AddRoll(3);
             game.AddRoll(4);
             RollMany(0, 16);
-            Assert.Equal(24, game.Score());
+            Assert.Equal(24, game.Score);
         }
 
         [Fact]
         public void ThreeHundredPoints_IfPerfectGame()
         {
             RollMany(10, 12);
-            Assert.Equal(300, game.Score());
+            Assert.Equal(300, game.Score);
         }
 
         [Fact]
         public void OneHundredFourtyNinePoints_IfExampleGame()
         {
             RollList(exampleGameList);
-            Assert.Equal(149, game.Score());
+            Assert.Equal(149, game.Score);
         }
         #endregion
 
@@ -250,7 +250,7 @@ namespace BowlingGameAppTests
         public void CanGetScoreMidGame()
         {
             game.AddRoll(5);
-            game.Score();
+            Assert.Equal(5, game.Score);
         }
 
         [Fact]
@@ -405,7 +405,7 @@ namespace BowlingGameAppTests
             Roll(-4);
             Roll(12);
             RollMany(5, 12);
-            Assert.Equal(150, game.Score());
+            Assert.Equal(150, game.Score);
             Assert.Equal(21, game.PlayedRolls.Count);
             foreach (var roll in game.PlayedRolls)
             {
@@ -479,7 +479,7 @@ namespace BowlingGameAppTests
 
         private int GetFinalScore()
         {
-            return game.Score();
+            return game.Score;
         }
     }
 }
