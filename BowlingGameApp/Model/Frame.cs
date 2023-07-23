@@ -14,7 +14,7 @@ namespace BowlingGameApp.Model
         /// <param name="previousFrame">Frame to refer to when calculating a running total.</param>
         public Frame(bool isFinalFrame, Frame? previousFrame)
         {
-            this.IsFinalFrame = isFinalFrame;
+            IsFinalFrame = isFinalFrame;
             this.previousFrame = previousFrame;
         }
 

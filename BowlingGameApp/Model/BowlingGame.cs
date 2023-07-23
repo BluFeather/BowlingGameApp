@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Controls;
 
 namespace BowlingGameApp.Model
 {
@@ -18,7 +17,7 @@ namespace BowlingGameApp.Model
         {
             get
             {
-                List<int> rolls = new List<int>();
+                List<int> rolls = new();
                 foreach (Frame frame in Frames)
                 {
                     rolls.AddRange(frame.Scores);

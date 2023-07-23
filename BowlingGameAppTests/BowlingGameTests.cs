@@ -5,15 +5,15 @@ namespace BowlingGameAppTests
 {
     public class BowlingGameTests
     {
-        public ITestOutputHelper output { get; private set; }
+        public ITestOutputHelper Output { get; private set; }
 
         private readonly BowlingGame game;
 
-        private readonly List<int> exampleGameList = new List<int>() { 8, 2, 5, 4, 9, 0, 10, 10, 5, 5, 5, 3, 6, 3, 9, 1, 9, 1, 10 };
+        private readonly List<int> exampleGameList = new() { 8, 2, 5, 4, 9, 0, 10, 10, 5, 5, 5, 3, 6, 3, 9, 1, 9, 1, 10 };
 
         public BowlingGameTests(ITestOutputHelper output)
         {
-            this.output = output;
+            Output = output;
             game = new BowlingGame();
         }
 
@@ -258,11 +258,11 @@ namespace BowlingGameAppTests
         {
             RollMany(0, 10);
 
-            output.WriteLine($"Final Score: {GetFinalScore()}");
+            Output.WriteLine($"Final Score: {GetFinalScore()}");
 
             foreach (var frame in GetFrames())
             {
-                output.WriteLine(frame?.ToString());
+                Output.WriteLine(frame?.ToString());
             }
 
             Frame? frameTwo = GetFrame(1);
@@ -273,11 +273,11 @@ namespace BowlingGameAppTests
         public void FrameTwoIsFourPoints_IfHalfSinglesGame()
         {
             RollMany(1, 10);
-            output.WriteLine($"Final Score: {GetFinalScore()}");
+            Output.WriteLine($"Final Score: {GetFinalScore()}");
 
             foreach (var frame in GetFrames())
             {
-                output.WriteLine(frame?.ToString());
+                Output.WriteLine(frame?.ToString());
             }
 
             Frame? frameTwo = GetFrame(1);
@@ -288,11 +288,11 @@ namespace BowlingGameAppTests
         public void FrameFourIsOneHundredTwentyPoints_IfHalfPerfectGame()
         {
             RollMany(10, 6);
-            output.WriteLine($"Final Score: {GetFinalScore()}");
+            Output.WriteLine($"Final Score: {GetFinalScore()}");
 
             foreach (var frame in GetFrames())
             {
-                output.WriteLine(frame?.ToString());
+                Output.WriteLine(frame?.ToString());
             }
 
             Frame? frameFour = GetFrame(3);
@@ -303,11 +303,11 @@ namespace BowlingGameAppTests
         public void FramesAreExpectedPoints_IfExampleGame()
         {
             RollList(exampleGameList);
-            output.WriteLine($"Final Score: {GetFinalScore()}");
+            Output.WriteLine($"Final Score: {GetFinalScore()}");
             
             foreach (var frame in GetFrames())
             {
-                output.WriteLine(frame?.ToString());
+                Output.WriteLine(frame?.ToString());
             }
 
             for (int frame = 0; frame < 10; frame++)
@@ -382,7 +382,7 @@ namespace BowlingGameAppTests
         [Fact]
         public void RollsDoNotContainInvalidRolls()
         {
-            List<int> testRolls = new List<int>() { 5, 5, 5, 6, 11, -1, 5 };
+            List<int> testRolls = new() { 5, 5, 5, 6, 11, -1, 5 };
             RollList(testRolls);
 
             List<int> rollList = game.PlayedRolls;
