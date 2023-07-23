@@ -1,4 +1,5 @@
 ﻿using BowlingGameApp.Model;
+using System;
 using System.Collections.Generic;
 
 namespace BowlingGameApp.ViewModel
@@ -10,7 +11,7 @@ namespace BowlingGameApp.ViewModel
             GameInstance = BowlingGameInstance.GameInstance;
         }
 
-        public BowlingGame GameInstance { get; }
+        private BowlingGame GameInstance { get; }
 
         public List<Frame> Frames
         {
@@ -20,6 +21,11 @@ namespace BowlingGameApp.ViewModel
         public void AddRoll(int roll)
         {
             GameInstance.AddRoll(roll);
+        }
+
+        public void ResetGame()
+        {
+            GameInstance.ResetGame();
         }
     }
 }

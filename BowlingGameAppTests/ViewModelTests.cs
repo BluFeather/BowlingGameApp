@@ -1,15 +1,20 @@
-﻿using BowlingGameApp.ViewModel;
+﻿using BowlingGameApp.Model;
+using BowlingGameApp.ViewModel;
+using Xunit.Abstractions;
 
 namespace BowlingGameAppTests
 {
     public class ViewModelTests
     {
-        public ViewModelTests()
+        public ViewModelTests(ITestOutputHelper output)
         {
             ViewModel = new BowlingGameViewModel();
+            this.output = output;
         }
 
         public BowlingGameViewModel ViewModel { get; }
+
+        private ITestOutputHelper output;
 
         [Fact]
         public void ViewModelContainsTenFrames()
@@ -29,10 +34,8 @@ namespace BowlingGameAppTests
         [Fact]
         public void FramesContainSingleRolls_IfSinglesGame()
         {
-            for (var roll = 0; roll < 20; roll++)
-            {
-                ViewModel.AddRoll(1);
-            }
+            ResetGame();
+            RollMany(1, 20);
 
             foreach (var frame in ViewModel.Frames)
             {
@@ -41,6 +44,35 @@ namespace BowlingGameAppTests
                 {
                     Assert.Equal(1, score); // Each Roll was 1 Point.
                 }
+            }
+        }
+
+        [Fact]
+        public void FramesContainDoubleRolls_IfDoublesGame()
+        {
+            ResetGame();
+            RollMany(2, 20);
+
+            foreach (var frame in ViewModel.Frames)
+            {
+                Assert.Equal(2, frame.Scores.Count); // Exactly 2 Rolls in each frame.
+                foreach (var score in frame.Scores)
+                {
+                    Assert.Equal(2, score); // Each Roll was 2 Points.
+                }
+            }
+        }
+
+        private void ResetGame()
+        {
+            ViewModel.ResetGame();
+        }
+
+        private void RollMany(int numberOfPins, int numberOfRolls)
+        {
+            for (var roll = 0; roll < numberOfRolls; roll++)
+            {
+                ViewModel.AddRoll(numberOfPins);
             }
         }
     }
