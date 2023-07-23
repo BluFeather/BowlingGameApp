@@ -57,21 +57,28 @@ namespace BowlingGameApp.Model
             }
         }
 
+        /// <summary>
+        /// Represents the current turn in this game.
+        /// </summary>
         public int FrameNumber { get; protected set; }
 
+        /// <summary>
+        /// Number of pins remaining in this frame.
+        /// </summary>
         public int RemainingPins { get; protected set; } = 10;
 
         /// <summary>
         /// Adds the value of a roll to this frame.
         /// </summary>
         /// <param name="rollValue">Points to be added for the roll.</param>
+        /// <returns>bool indicating whether or not the rollValue was considered valid.</returns>
         public bool AddRoll(int rollValue)
         {
             if (rollValue > RemainingPins) return false;
             Scores.Add(rollValue);
             RemainingPins -= rollValue;
 
-            if (FrameNumber == 9 && IsStrike() || IsSpare() && Scores.Count <= 2)
+            if (IfThirdRollNeededForLastFrame())
             {
                 RemainingPins = 10;
             }
@@ -89,6 +96,25 @@ namespace BowlingGameApp.Model
         }
 
         /// <summary>
+        /// Indicates whether or not this frame begins with a Strike.
+        /// </summary>
+        /// <returns>bool indicating whether or not this frame begins with a Strike</returns>
+        public bool IsStrike()
+        {
+            return Scores.ElementAtOrDefault(0) == 10;
+        }
+
+        /// <summary>
+        /// Indicated whether or not this frame begins with a spare.
+        /// </summary>
+        /// <returns>bool indicating whether or not this frame begins with a spare</returns>
+        public bool IsSpare()
+        {
+            if (IsStrike()) return false;
+            return Scores.ElementAtOrDefault(0) + Scores.ElementAtOrDefault(1) == 10;
+        }
+
+        /// <summary>
         /// Verbose string describing the contents of this Frame. Useful for debug outputs.
         /// </summary>
         /// <returns>string describing the contents of this Frame.</returns>
@@ -101,23 +127,17 @@ namespace BowlingGameApp.Model
 
         private List<int> Bonuses { get; set; } = new List<int>();
 
-        public bool IsStrike()
-        {
-            return Scores.ElementAtOrDefault(0) == 10;
-        }
-
-        public bool IsSpare()
-        {
-            if (IsStrike()) return false;
-            return Scores.ElementAtOrDefault(0) + Scores.ElementAtOrDefault(1) == 10;
-        }
-
         private bool NeedsBonusPoints()
         {
             if (!IsSpare() && !IsStrike()) return false;
             if (IsSpare() && Bonuses.Count >= 1) return false;
             if (IsStrike() && Bonuses.Count >= 2) return false;
             return true;
+        }
+
+        private bool IfThirdRollNeededForLastFrame()
+        {
+            return FrameNumber == 9 && IsStrike() || IsSpare() && Scores.Count <= 2;
         }
     }
 }

@@ -23,7 +23,7 @@ namespace BowlingGameApp.Model
             get
             {
                 var frame = GetCurrentFrame();
-                if (frameIndex == 10)
+                if (currentFrame == 10)
                 {
                     
                     if (frame.IsStrike())
@@ -47,7 +47,7 @@ namespace BowlingGameApp.Model
         public void ResetGame()
         {
             ResetFrames();
-            frameIndex = 0;
+            currentFrame = 0;
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace BowlingGameApp.Model
             return score;
         }
 
-        private int frameIndex = 0;
+        private int currentFrame = 0;
 
         private void ResetFrames()
         {
@@ -118,17 +118,17 @@ namespace BowlingGameApp.Model
 
         private void GoToNextFrame()
         {
-            frameIndex++;
+            currentFrame++;
         }
 
         private Frame GetCurrentFrame()
         {
-            if (Frames.ElementAtOrDefault(frameIndex) == null)
+            if (Frames.ElementAtOrDefault(currentFrame) == null)
             {
-                var previousFrame = Frames.ElementAtOrDefault(frameIndex - 1);
-                Frames.Add(new Frame(frameIndex, previousFrame));
+                var previousFrame = Frames.ElementAtOrDefault(currentFrame - 1);
+                Frames.Add(new Frame(currentFrame, previousFrame));
             }
-            return Frames[frameIndex];
+            return Frames[currentFrame];
         }
 
         private int GetRollScore(int rollIndex)
@@ -168,12 +168,12 @@ namespace BowlingGameApp.Model
 
         private bool FrameIsCompleted(int value)
         {
-            return Frames[frameIndex].Scores.Count >= 2 || value == 10;
+            return Frames[currentFrame].Scores.Count >= 2 || value == 10;
         }
 
         private bool IsFinalFrame()
         {
-            return frameIndex >= 9;
+            return currentFrame >= 9;
         }
     }
 }
