@@ -282,6 +282,68 @@ namespace BowlingGameAppTests
         }
         #endregion
 
+        #region Input Validation Tests
+        [Fact]
+        public void AddRollReturnsFalse_IfRollHigherThanRemainingPins()
+        {
+            Assert.True(Roll(6));
+            Assert.False(Roll(6));
+        }
+
+        [Fact]
+        public void AddRollAlwaysReturnsTrue_IfPerfectGame()
+        {
+            RollMany(10, 12, true);
+        }
+
+        [Fact]
+        public void AddRollAlwaysReturnsTrue_IfGutterGame()
+        {
+            RollMany(0, 20, true);
+        }
+
+        [Fact]
+        public void AddRollAlwaysReturnsTrue_IfExampleGame()
+        {
+            RollList(exampleGameList, true);
+        }
+
+        [Fact]
+        public void RollsDoNotContainInvalidRolls()
+        {
+            List<int> testRolls = new List<int>() { 5, 5, 5, 6, 11, -1, 5 };
+            RollList(testRolls);
+
+            List<int> rollList = game.Rolls;
+            Assert.DoesNotContain(6, rollList);
+            Assert.DoesNotContain(11, rollList);
+            Assert.DoesNotContain(-1, rollList);
+            Assert.Equal(4, rollList.Count);
+            
+            foreach (int roll in rollList)
+            {
+                Assert.Equal(5, roll);
+            }
+        }
+
+        [Fact]
+        public void GameCanBeCompleted_IfInvalidInputDuringGame()
+        {
+            RollMany(5, 9);
+            Roll(21);
+            Roll(-4);
+            Roll(12);
+            RollMany(5, 12);
+            Assert.Equal(150, game.CalculateFinalScore());
+            Assert.Equal(21, game.Rolls.Count);
+            foreach (var roll in game.Rolls)
+            {
+                Assert.Equal(5, roll);
+            }
+        }
+
+        #endregion
+
         private void TestConsistentGame(int ValuePerRoll, int ValuePerFrame, int ExpectedFinalScore)
         {
             RollMany(ValuePerRoll, 20);
@@ -296,11 +358,19 @@ namespace BowlingGameAppTests
             Assert.Equal(ExpectedFinalScore, GetFinalScore());
         }
 
-        private void RollMany(int pins, int rolls)
+        private bool Roll(int pins)
+        {
+            return game.AddRoll(pins);
+        }
+
+        private void RollMany(int pins, int rolls, bool failIfAnyFalse = false)
         {
             for (var roll = 0; roll < rolls; roll++)
             {
-                game.AddRoll(pins);
+                if (Roll(pins) == false && failIfAnyFalse)
+                {
+                    Assert.Fail($"roll {roll} of value {pins} was considered invalid!");
+                }
             }
         }
 
@@ -315,11 +385,14 @@ namespace BowlingGameAppTests
             game.AddRoll(10);
         }
 
-        private void RollList(List<int> Rolls)
+        private void RollList(List<int> Rolls, bool failIfAnyFalse = false)
         {
             foreach (var roll in Rolls)
             {
-                game.AddRoll(roll);
+                if (Roll(roll) == false && failIfAnyFalse)
+                {
+                    Assert.Fail($"roll {roll} was considered invalid!");
+                }
             }
         }
 
