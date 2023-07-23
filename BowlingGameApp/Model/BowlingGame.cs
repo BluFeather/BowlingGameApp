@@ -56,7 +56,7 @@ namespace BowlingGameApp.Model
         /// <param name="points">Number of pins knocked down.</param>
         public bool AddRoll(int points)
         {
-            if (points > GetCurrentFrame().RemainingPins) return false;
+            if (points < 0 || points > GetCurrentFrame().RemainingPins) return false;
 
             foreach (var frame in Frames)
             {

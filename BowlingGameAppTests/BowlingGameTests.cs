@@ -295,6 +295,37 @@ namespace BowlingGameAppTests
         {
             RollMany(10, 12, true);
         }
+
+        [Fact]
+        public void AddRollAlwaysReturnsTrue_IfGutterGame()
+        {
+            RollMany(0, 20, true);
+        }
+
+        [Fact]
+        public void AddRollAlwaysReturnsTrue_IfExampleGame()
+        {
+            RollList(exampleGameList, true);
+        }
+
+        [Fact]
+        public void RollsDoNotContainInvalidRolls()
+        {
+            List<int> testRolls = new List<int>() { 5, 5, 5, 6, 11, -1, 5 };
+            RollList(testRolls);
+
+            List<int> rollList = game.Rolls;
+            Assert.DoesNotContain(6, rollList);
+            Assert.DoesNotContain(11, rollList);
+            Assert.DoesNotContain(-1, rollList);
+            Assert.Equal(4, rollList.Count);
+            
+            foreach (int roll in rollList)
+            {
+                Assert.Equal(5, roll);
+            }
+        }
+
         #endregion
 
         private void TestConsistentGame(int ValuePerRoll, int ValuePerFrame, int ExpectedFinalScore)
@@ -320,7 +351,7 @@ namespace BowlingGameAppTests
         {
             for (var roll = 0; roll < rolls; roll++)
             {
-                if (game.AddRoll(pins) == false && failIfAnyFalse)
+                if (Roll(pins) == false && failIfAnyFalse)
                 {
                     Assert.Fail($"roll {roll} of value {pins} was considered invalid!");
                 }
@@ -338,11 +369,14 @@ namespace BowlingGameAppTests
             game.AddRoll(10);
         }
 
-        private void RollList(List<int> Rolls)
+        private void RollList(List<int> Rolls, bool failIfAnyFalse = false)
         {
             foreach (var roll in Rolls)
             {
-                game.AddRoll(roll);
+                if (Roll(roll) == false && failIfAnyFalse)
+                {
+                    Assert.Fail($"roll {roll} was considered invalid!");
+                }
             }
         }
 
