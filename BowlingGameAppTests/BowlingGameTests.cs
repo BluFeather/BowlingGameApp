@@ -326,6 +326,22 @@ namespace BowlingGameAppTests
             }
         }
 
+        [Fact]
+        public void GameCanBeCompleted_IfInvalidInputDuringGame()
+        {
+            RollMany(5, 9);
+            Roll(21);
+            Roll(-4);
+            Roll(12);
+            RollMany(5, 12);
+            Assert.Equal(150, game.CalculateFinalScore());
+            Assert.Equal(21, game.Rolls.Count);
+            foreach (var roll in game.Rolls)
+            {
+                Assert.Equal(5, roll);
+            }
+        }
+
         #endregion
 
         private void TestConsistentGame(int ValuePerRoll, int ValuePerFrame, int ExpectedFinalScore)
