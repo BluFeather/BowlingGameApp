@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Controls;
 
 namespace BowlingGameApp.Model
 {
@@ -13,7 +14,18 @@ namespace BowlingGameApp.Model
         /// <summary>
         /// List containing the values of each played roll.
         /// </summary>
-        public List<int> PlayedRolls => GetRollsFromFrames(Frames);
+        public List<int> PlayedRolls
+        {
+            get
+            {
+                List<int> rolls = new List<int>();
+                foreach (Frame frame in Frames)
+                {
+                    rolls.AddRange(frame.Scores);
+                }
+                return rolls;
+            }
+        }
 
         /// <summary>
         /// Contains objects representing a single turn.
@@ -63,6 +75,8 @@ namespace BowlingGameApp.Model
 
         private int frameIndex = 0;
 
+        private Frame CurrentFrame => Frames[frameIndex];
+
         private void ResetFrames()
         {
             Frames.Clear();
@@ -75,18 +89,6 @@ namespace BowlingGameApp.Model
         private void GoToNextFrame()
         {
             frameIndex++;
-        }
-
-        private Frame CurrentFrame => Frames[frameIndex];
-
-        private List<int> GetRollsFromFrames(List<Frame> frames)
-        {
-            List<int> rolls = new List<int>();
-            foreach (Frame frame in frames)
-            {
-                rolls.AddRange(frame.Scores);
-            }
-            return rolls;
         }
 
         private bool FrameIsCompleted(int value)
