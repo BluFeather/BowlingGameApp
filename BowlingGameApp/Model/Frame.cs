@@ -9,14 +9,6 @@ namespace BowlingGameApp.Model
     public class Frame
     {
         /// <summary>
-        /// Frame that will contain a running total of only this frame's values. This is expected to be the first Frame in a collection of Frames.
-        /// </summary>
-        public Frame(bool isFinalFrame) : this(isFinalFrame, null)
-        {
-
-        }
-
-        /// <summary>
         /// Frame that will contain a running total consisting of this frame's value on top of the previous frame's value.
         /// </summary>
         /// <param name="previousFrame">Frame to refer to when calculating a running total.</param>
