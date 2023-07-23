@@ -49,6 +49,7 @@ namespace BowlingGameApp.Model
         /// Adds the result of a roll to the game's score.
         /// </summary>
         /// <param name="points">Number of pins knocked down.</param>
+        /// <returns>bool indicating whether or not the roll was considered valid and added to the current frame.</returns>
         public bool AddRoll(int points)
         {
             if (points < 0 || points > CurrentFrame.RemainingPins) return false;
