@@ -19,20 +19,48 @@ namespace BowlingGameAppTests
         [Fact]
         public void ExpectedValuesIfGutterGame()
         {
-            RollMany(0, 20);
-            var rolls = GetRolls();
+            int valueOfRolls = 0;
+            int numberOfRolls = 20;
 
-            Assert.Equal(20, rolls.Count);
+            RollMany(valueOfRolls, numberOfRolls);
+            PassIfExpectedRollCount(numberOfRolls);
             
             var frames = GetFrames();
             for (int frame = 0; frame < 10; frame++)
             {
+                Output.WriteLine($"{frames[frame]}");
                 Assert.Equal(2, frames[frame].Scores.Count);
                 for (int roll = 0; roll < 2; roll++)
                 {
-                    Assert.Equal(0, frames[frame].Scores[roll]);
+                    Assert.Equal(valueOfRolls, frames[frame].Scores[roll]);
                 }
             }
+        }
+
+        [Fact]
+        public void ExpectedValuesIfOnesGame()
+        {
+            int valueOfRolls = 1;
+            int numberOfRolls = 20;
+
+            RollMany(valueOfRolls, numberOfRolls);
+            PassIfExpectedRollCount(numberOfRolls);
+
+            var frames = GetFrames();
+            for (int frame = 0; frame < 10; frame++)
+            {
+                Output.WriteLine($"{frames[frame]}");
+                Assert.Equal(2, frames[frame].Scores.Count);
+                for (int roll = 0; roll < 2; roll++)
+                {
+                    Assert.Equal(valueOfRolls, frames[frame].Scores[roll]);
+                }
+            }
+        }
+
+        private void PassIfExpectedRollCount(int expectedRollCount)
+        {
+            Assert.Equal(expectedRollCount, GetRolls().Count);
         }
         #endregion
 
