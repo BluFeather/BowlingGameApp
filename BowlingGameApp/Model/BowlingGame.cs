@@ -5,10 +5,26 @@ namespace BowlingGameApp.Model
 {
     public class BowlingGame
     {
+        public BowlingGame()
+        {
+            NewGame();
+        }
+
         /// <summary>
         /// List containing the values of each played roll.
         /// </summary>
-        public List<int> Rolls => GetRollsFromFrames(Frames);
+        public List<int> PlayedRolls
+        {
+            get
+            {
+                List<int> rolls = new();
+                foreach (Frame frame in Frames)
+                {
+                    rolls.AddRange(frame.Scores);
+                }
+                return rolls;
+            }
+        }
 
         /// <summary>
         /// Contains objects representing a single turn.
@@ -16,164 +32,63 @@ namespace BowlingGameApp.Model
         public List<Frame> Frames { get; protected set; } = new List<Frame>();
 
         /// <summary>
-        /// Returns number of pins remaining this turn.
+        /// Returns number of remaining pins in this frame.
         /// </summary>
-        public int RemainingPinsThisFrame
-        {
-            get
-            {
-                var frame = GetCurrentFrame();
-                if (currentFrame == 10)
-                {
-                    
-                    if (frame.IsStrike())
-                    {
-                        return 10 - frame.Scores.ElementAtOrDefault(1);
-                    }
-
-                    if (frame.IsSpare())
-                    {
-                        return 10;
-                    }
-                }
-
-                return 10 - frame.Scores.Sum();
-            }
-        }
+        public int RemainingPins => CurrentFrame.RemainingPins;
 
         /// <summary>
-        /// Resets the state of the game.
+        /// Readies this game for a new match.
         /// </summary>
-        public void ResetGame()
+        public void NewGame()
         {
             ResetFrames();
-            currentFrame = 0;
+            frameIndex = 0;
         }
 
         /// <summary>
         /// Adds the result of a roll to the game's score.
         /// </summary>
         /// <param name="points">Number of pins knocked down.</param>
+        /// <returns>bool indicating whether or not the roll was considered valid and added to the current frame.</returns>
         public bool AddRoll(int points)
         {
-            if (points < 0 || points > GetCurrentFrame().RemainingPins) return false;
+            if (points < 0 || points > CurrentFrame.RemainingPins) return false;
 
             foreach (var frame in Frames)
             {
                 frame.AddBonusPoints(points);
             }
 
-            GetCurrentFrame().AddRoll(points);
+            CurrentFrame.TryAddRoll(points);
 
-            if (!FrameIsCompleted(points)) return true;
-            if (IsFinalFrame()) return true;
+            if (!CurrentFrame.FrameIsComplete) return true;
+            if (CurrentFrame.IsFinalFrame) return true;
             GoToNextFrame();
             return true;
         }
 
         /// <summary>
-        /// Calculates the game's final score.
+        /// The player's current score.
         /// </summary>
-        /// <returns>Integer representation of the game's final score.</returns>
-        public int CalculateFinalScore()
-        {
-            int score = 0;
-            int rollIndex = 0;
+        /// <returns>Integer representation of the current score.</returns>
+        public int Score => CurrentFrame.OverallScore;
 
-            for (int frame = 0; frame < 10; frame++)
-            {
-                if (IsStrike(rollIndex))
-                {
-                    score += 10;
-                    score += StrikeBonus(rollIndex);
-                    rollIndex += 1;
-                    continue;
-                }
+        private int frameIndex = 0;
 
-                if (IsSpare(rollIndex))
-                {
-                    score += 10;
-                    score += SpareBonus(rollIndex);
-                    rollIndex += 2;
-                    continue;
-                }
-
-                score += GetRollScore(rollIndex) + GetRollScore(rollIndex + 1);
-                rollIndex += 2;
-            }
-
-            return score;
-        }
-
-        private int currentFrame = 0;
+        private Frame CurrentFrame => Frames[frameIndex];
 
         private void ResetFrames()
         {
             Frames.Clear();
             for (int frame = 0; frame < 10; frame++)
             {
-                Frames.Add(new Frame(frame));
+                Frames.Add(new Frame(frame == 9, Frames.ElementAtOrDefault(frame - 1)));
             }
         }
 
         private void GoToNextFrame()
         {
-            currentFrame++;
-        }
-
-        private Frame GetCurrentFrame()
-        {
-            if (Frames.ElementAtOrDefault(currentFrame) == null)
-            {
-                var previousFrame = Frames.ElementAtOrDefault(currentFrame - 1);
-                Frames.Add(new Frame(currentFrame, previousFrame));
-            }
-            return Frames[currentFrame];
-        }
-
-        private int GetRollScore(int rollIndex)
-        {
-            return Rolls.ElementAtOrDefault(rollIndex);
-        }
-
-        private bool IsStrike(int rollIndex)
-        {
-            return GetRollScore(rollIndex) == 10;
-        }
-
-        private bool IsSpare(int rollIndex)
-        {
-            return GetRollScore(rollIndex) + GetRollScore(rollIndex + 1) == 10;
-        }
-
-        private int StrikeBonus(int rollIndex)
-        {
-            return GetRollScore(rollIndex + 1) + GetRollScore(rollIndex + 2);
-        }
-
-        private int SpareBonus(int rollIndex)
-        {
-            return GetRollScore(rollIndex + 2);
-        }
-
-        private List<int> GetRollsFromFrames(List<Frame> frames)
-        {
-            List<int> rolls = new List<int>();
-            foreach (Frame frame in frames)
-            {
-                rolls.AddRange(frame.Scores);
-            }
-            return rolls;
-        }
-
-        private bool FrameIsCompleted(int value)
-        {
-            return Frames[currentFrame].Scores.Count >= 2 || value == 10;
-        }
-
-        private bool IsFinalFrame()
-        {
-            return currentFrame >= 9;
+            frameIndex++;
         }
     }
 }

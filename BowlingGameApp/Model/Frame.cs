@@ -9,20 +9,12 @@ namespace BowlingGameApp.Model
     public class Frame
     {
         /// <summary>
-        /// Frame that will contain a running total of only this frame's values. This is expected to be the first Frame in a collection of Frames.
-        /// </summary>
-        public Frame(int frameNumber) : this(frameNumber, null)
-        {
-
-        }
-
-        /// <summary>
         /// Frame that will contain a running total consisting of this frame's value on top of the previous frame's value.
         /// </summary>
         /// <param name="previousFrame">Frame to refer to when calculating a running total.</param>
-        public Frame(int frameNumber, Frame? previousFrame)
+        public Frame(bool isFinalFrame, Frame? previousFrame)
         {
-            this.FrameNumber = frameNumber;
+            IsFinalFrame = isFinalFrame;
             this.previousFrame = previousFrame;
         }
 
@@ -47,20 +39,9 @@ namespace BowlingGameApp.Model
         }
 
         /// <summary>
-        /// Overall points awarded by this frame in the game.
+        /// Overall points awarded at the time of playing this frame. Includes bonuses from rolls in following frames.
         /// </summary>
-        public int RunningValue
-        {
-            get
-            {
-                return previousFrame != null ? Value + previousFrame.RunningValue : Value;
-            }
-        }
-
-        /// <summary>
-        /// Represents the current turn in this game.
-        /// </summary>
-        public int FrameNumber { get; protected set; }
+        public int OverallScore => previousFrame != null ? Value + previousFrame.OverallScore : Value;
 
         /// <summary>
         /// Number of pins remaining in this frame.
@@ -68,17 +49,17 @@ namespace BowlingGameApp.Model
         public int RemainingPins { get; protected set; } = 10;
 
         /// <summary>
-        /// Adds the value of a roll to this frame.
+        /// Attempts to add the value of a roll to this frame.
         /// </summary>
-        /// <param name="rollValue">Points to be added for the roll.</param>
+        /// <param name="rollValue">Points to be awarded for this roll.</param>
         /// <returns>bool indicating whether or not the rollValue was considered valid.</returns>
-        public bool AddRoll(int rollValue)
+        public bool TryAddRoll(int rollValue)
         {
             if (rollValue > RemainingPins) return false;
             Scores.Add(rollValue);
             RemainingPins -= rollValue;
 
-            if (IfThirdRollNeededForLastFrame())
+            if (ThirdRollNeededForLastFrame)
             {
                 RemainingPins = 10;
             }
@@ -86,7 +67,7 @@ namespace BowlingGameApp.Model
         }
 
         /// <summary>
-        /// Adds rollValue to this frame's score if it needs bonus points for a spare or strike.
+        /// Adds points as a bonus to this frame's score, if it needs bonus points for a spare or strike.
         /// </summary>
         /// <param name="rollValue">bonus points to be added to this frame's value.</param>
         public void AddBonusPoints(int rollValue)
@@ -105,9 +86,9 @@ namespace BowlingGameApp.Model
         }
 
         /// <summary>
-        /// Indicated whether or not this frame begins with a spare.
+        /// Indicates whether or not this frame begins with a spare.
         /// </summary>
-        /// <returns>bool indicating whether or not this frame begins with a spare</returns>
+        /// <returns>bool indicating whether or not this frame begins with a spare.</returns>
         public bool IsSpare()
         {
             if (IsStrike()) return false;
@@ -115,17 +96,29 @@ namespace BowlingGameApp.Model
         }
 
         /// <summary>
+        /// Indicates whether or not any rolls are remaining for this frame.
+        /// </summary>
+        public bool FrameIsComplete => Scores.Count >= 2 || Value == 10;
+
+        /// <summary>
+        /// Indicates whether or not this is the last frame in a bowling game.
+        /// </summary>
+        public bool IsFinalFrame { get; protected set; } = false;
+
+        /// <summary>
         /// Verbose string describing the contents of this Frame. Useful for debug outputs.
         /// </summary>
         /// <returns>string describing the contents of this Frame.</returns>
         public override string ToString()
         {
-            return $"Roll values: {string.Join(", ", Scores)} | Frame Value: {Value} | Frame Running Value: {RunningValue}";
+            return $"Roll values: {string.Join(", ", Scores)} | Frame Value: {Value} | Frame Running Value: {OverallScore}";
         }
 
         private readonly Frame? previousFrame;
 
         private List<int> Bonuses { get; set; } = new List<int>();
+
+        private bool ThirdRollNeededForLastFrame => IsFinalFrame && IsStrike() || IsSpare() && Scores.Count <= 2;
 
         private bool NeedsBonusPoints()
         {
@@ -133,11 +126,6 @@ namespace BowlingGameApp.Model
             if (IsSpare() && Bonuses.Count >= 1) return false;
             if (IsStrike() && Bonuses.Count >= 2) return false;
             return true;
-        }
-
-        private bool IfThirdRollNeededForLastFrame()
-        {
-            return FrameNumber == 9 && IsStrike() || IsSpare() && Scores.Count <= 2;
         }
     }
 }

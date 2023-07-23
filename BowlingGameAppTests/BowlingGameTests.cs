@@ -5,15 +5,15 @@ namespace BowlingGameAppTests
 {
     public class BowlingGameTests
     {
-        public ITestOutputHelper output { get; private set; }
+        public ITestOutputHelper Output { get; private set; }
 
         private readonly BowlingGame game;
 
-        private readonly List<int> exampleGameList = new List<int>() { 8, 2, 5, 4, 9, 0, 10, 10, 5, 5, 5, 3, 6, 3, 9, 1, 9, 1, 10 };
+        private readonly List<int> exampleGameList = new() { 8, 2, 5, 4, 9, 0, 10, 10, 5, 5, 5, 3, 6, 3, 9, 1, 9, 1, 10 };
 
         public BowlingGameTests(ITestOutputHelper output)
         {
-            this.output = output;
+            Output = output;
             game = new BowlingGame();
         }
 
@@ -22,14 +22,14 @@ namespace BowlingGameAppTests
         public void ZeroPoints_IfGutterGame()
         {
             RollMany(0, 20);
-            Assert.Equal(0, game.CalculateFinalScore());
+            Assert.Equal(0, game.Score);
         }
 
         [Fact]
         public void TwentyPoints_IfOnesGame()
         {
             RollMany(1, 20);
-            Assert.Equal(20, game.CalculateFinalScore());
+            Assert.Equal(20, game.Score);
         }
 
         [Fact]
@@ -39,7 +39,7 @@ namespace BowlingGameAppTests
             game.AddRoll(3);
             RollMany(0, 17);
 
-            Assert.Equal(16, game.CalculateFinalScore());
+            Assert.Equal(16, game.Score);
         }
 
         [Fact]
@@ -49,21 +49,21 @@ namespace BowlingGameAppTests
             game.AddRoll(3);
             game.AddRoll(4);
             RollMany(0, 16);
-            Assert.Equal(24, game.CalculateFinalScore());
+            Assert.Equal(24, game.Score);
         }
 
         [Fact]
         public void ThreeHundredPoints_IfPerfectGame()
         {
             RollMany(10, 12);
-            Assert.Equal(300, game.CalculateFinalScore());
+            Assert.Equal(300, game.Score);
         }
 
         [Fact]
         public void OneHundredFourtyNinePoints_IfExampleGame()
         {
             RollList(exampleGameList);
-            Assert.Equal(149, game.CalculateFinalScore());
+            Assert.Equal(149, game.Score);
         }
         #endregion
 
@@ -172,6 +172,77 @@ namespace BowlingGameAppTests
             }
             Assert.Equal(ExpectedFinalScore, GetFinalScore());
         }
+
+        [Fact]
+        public void FramesContainExpectedValues_IfGameAfterReset()
+        {
+            RollMany(5, 6);
+            game.NewGame();
+
+            int ExpectedFinalScore = 149;
+
+            RollList(exampleGameList);
+            var frames = GetFrames();
+            for (int frame = 0; frame < frames.Count; frame++)
+            {
+                switch (frame)
+                {
+                    case 0:
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(8, frames[frame].Scores[0]);
+                        Assert.Equal(2, frames[frame].Scores[1]);
+                        continue;
+                    case 1:
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(5, frames[frame].Scores[0]);
+                        Assert.Equal(4, frames[frame].Scores[1]);
+                        continue;
+                    case 2:
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(9, frames[frame].Scores[0]);
+                        Assert.Equal(0, frames[frame].Scores[1]);
+                        continue;
+                    case 3:
+                        Assert.Single(frames[frame].Scores);
+                        Assert.Equal(10, frames[frame].Scores[0]);
+                        continue;
+                    case 4:
+                        Assert.Single(frames[frame].Scores);
+                        Assert.Equal(10, frames[frame].Scores[0]);
+                        continue;
+                    case 5:
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(5, frames[frame].Scores[0]);
+                        Assert.Equal(5, frames[frame].Scores[1]);
+                        continue;
+                    case 6:
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(5, frames[frame].Scores[0]);
+                        Assert.Equal(3, frames[frame].Scores[1]);
+                        continue;
+                    case 7:
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(6, frames[frame].Scores[0]);
+                        Assert.Equal(3, frames[frame].Scores[1]);
+                        continue;
+                    case 8:
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(9, frames[frame].Scores[0]);
+                        Assert.Equal(1, frames[frame].Scores[1]);
+                        continue;
+                    case 9:
+                        Assert.Equal(3, frames[frame].Scores.Count);
+                        Assert.Equal(9, frames[frame].Scores[0]);
+                        Assert.Equal(1, frames[frame].Scores[1]);
+                        Assert.Equal(10, frames[frame].Scores[2]);
+                        continue;
+                    default:
+                        Assert.Fail($"Frame {frame} is unexpected!");
+                        continue;
+                }
+            }
+            Assert.Equal(ExpectedFinalScore, GetFinalScore());
+        }
         #endregion
 
         #region Realtime Scoring Tests
@@ -179,7 +250,7 @@ namespace BowlingGameAppTests
         public void CanGetScoreMidGame()
         {
             game.AddRoll(5);
-            game.CalculateFinalScore();
+            Assert.Equal(5, game.Score);
         }
 
         [Fact]
@@ -187,56 +258,56 @@ namespace BowlingGameAppTests
         {
             RollMany(0, 10);
 
-            output.WriteLine($"Final Score: {GetFinalScore()}");
+            Output.WriteLine($"Final Score: {GetFinalScore()}");
 
             foreach (var frame in GetFrames())
             {
-                output.WriteLine(frame?.ToString());
+                Output.WriteLine(frame?.ToString());
             }
 
             Frame? frameTwo = GetFrame(1);
-            Assert.Equal(0, frameTwo?.RunningValue);
+            Assert.Equal(0, frameTwo?.OverallScore);
         }
 
         [Fact]
         public void FrameTwoIsFourPoints_IfHalfSinglesGame()
         {
             RollMany(1, 10);
-            output.WriteLine($"Final Score: {GetFinalScore()}");
+            Output.WriteLine($"Final Score: {GetFinalScore()}");
 
             foreach (var frame in GetFrames())
             {
-                output.WriteLine(frame?.ToString());
+                Output.WriteLine(frame?.ToString());
             }
 
             Frame? frameTwo = GetFrame(1);
-            Assert.Equal(4, frameTwo?.RunningValue);
+            Assert.Equal(4, frameTwo?.OverallScore);
         }
 
         [Fact]
         public void FrameFourIsOneHundredTwentyPoints_IfHalfPerfectGame()
         {
             RollMany(10, 6);
-            output.WriteLine($"Final Score: {GetFinalScore()}");
+            Output.WriteLine($"Final Score: {GetFinalScore()}");
 
             foreach (var frame in GetFrames())
             {
-                output.WriteLine(frame?.ToString());
+                Output.WriteLine(frame?.ToString());
             }
 
             Frame? frameFour = GetFrame(3);
-            Assert.Equal(120, frameFour?.RunningValue);
+            Assert.Equal(120, frameFour?.OverallScore);
         }
 
         [Fact]
         public void FramesAreExpectedPoints_IfExampleGame()
         {
             RollList(exampleGameList);
-            output.WriteLine($"Final Score: {GetFinalScore()}");
+            Output.WriteLine($"Final Score: {GetFinalScore()}");
             
             foreach (var frame in GetFrames())
             {
-                output.WriteLine(frame?.ToString());
+                Output.WriteLine(frame?.ToString());
             }
 
             for (int frame = 0; frame < 10; frame++)
@@ -245,34 +316,34 @@ namespace BowlingGameAppTests
                 switch (frame)
                 {
                     case 0:
-                        Assert.Equal(15, currentFrame?.RunningValue);
+                        Assert.Equal(15, currentFrame?.OverallScore);
                         continue;
                     case 1:
-                        Assert.Equal(24, currentFrame?.RunningValue);
+                        Assert.Equal(24, currentFrame?.OverallScore);
                         continue;
                     case 2:
-                        Assert.Equal(33, currentFrame?.RunningValue);
+                        Assert.Equal(33, currentFrame?.OverallScore);
                         continue;
                     case 3:
-                        Assert.Equal(58, currentFrame?.RunningValue);
+                        Assert.Equal(58, currentFrame?.OverallScore);
                         continue;
                     case 4:
-                        Assert.Equal(78, currentFrame?.RunningValue);
+                        Assert.Equal(78, currentFrame?.OverallScore);
                         continue;
                     case 5:
-                        Assert.Equal(93, currentFrame?.RunningValue);
+                        Assert.Equal(93, currentFrame?.OverallScore);
                         continue;
                     case 6:
-                        Assert.Equal(101, currentFrame?.RunningValue);
+                        Assert.Equal(101, currentFrame?.OverallScore);
                         continue;
                     case 7:
-                        Assert.Equal(110, currentFrame?.RunningValue);
+                        Assert.Equal(110, currentFrame?.OverallScore);
                         continue;
                     case 8:
-                        Assert.Equal(129, currentFrame?.RunningValue);
+                        Assert.Equal(129, currentFrame?.OverallScore);
                         continue;
                     case 9:
-                        Assert.Equal(149, currentFrame?.RunningValue);
+                        Assert.Equal(149, currentFrame?.OverallScore);
                         continue;
                     default:
                         Assert.Fail($"Frame {frame} is unexpected!");
@@ -311,10 +382,10 @@ namespace BowlingGameAppTests
         [Fact]
         public void RollsDoNotContainInvalidRolls()
         {
-            List<int> testRolls = new List<int>() { 5, 5, 5, 6, 11, -1, 5 };
+            List<int> testRolls = new() { 5, 5, 5, 6, 11, -1, 5 };
             RollList(testRolls);
 
-            List<int> rollList = game.Rolls;
+            List<int> rollList = game.PlayedRolls;
             Assert.DoesNotContain(6, rollList);
             Assert.DoesNotContain(11, rollList);
             Assert.DoesNotContain(-1, rollList);
@@ -334,9 +405,9 @@ namespace BowlingGameAppTests
             Roll(-4);
             Roll(12);
             RollMany(5, 12);
-            Assert.Equal(150, game.CalculateFinalScore());
-            Assert.Equal(21, game.Rolls.Count);
-            foreach (var roll in game.Rolls)
+            Assert.Equal(150, game.Score);
+            Assert.Equal(21, game.PlayedRolls.Count);
+            foreach (var roll in game.PlayedRolls)
             {
                 Assert.Equal(5, roll);
             }
@@ -406,14 +477,9 @@ namespace BowlingGameAppTests
             return GetFrames().ElementAtOrDefault(frameIndex);
         }
 
-        private List<int> GetRolls()
-        {
-            return game.Rolls;
-        }
-
         private int GetFinalScore()
         {
-            return game.CalculateFinalScore();
+            return game.Score;
         }
     }
 }
