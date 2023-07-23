@@ -88,12 +88,12 @@ namespace BowlingGameApp.Model
 
         private List<int> Bonuses { get; set; } = new List<int>();
 
-        private bool IsStrike()
+        public bool IsStrike()
         {
             return Scores.ElementAtOrDefault(0) == 10;
         }
 
-        private bool IsSpare()
+        public bool IsSpare()
         {
             if (IsStrike()) return false;
             return Scores.ElementAtOrDefault(0) + Scores.ElementAtOrDefault(1) == 10;

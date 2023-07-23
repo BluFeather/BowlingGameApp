@@ -35,7 +35,7 @@ namespace BowlingGameAppTests
         public void FramesContainSingleRolls_IfSinglesGame()
         {
             ResetGame();
-            RollMany(1, 20);
+            RollMany("1", 20);
 
             foreach (var frame in ViewModel.Frames)
             {
@@ -51,7 +51,7 @@ namespace BowlingGameAppTests
         public void FramesContainDoubleRolls_IfDoublesGame()
         {
             ResetGame();
-            RollMany(2, 20);
+            RollMany("2", 20);
 
             foreach (var frame in ViewModel.Frames)
             {
@@ -67,12 +67,22 @@ namespace BowlingGameAppTests
         public void CanResetMidGame()
         {
             ResetGame();
-            RollMany(5, 5);
+            RollMany("5", 5);
             Assert.Equal(5, GetRolls().Count);
 
             ResetGame();
-            RollMany(1, 1);
+            RollMany("1", 1);
             Assert.Single(GetRolls());
+        }
+
+        [Fact]
+        public void CanRollSpareUsingSlash()
+        {
+            ResetGame();
+            Roll("4");
+            Roll("/");
+            Assert.Equal(4, GetFrame(0).Scores[0]);
+            Assert.Equal(6, GetFrame(0).Scores[1]);
         }
 
         private void ResetGame()
@@ -80,12 +90,22 @@ namespace BowlingGameAppTests
             ViewModel.ResetGame();
         }
 
-        private void RollMany(int numberOfPins, int numberOfRolls)
+        private void Roll(string numberOfPins)
+        {
+            ViewModel.AddRoll(numberOfPins);
+        }
+
+        private void RollMany(string numberOfPins, int numberOfRolls)
         {
             for (var roll = 0; roll < numberOfRolls; roll++)
             {
-                ViewModel.AddRoll(numberOfPins);
+                Roll(numberOfPins);
             }
+        }
+
+        private Frame GetFrame(int frameNumber)
+        {
+            return GetFrames()[frameNumber];
         }
 
         private List<Frame> GetFrames()

@@ -18,9 +18,18 @@ namespace BowlingGameApp.ViewModel
             get => GameInstance.Frames;
         }
         
-        public void AddRoll(int roll)
+        public void AddRoll(string roll)
         {
-            GameInstance.AddRoll(roll);
+            if (int.TryParse(roll, out var score))
+            {
+                GameInstance.AddRoll(score);
+            }
+            
+            if (string.Compare(roll, "/") == 0)
+            {
+                var remainingPins = GameInstance.RemainingPinsThisFrame;
+                GameInstance.AddRoll(remainingPins);
+            }
         }
 
         public void ResetGame()

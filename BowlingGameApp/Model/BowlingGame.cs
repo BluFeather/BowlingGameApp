@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Controls;
 
 namespace BowlingGameApp.Model
 {
@@ -14,6 +15,29 @@ namespace BowlingGameApp.Model
         /// Contains objects representing a single turn.
         /// </summary>
         public List<Frame> Frames { get; protected set; } = new List<Frame>();
+
+        public int RemainingPinsThisFrame
+        {
+            get
+            {
+                var frame = GetCurrentFrame();
+                if (frameIndex == 10)
+                {
+                    
+                    if (frame.IsStrike())
+                    {
+                        return 10 - frame.Scores.ElementAtOrDefault(1);
+                    }
+
+                    if (frame.IsSpare())
+                    {
+                        return 10;
+                    }
+                }
+
+                return 10 - frame.Scores.Sum();
+            }
+        }
 
         /// <summary>
         /// Resets the state of the game.
