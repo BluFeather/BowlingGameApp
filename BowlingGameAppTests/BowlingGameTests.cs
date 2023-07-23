@@ -477,11 +477,6 @@ namespace BowlingGameAppTests
             return GetFrames().ElementAtOrDefault(frameIndex);
         }
 
-        private List<int> GetRolls()
-        {
-            return game.PlayedRolls;
-        }
-
         private int GetFinalScore()
         {
             return game.Score();

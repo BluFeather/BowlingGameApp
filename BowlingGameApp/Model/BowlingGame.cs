@@ -56,9 +56,9 @@ namespace BowlingGameApp.Model
         }
 
         /// <summary>
-        /// Calculates the game's final score.
+        /// The player's current score.
         /// </summary>
-        /// <returns>Integer representation of the game's final score.</returns>
+        /// <returns>Integer representation of the current score.</returns>
         public int Score() => GetCurrentFrame().RunningValue;
 
         private int currentFrame = 0;
@@ -78,31 +78,6 @@ namespace BowlingGameApp.Model
         }
 
         private Frame GetCurrentFrame() => Frames[currentFrame];
-
-        private int GetRollScore(int rollIndex)
-        {
-            return PlayedRolls.ElementAtOrDefault(rollIndex);
-        }
-
-        private bool IsStrike(int rollIndex)
-        {
-            return GetRollScore(rollIndex) == 10;
-        }
-
-        private bool IsSpare(int rollIndex)
-        {
-            return GetRollScore(rollIndex) + GetRollScore(rollIndex + 1) == 10;
-        }
-
-        private int StrikeBonus(int rollIndex)
-        {
-            return GetRollScore(rollIndex + 1) + GetRollScore(rollIndex + 2);
-        }
-
-        private int SpareBonus(int rollIndex)
-        {
-            return GetRollScore(rollIndex + 2);
-        }
 
         private List<int> GetRollsFromFrames(List<Frame> frames)
         {
