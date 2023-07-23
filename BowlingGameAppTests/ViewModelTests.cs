@@ -85,6 +85,16 @@ namespace BowlingGameAppTests
             Assert.Equal(6, GetFrame(0).Scores[1]);
         }
 
+        [Fact]
+        public void CanRollStrikesUsingX()
+        {
+            ResetGame();
+            Roll("X");
+            Roll("x");
+            Assert.Equal(10, GetFrame(0).Scores[0]);
+            Assert.Equal(10, GetFrame(1).Scores[0]);
+        }
+
         private void ResetGame()
         {
             ViewModel.ResetGame();

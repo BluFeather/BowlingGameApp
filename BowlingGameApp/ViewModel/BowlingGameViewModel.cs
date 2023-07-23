@@ -30,6 +30,11 @@ namespace BowlingGameApp.ViewModel
                 var remainingPins = GameInstance.RemainingPinsThisFrame;
                 GameInstance.AddRoll(remainingPins);
             }
+
+            if (string.Compare(roll, "X", true) == 0)
+            {
+                GameInstance.AddRoll(10);
+            }
         }
 
         public void ResetGame()
