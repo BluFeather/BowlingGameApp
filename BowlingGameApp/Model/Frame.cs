@@ -11,7 +11,7 @@ namespace BowlingGameApp.Model
         /// <summary>
         /// Frame that will contain a running total of only this frame's values. This is expected to be the first Frame in a collection of Frames.
         /// </summary>
-        public Frame() : this(null)
+        public Frame(int frameNumber) : this(frameNumber, null)
         {
 
         }
@@ -20,8 +20,9 @@ namespace BowlingGameApp.Model
         /// Frame that will contain a running total consisting of this frame's value on top of the previous frame's value.
         /// </summary>
         /// <param name="previousFrame">Frame to refer to when calculating a running total.</param>
-        public Frame(Frame? previousFrame)
+        public Frame(int frameNumber, Frame? previousFrame)
         {
+            this.FrameNumber = frameNumber;
             this.previousFrame = previousFrame;
         }
 
@@ -56,13 +57,25 @@ namespace BowlingGameApp.Model
             }
         }
 
+        public int FrameNumber { get; protected set; }
+
+        public int RemainingPins { get; protected set; } = 10;
+
         /// <summary>
         /// Adds the value of a roll to this frame.
         /// </summary>
         /// <param name="rollValue">Points to be added for the roll.</param>
-        public void AddRoll(int rollValue)
+        public bool AddRoll(int rollValue)
         {
+            if (rollValue > RemainingPins) return false;
             Scores.Add(rollValue);
+            RemainingPins -= rollValue;
+
+            if (FrameNumber == 9 && IsStrike() || IsSpare() && Scores.Count <= 2)
+            {
+                RemainingPins = 10;
+            }
+            return true;
         }
 
         /// <summary>

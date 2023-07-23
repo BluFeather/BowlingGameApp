@@ -54,8 +54,10 @@ namespace BowlingGameApp.Model
         /// Adds the result of a roll to the game's score.
         /// </summary>
         /// <param name="points">Number of pins knocked down.</param>
-        public void AddRoll(int points)
+        public bool AddRoll(int points)
         {
+            if (points > GetCurrentFrame().RemainingPins) return false;
+
             foreach (var frame in Frames)
             {
                 frame.AddBonusPoints(points);
@@ -63,9 +65,10 @@ namespace BowlingGameApp.Model
 
             GetCurrentFrame().AddRoll(points);
 
-            if (!FrameIsCompleted(points)) return;
-            if (IsFinalFrame()) return;
+            if (!FrameIsCompleted(points)) return true;
+            if (IsFinalFrame()) return true;
             GoToNextFrame();
+            return true;
         }
 
         /// <summary>
@@ -109,7 +112,7 @@ namespace BowlingGameApp.Model
             Frames.Clear();
             for (int frame = 0; frame < 10; frame++)
             {
-                Frames.Add(new Frame());
+                Frames.Add(new Frame(frame));
             }
         }
 
@@ -123,7 +126,7 @@ namespace BowlingGameApp.Model
             if (Frames.ElementAtOrDefault(frameIndex) == null)
             {
                 var previousFrame = Frames.ElementAtOrDefault(frameIndex - 1);
-                Frames.Add(new Frame(previousFrame));
+                Frames.Add(new Frame(frameIndex, previousFrame));
             }
             return Frames[frameIndex];
         }

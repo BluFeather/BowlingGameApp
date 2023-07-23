@@ -282,6 +282,15 @@ namespace BowlingGameAppTests
         }
         #endregion
 
+        #region Input Validation Tests
+        [Fact]
+        public void AddRollReturnsFalse_IfRollHigherThanRemainingPins()
+        {
+            Assert.True(Roll(6));
+            Assert.False(Roll(6));
+        }
+        #endregion
+
         private void TestConsistentGame(int ValuePerRoll, int ValuePerFrame, int ExpectedFinalScore)
         {
             RollMany(ValuePerRoll, 20);
@@ -294,6 +303,11 @@ namespace BowlingGameAppTests
                 Assert.Equal(ValuePerFrame, frame.Value);
             }
             Assert.Equal(ExpectedFinalScore, GetFinalScore());
+        }
+
+        private bool Roll(int pins)
+        {
+            return game.AddRoll(pins);
         }
 
         private void RollMany(int pins, int rolls)
