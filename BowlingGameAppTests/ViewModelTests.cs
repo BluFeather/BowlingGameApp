@@ -63,6 +63,18 @@ namespace BowlingGameAppTests
             }
         }
 
+        [Fact]
+        public void CanResetMidGame()
+        {
+            ResetGame();
+            RollMany(5, 5);
+            Assert.Equal(5, GetRolls().Count);
+
+            ResetGame();
+            RollMany(1, 1);
+            Assert.Single(GetRolls());
+        }
+
         private void ResetGame()
         {
             ViewModel.ResetGame();
@@ -74,6 +86,21 @@ namespace BowlingGameAppTests
             {
                 ViewModel.AddRoll(numberOfPins);
             }
+        }
+
+        private List<Frame> GetFrames()
+        {
+            return ViewModel.Frames;
+        }
+
+        private List<int> GetRolls()
+        {
+            List<int> rollList = new List<int>();
+            foreach (var frame in GetFrames())
+            {
+                rollList.AddRange(frame.Scores);
+            }
+            return rollList;
         }
     }
 }
