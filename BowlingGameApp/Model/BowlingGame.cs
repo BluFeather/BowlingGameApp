@@ -59,7 +59,7 @@ namespace BowlingGameApp.Model
                 frame.AddBonusPoints(points);
             }
 
-            CurrentFrame.AddRoll(points);
+            CurrentFrame.TryAddRoll(points);
 
             if (!CurrentFrame.FrameIsComplete) return true;
             if (CurrentFrame.IsFinalFrame) return true;

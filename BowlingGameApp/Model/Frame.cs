@@ -49,11 +49,11 @@ namespace BowlingGameApp.Model
         public int RemainingPins { get; protected set; } = 10;
 
         /// <summary>
-        /// Adds the value of a roll to this frame.
+        /// Attempts to add the value of a roll to this frame.
         /// </summary>
-        /// <param name="rollValue">Points to be added for the roll.</param>
+        /// <param name="rollValue">Points to be awarded for this roll.</param>
         /// <returns>bool indicating whether or not the rollValue was considered valid.</returns>
-        public bool AddRoll(int rollValue)
+        public bool TryAddRoll(int rollValue)
         {
             if (rollValue > RemainingPins) return false;
             Scores.Add(rollValue);
