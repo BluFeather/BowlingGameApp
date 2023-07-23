@@ -58,6 +58,32 @@ namespace BowlingGameAppTests
             }
         }
 
+        [Fact]
+        public void ExpectedValuesIfSparesGame()
+        {
+            int valueOfRolls = 5;
+            int numberOfRolls = 21;
+            int expectedFinalScore = 150;
+
+            RollMany(valueOfRolls, numberOfRolls);
+            PassIfExpectedRollCount(numberOfRolls);
+
+            var frames = GetFrames();
+            for (int frame = 0; frame < 10; frame++)
+            {
+                Output.WriteLine($"{frames[frame]}");
+
+                int expectedRollsThisFrame = frame != 9 ? 2 : 3;
+                Assert.Equal(expectedRollsThisFrame, frames[frame].Scores.Count);
+                for (int roll = 0; roll < frames[frame].Scores.Count; roll++)
+                {
+                    Assert.Equal(valueOfRolls, frames[frame].Scores[roll]);
+                }
+            }
+
+            Assert.Equal(expectedFinalScore, GetScore());
+        }
+
         private void PassIfExpectedRollCount(int expectedRollCount)
         {
             Assert.Equal(expectedRollCount, GetRolls().Count);
@@ -80,5 +106,7 @@ namespace BowlingGameAppTests
         private List<int> GetRolls() => Game.PlayedRolls;
 
         private List<Frame> GetFrames() => Game.Frames;
+
+        private int GetScore() => Game.Score;
     }
 }
