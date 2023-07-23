@@ -289,6 +289,12 @@ namespace BowlingGameAppTests
             Assert.True(Roll(6));
             Assert.False(Roll(6));
         }
+
+        [Fact]
+        public void AddRollAlwaysReturnsTrue_IfPerfectGame()
+        {
+            RollMany(10, 12, true);
+        }
         #endregion
 
         private void TestConsistentGame(int ValuePerRoll, int ValuePerFrame, int ExpectedFinalScore)
@@ -310,11 +316,14 @@ namespace BowlingGameAppTests
             return game.AddRoll(pins);
         }
 
-        private void RollMany(int pins, int rolls)
+        private void RollMany(int pins, int rolls, bool failIfAnyFalse = false)
         {
             for (var roll = 0; roll < rolls; roll++)
             {
-                game.AddRoll(pins);
+                if (game.AddRoll(pins) == false && failIfAnyFalse)
+                {
+                    Assert.Fail($"roll {roll} of value {pins} was considered invalid!");
+                }
             }
         }
 
