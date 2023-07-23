@@ -114,6 +114,9 @@ namespace BowlingGameApp.Model
             return Scores.ElementAtOrDefault(0) + Scores.ElementAtOrDefault(1) == 10;
         }
 
+        /// <summary>
+        /// Indicates whether or not any rolls are remaining for this frame.
+        /// </summary>
         public bool FrameIsComplete => Scores.Count >= 2 || Value == 10;
 
         /// <summary>
