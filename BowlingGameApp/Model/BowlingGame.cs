@@ -54,35 +54,7 @@ namespace BowlingGameApp.Model
         /// Calculates the game's final score.
         /// </summary>
         /// <returns>Integer representation of the game's final score.</returns>
-        public int CalculateFinalScore()
-        {
-            int score = 0;
-            int rollIndex = 0;
-
-            for (int frame = 0; frame < 10; frame++)
-            {
-                if (IsStrike(rollIndex))
-                {
-                    score += 10;
-                    score += StrikeBonus(rollIndex);
-                    rollIndex += 1;
-                    continue;
-                }
-
-                if (IsSpare(rollIndex))
-                {
-                    score += 10;
-                    score += SpareBonus(rollIndex);
-                    rollIndex += 2;
-                    continue;
-                }
-
-                score += GetRollScore(rollIndex) + GetRollScore(rollIndex + 1);
-                rollIndex += 2;
-            }
-
-            return score;
-        }
+        public int CalculateFinalScore() => GetCurrentFrame().RunningValue;
 
         private int currentFrame = 0;
 
