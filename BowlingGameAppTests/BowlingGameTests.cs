@@ -266,7 +266,7 @@ namespace BowlingGameAppTests
             }
 
             Frame? frameTwo = GetFrame(1);
-            Assert.Equal(0, frameTwo?.RunningValue);
+            Assert.Equal(0, frameTwo?.OverallScore);
         }
 
         [Fact]
@@ -281,7 +281,7 @@ namespace BowlingGameAppTests
             }
 
             Frame? frameTwo = GetFrame(1);
-            Assert.Equal(4, frameTwo?.RunningValue);
+            Assert.Equal(4, frameTwo?.OverallScore);
         }
 
         [Fact]
@@ -296,7 +296,7 @@ namespace BowlingGameAppTests
             }
 
             Frame? frameFour = GetFrame(3);
-            Assert.Equal(120, frameFour?.RunningValue);
+            Assert.Equal(120, frameFour?.OverallScore);
         }
 
         [Fact]
@@ -316,34 +316,34 @@ namespace BowlingGameAppTests
                 switch (frame)
                 {
                     case 0:
-                        Assert.Equal(15, currentFrame?.RunningValue);
+                        Assert.Equal(15, currentFrame?.OverallScore);
                         continue;
                     case 1:
-                        Assert.Equal(24, currentFrame?.RunningValue);
+                        Assert.Equal(24, currentFrame?.OverallScore);
                         continue;
                     case 2:
-                        Assert.Equal(33, currentFrame?.RunningValue);
+                        Assert.Equal(33, currentFrame?.OverallScore);
                         continue;
                     case 3:
-                        Assert.Equal(58, currentFrame?.RunningValue);
+                        Assert.Equal(58, currentFrame?.OverallScore);
                         continue;
                     case 4:
-                        Assert.Equal(78, currentFrame?.RunningValue);
+                        Assert.Equal(78, currentFrame?.OverallScore);
                         continue;
                     case 5:
-                        Assert.Equal(93, currentFrame?.RunningValue);
+                        Assert.Equal(93, currentFrame?.OverallScore);
                         continue;
                     case 6:
-                        Assert.Equal(101, currentFrame?.RunningValue);
+                        Assert.Equal(101, currentFrame?.OverallScore);
                         continue;
                     case 7:
-                        Assert.Equal(110, currentFrame?.RunningValue);
+                        Assert.Equal(110, currentFrame?.OverallScore);
                         continue;
                     case 8:
-                        Assert.Equal(129, currentFrame?.RunningValue);
+                        Assert.Equal(129, currentFrame?.OverallScore);
                         continue;
                     case 9:
-                        Assert.Equal(149, currentFrame?.RunningValue);
+                        Assert.Equal(149, currentFrame?.OverallScore);
                         continue;
                     default:
                         Assert.Fail($"Frame {frame} is unexpected!");

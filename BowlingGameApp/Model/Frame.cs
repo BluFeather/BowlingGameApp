@@ -39,15 +39,9 @@ namespace BowlingGameApp.Model
         }
 
         /// <summary>
-        /// Overall points awarded by this frame in the game.
+        /// Overall points awarded at the time of playing this frame. Includes bonuses from rolls in following frames.
         /// </summary>
-        public int RunningValue
-        {
-            get
-            {
-                return previousFrame != null ? Value + previousFrame.RunningValue : Value;
-            }
-        }
+        public int OverallScore => previousFrame != null ? Value + previousFrame.OverallScore : Value;
 
         /// <summary>
         /// Number of pins remaining in this frame.
@@ -117,7 +111,7 @@ namespace BowlingGameApp.Model
         /// <returns>string describing the contents of this Frame.</returns>
         public override string ToString()
         {
-            return $"Roll values: {string.Join(", ", Scores)} | Frame Value: {Value} | Frame Running Value: {RunningValue}";
+            return $"Roll values: {string.Join(", ", Scores)} | Frame Value: {Value} | Frame Running Value: {OverallScore}";
         }
 
         private readonly Frame? previousFrame;

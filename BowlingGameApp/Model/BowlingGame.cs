@@ -71,7 +71,7 @@ namespace BowlingGameApp.Model
         /// The player's current score.
         /// </summary>
         /// <returns>Integer representation of the current score.</returns>
-        public int Score => CurrentFrame.RunningValue;
+        public int Score => CurrentFrame.OverallScore;
 
         private int frameIndex = 0;
 
