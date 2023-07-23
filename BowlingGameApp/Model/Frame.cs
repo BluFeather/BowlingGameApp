@@ -11,7 +11,7 @@ namespace BowlingGameApp.Model
         /// <summary>
         /// Frame that will contain a running total of only this frame's values. This is expected to be the first Frame in a collection of Frames.
         /// </summary>
-        public Frame(int frameNumber) : this(frameNumber, null)
+        public Frame(bool isFinalFrame) : this(isFinalFrame, null)
         {
 
         }
@@ -20,9 +20,9 @@ namespace BowlingGameApp.Model
         /// Frame that will contain a running total consisting of this frame's value on top of the previous frame's value.
         /// </summary>
         /// <param name="previousFrame">Frame to refer to when calculating a running total.</param>
-        public Frame(int frameNumber, Frame? previousFrame)
+        public Frame(bool isFinalFrame, Frame? previousFrame)
         {
-            this.FrameNumber = frameNumber;
+            this.IsFinalFrame = isFinalFrame;
             this.previousFrame = previousFrame;
         }
 
@@ -56,11 +56,6 @@ namespace BowlingGameApp.Model
                 return previousFrame != null ? Value + previousFrame.RunningValue : Value;
             }
         }
-
-        /// <summary>
-        /// Represents the current turn in this game.
-        /// </summary>
-        public int FrameNumber { get; protected set; }
 
         /// <summary>
         /// Number of pins remaining in this frame.
@@ -120,6 +115,11 @@ namespace BowlingGameApp.Model
         public bool FrameIsComplete => Scores.Count >= 2 || Value == 10;
 
         /// <summary>
+        /// Indicates whether or not this is the last frame in a bowling game.
+        /// </summary>
+        public bool IsFinalFrame { get; protected set; } = false;
+
+        /// <summary>
         /// Verbose string describing the contents of this Frame. Useful for debug outputs.
         /// </summary>
         /// <returns>string describing the contents of this Frame.</returns>
@@ -142,7 +142,7 @@ namespace BowlingGameApp.Model
 
         private bool IfThirdRollNeededForLastFrame()
         {
-            return FrameNumber == 9 && IsStrike() || IsSpare() && Scores.Count <= 2;
+            return IsFinalFrame && IsStrike() || IsSpare() && Scores.Count <= 2;
         }
     }
 }

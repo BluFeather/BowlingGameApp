@@ -62,7 +62,7 @@ namespace BowlingGameApp.Model
             CurrentFrame.AddRoll(points);
 
             if (!CurrentFrame.FrameIsComplete) return true;
-            if (IsFinalFrame) return true;
+            if (CurrentFrame.IsFinalFrame) return true;
             GoToNextFrame();
             return true;
         }
@@ -82,7 +82,7 @@ namespace BowlingGameApp.Model
             Frames.Clear();
             for (int frame = 0; frame < 10; frame++)
             {
-                Frames.Add(new Frame(frame, Frames.ElementAtOrDefault(frame - 1)));
+                Frames.Add(new Frame(frame == 9, Frames.ElementAtOrDefault(frame - 1)));
             }
         }
 
@@ -90,7 +90,5 @@ namespace BowlingGameApp.Model
         {
             frameIndex++;
         }
-
-        private bool IsFinalFrame => frameIndex >= 9;
     }
 }
