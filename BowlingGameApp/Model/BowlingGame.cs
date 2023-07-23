@@ -16,6 +16,32 @@ namespace BowlingGameApp.Model
         public List<Frame> Frames { get; protected set; } = new List<Frame>();
 
         /// <summary>
+        /// Returns number of pins remaining this turn.
+        /// </summary>
+        public int RemainingPinsThisFrame
+        {
+            get
+            {
+                var frame = GetCurrentFrame();
+                if (frameIndex == 10)
+                {
+                    
+                    if (frame.IsStrike())
+                    {
+                        return 10 - frame.Scores.ElementAtOrDefault(1);
+                    }
+
+                    if (frame.IsSpare())
+                    {
+                        return 10;
+                    }
+                }
+
+                return 10 - frame.Scores.Sum();
+            }
+        }
+
+        /// <summary>
         /// Resets the state of the game.
         /// </summary>
         public void ResetGame()
