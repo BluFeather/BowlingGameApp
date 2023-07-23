@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Controls;
 
 namespace BowlingGameApp.Model
 {
@@ -16,6 +15,9 @@ namespace BowlingGameApp.Model
         /// </summary>
         public List<Frame> Frames { get; protected set; } = new List<Frame>();
 
+        /// <summary>
+        /// Returns number of pins remaining this turn.
+        /// </summary>
         public int RemainingPinsThisFrame
         {
             get
