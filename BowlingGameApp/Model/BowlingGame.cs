@@ -5,6 +5,11 @@ namespace BowlingGameApp.Model
 {
     public class BowlingGame
     {
+        public BowlingGame()
+        {
+            ResetGame();
+        }
+
         /// <summary>
         /// List containing the values of each played roll.
         /// </summary>
@@ -72,15 +77,7 @@ namespace BowlingGameApp.Model
             currentFrame++;
         }
 
-        private Frame GetCurrentFrame()
-        {
-            if (Frames.ElementAtOrDefault(currentFrame) == null)
-            {
-                var previousFrame = Frames.ElementAtOrDefault(currentFrame - 1);
-                Frames.Add(new Frame(currentFrame, previousFrame));
-            }
-            return Frames[currentFrame];
-        }
+        private Frame GetCurrentFrame() => Frames[currentFrame];
 
         private int GetRollScore(int rollIndex)
         {
