@@ -16,5 +16,14 @@ namespace BowlingGameAppTests
         {
             Assert.Equal(10, ViewModel.Frames.Count);
         }
+
+        [Fact]
+        public void ViewModelFramesAreNotNull()
+        {
+            foreach (var frame in ViewModel.Frames)
+            {
+                Assert.NotNull(frame);
+            }
+        }
     }
 }
