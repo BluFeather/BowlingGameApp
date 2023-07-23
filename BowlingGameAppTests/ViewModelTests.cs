@@ -25,5 +25,23 @@ namespace BowlingGameAppTests
                 Assert.NotNull(frame);
             }
         }
+
+        [Fact]
+        public void FramesContainSingleRolls_IfSinglesGame()
+        {
+            for (var roll = 0; roll < 20; roll++)
+            {
+                ViewModel.AddRoll(1);
+            }
+
+            foreach (var frame in ViewModel.Frames)
+            {
+                Assert.Equal(2, frame.Scores.Count); // Exactly 2 Rolls in each frame.
+                foreach (var score in frame.Scores)
+                {
+                    Assert.Equal(1, score); // Each Roll was 1 Point.
+                }
+            }
+        }
     }
 }
