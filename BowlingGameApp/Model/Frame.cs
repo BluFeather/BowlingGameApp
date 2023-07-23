@@ -59,7 +59,7 @@ namespace BowlingGameApp.Model
             Scores.Add(rollValue);
             RemainingPins -= rollValue;
 
-            if (IfThirdRollNeededForLastFrame())
+            if (ThirdRollNeededForLastFrame)
             {
                 RemainingPins = 10;
             }
@@ -67,7 +67,7 @@ namespace BowlingGameApp.Model
         }
 
         /// <summary>
-        /// Adds rollValue to this frame's score if it needs bonus points for a spare or strike.
+        /// Adds points as a bonus to this frame's score, if it needs bonus points for a spare or strike.
         /// </summary>
         /// <param name="rollValue">bonus points to be added to this frame's value.</param>
         public void AddBonusPoints(int rollValue)
@@ -86,9 +86,9 @@ namespace BowlingGameApp.Model
         }
 
         /// <summary>
-        /// Indicated whether or not this frame begins with a spare.
+        /// Indicates whether or not this frame begins with a spare.
         /// </summary>
-        /// <returns>bool indicating whether or not this frame begins with a spare</returns>
+        /// <returns>bool indicating whether or not this frame begins with a spare.</returns>
         public bool IsSpare()
         {
             if (IsStrike()) return false;
@@ -118,17 +118,14 @@ namespace BowlingGameApp.Model
 
         private List<int> Bonuses { get; set; } = new List<int>();
 
+        private bool ThirdRollNeededForLastFrame => IsFinalFrame && IsStrike() || IsSpare() && Scores.Count <= 2;
+
         private bool NeedsBonusPoints()
         {
             if (!IsSpare() && !IsStrike()) return false;
             if (IsSpare() && Bonuses.Count >= 1) return false;
             if (IsStrike() && Bonuses.Count >= 2) return false;
             return true;
-        }
-
-        private bool IfThirdRollNeededForLastFrame()
-        {
-            return IsFinalFrame && IsStrike() || IsSpare() && Scores.Count <= 2;
         }
     }
 }
