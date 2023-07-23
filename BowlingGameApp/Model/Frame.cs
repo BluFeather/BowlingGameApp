@@ -114,6 +114,8 @@ namespace BowlingGameApp.Model
             return Scores.ElementAtOrDefault(0) + Scores.ElementAtOrDefault(1) == 10;
         }
 
+        public bool FrameIsComplete => Scores.Count >= 2 || Value == 10;
+
         /// <summary>
         /// Verbose string describing the contents of this Frame. Useful for debug outputs.
         /// </summary>

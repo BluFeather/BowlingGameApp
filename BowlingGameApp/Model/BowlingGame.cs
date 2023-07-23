@@ -61,7 +61,7 @@ namespace BowlingGameApp.Model
 
             CurrentFrame.AddRoll(points);
 
-            if (!FrameIsCompleted(points)) return true;
+            if (!CurrentFrame.FrameIsComplete) return true;
             if (IsFinalFrame) return true;
             GoToNextFrame();
             return true;
@@ -89,11 +89,6 @@ namespace BowlingGameApp.Model
         private void GoToNextFrame()
         {
             frameIndex++;
-        }
-
-        private bool FrameIsCompleted(int value)
-        {
-            return Frames[frameIndex].Scores.Count >= 2 || value == 10;
         }
 
         private bool IsFinalFrame => frameIndex >= 9;
