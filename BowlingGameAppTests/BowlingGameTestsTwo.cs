@@ -21,6 +21,7 @@ namespace BowlingGameAppTests
         {
             int valueOfRolls = 0;
             int numberOfRolls = 20;
+            int expectedFinalScore = 0;
 
             RollMany(valueOfRolls, numberOfRolls);
             PassIfExpectedRollCount(numberOfRolls);
@@ -35,6 +36,8 @@ namespace BowlingGameAppTests
                     Assert.Equal(valueOfRolls, frames[frame].Scores[roll]);
                 }
             }
+
+            Assert.Equal(expectedFinalScore, GetScore());
         }
 
         [Fact]
@@ -42,6 +45,7 @@ namespace BowlingGameAppTests
         {
             int valueOfRolls = 1;
             int numberOfRolls = 20;
+            int expectedFinalScore = 20;
 
             RollMany(valueOfRolls, numberOfRolls);
             PassIfExpectedRollCount(numberOfRolls);
@@ -56,6 +60,8 @@ namespace BowlingGameAppTests
                     Assert.Equal(valueOfRolls, frames[frame].Scores[roll]);
                 }
             }
+
+            Assert.Equal(expectedFinalScore, GetScore());
         }
 
         [Fact]
