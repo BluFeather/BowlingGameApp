@@ -23,7 +23,7 @@ namespace BowlingGameApp.Model
         /// <summary>
         /// Returns number of remaining pins in this frame.
         /// </summary>
-        public int RemainingPins => GetCurrentFrame().RemainingPins;
+        public int RemainingPins => CurrentFrame.RemainingPins;
 
         /// <summary>
         /// Readies this game for a new match.
@@ -31,7 +31,7 @@ namespace BowlingGameApp.Model
         public void NewGame()
         {
             ResetFrames();
-            currentFrame = 0;
+            frameIndex = 0;
         }
 
         /// <summary>
@@ -40,14 +40,14 @@ namespace BowlingGameApp.Model
         /// <param name="points">Number of pins knocked down.</param>
         public bool AddRoll(int points)
         {
-            if (points < 0 || points > GetCurrentFrame().RemainingPins) return false;
+            if (points < 0 || points > CurrentFrame.RemainingPins) return false;
 
             foreach (var frame in Frames)
             {
                 frame.AddBonusPoints(points);
             }
 
-            GetCurrentFrame().AddRoll(points);
+            CurrentFrame.AddRoll(points);
 
             if (!FrameIsCompleted(points)) return true;
             if (IsFinalFrame) return true;
@@ -59,9 +59,9 @@ namespace BowlingGameApp.Model
         /// The player's current score.
         /// </summary>
         /// <returns>Integer representation of the current score.</returns>
-        public int Score() => GetCurrentFrame().RunningValue;
+        public int Score() => CurrentFrame.RunningValue;
 
-        private int currentFrame = 0;
+        private int frameIndex = 0;
 
         private void ResetFrames()
         {
@@ -74,10 +74,10 @@ namespace BowlingGameApp.Model
 
         private void GoToNextFrame()
         {
-            currentFrame++;
+            frameIndex++;
         }
 
-        private Frame GetCurrentFrame() => Frames[currentFrame];
+        private Frame CurrentFrame => Frames[frameIndex];
 
         private List<int> GetRollsFromFrames(List<Frame> frames)
         {
@@ -91,9 +91,9 @@ namespace BowlingGameApp.Model
 
         private bool FrameIsCompleted(int value)
         {
-            return Frames[currentFrame].Scores.Count >= 2 || value == 10;
+            return Frames[frameIndex].Scores.Count >= 2 || value == 10;
         }
 
-        private bool IsFinalFrame => currentFrame >= 9;
+        private bool IsFinalFrame => frameIndex >= 9;
     }
 }
