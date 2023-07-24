@@ -35,7 +35,7 @@ namespace BowlingGameAppTests
         }
 
         [Fact]
-        public void RunningScoreGivenFromPlayedFrames()
+        public void RunningScoreIsGiven_IfCompletedFrame()
         {
             var game = NewGame();
             RollMany(game, 5, 5);
