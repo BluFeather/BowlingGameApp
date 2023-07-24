@@ -40,14 +40,16 @@ namespace BowlingGameApp
         {
             List<Frame> frames = Game.Frames;
             List<string> scorecardEntries = new();
-            for (int frame = 0; frame < 10; frame++)
+            for (int frameIndex = 0; frameIndex < 10; frameIndex++)
             {
-                scorecardEntries.Add(frames[frame].Scores.Count >= 1 ? $"{frames[frame].Scores[0]}" : string.Empty);
-                scorecardEntries.Add(frames[frame].Scores.Count >= 2 ? $"{frames[frame].Scores[1]}" : string.Empty);
 
-                if (frame == 9)
+                Frame frame = frames[frameIndex];
+                scorecardEntries.Add(frame.Scores.Count >= 1 ? $"{frame.Scores[0]}" : string.Empty);
+                scorecardEntries.Add(frame.Scores.Count >= 2 ? $"{frame.Scores[1]}" : string.Empty);
+
+                if (frameIndex == 9)
                 {
-                    scorecardEntries.Add(frames[frame].Scores.Count >= 3 ? $"{frames[frame].Scores[2]}" : string.Empty);
+                    scorecardEntries.Add(frame.Scores.Count >= 3 ? $"{frame.Scores[2]}" : string.Empty);
                 }
             }
             Scorecard.SetRolls(scorecardEntries);
