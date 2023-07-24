@@ -21,7 +21,9 @@ namespace BowlingGameApp.ViewModel
         }
 
         private int CurrentRoll => GameInstance.CurrentRoll;
-        
+
+        public int CurrentFrameIndex => GameInstance.FrameIndex;
+
         public bool AddRoll(string roll)
         {
             if (int.TryParse(roll, out var score))

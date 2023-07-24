@@ -307,6 +307,14 @@ namespace BowlingGameAppTests
             Output.WriteLine($"Frame 2 after reset.\n{ViewModel.Frames[2]}");
             Assert.Equal(string.Empty, ViewModel.GetRollForFrame(2, 1));
         }
+
+        [Fact]
+        public void CanGetCurrentFrameIndex()
+        {
+            ViewModel.ResetGame();
+            RollMany(5, 7);
+            Assert.Equal(3, ViewModel.CurrentFrameIndex);
+        }
         #endregion
 
         private void Roll(int pointsForRoll)
