@@ -59,6 +59,20 @@ namespace BowlingGameAppTests
                 }
             }
         }
+
+        [Fact]
+        public void EnteringXResultsInStrike_CaseInsensitive()
+        {
+            ViewModel.ResetGame();
+            Assert.True(ViewModel.AddRoll("X"));
+            Assert.True(ViewModel.AddRoll("x"));
+
+            Assert.True(ViewModel.Frames[0].Scores.Count == 1);
+            Assert.True(ViewModel.Frames[0].Scores[0] == 10);
+            Assert.True(ViewModel.Frames[1].Scores.Count == 1);
+            Assert.True(ViewModel.Frames[1].Scores[0] == 10);
+            Assert.True(ViewModel.Frames[2].Scores.Count == 0);
+        }
         #endregion
     }
 }
