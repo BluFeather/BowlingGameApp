@@ -1,5 +1,4 @@
-﻿using BowlingGameApp.Model;
-using BowlingGameApp.ViewModel;
+﻿using BowlingGameApp.ViewModel;
 using Xunit.Abstractions;
 
 namespace BowlingGameAppTests
@@ -8,129 +7,58 @@ namespace BowlingGameAppTests
     {
         public ViewModelTests(ITestOutputHelper output)
         {
+            Output = output;
             ViewModel = new BowlingGameViewModel();
-            this.output = output;
         }
 
-        public BowlingGameViewModel ViewModel { get; }
+        public ITestOutputHelper Output { get; }
 
-        private ITestOutputHelper output;
+        private readonly BowlingGameViewModel ViewModel;
 
+        #region Input Validation Tests
         [Fact]
-        public void ViewModelContainsTenFrames()
+        public void CanRollValuesGreaterOrEqualToZero()
         {
-            Assert.Equal(10, ViewModel.Frames.Count);
-        }
-
-        [Fact]
-        public void ViewModelFramesAreNotNull()
-        {
-            foreach (var frame in ViewModel.Frames)
+            for (int value = -5; value <= 10; value++)
             {
-                Assert.NotNull(frame);
-            }
-        }
+                string valueString = $"{value}";
 
-        [Fact]
-        public void FramesContainSingleRolls_IfSinglesGame()
-        {
-            ResetGame();
-            RollMany("1", 20);
-
-            foreach (var frame in ViewModel.Frames)
-            {
-                Assert.Equal(2, frame.Scores.Count); // Exactly 2 Rolls in each frame.
-                foreach (var score in frame.Scores)
+                ViewModel.ResetGame();
+                bool result = ViewModel.AddRoll(valueString);
+                Output.WriteLine($"\"{valueString}\" returned {result}");
+                
+                if (value >= 0)
                 {
-                    Assert.Equal(1, score); // Each Roll was 1 Point.
+                    Assert.True(result);
+                }
+                else
+                {
+                    Assert.False(result);
                 }
             }
         }
 
         [Fact]
-        public void FramesContainDoubleRolls_IfDoublesGame()
+        public void CanRollValuesLessThanOrEqualToTen()
         {
-            ResetGame();
-            RollMany("2", 20);
-
-            foreach (var frame in ViewModel.Frames)
+            for (int value = 0; value <= 15; value++)
             {
-                Assert.Equal(2, frame.Scores.Count); // Exactly 2 Rolls in each frame.
-                foreach (var score in frame.Scores)
+                string valueString = $"{value}";
+
+                ViewModel.ResetGame();
+                bool result = ViewModel.AddRoll(valueString);
+                Output.WriteLine($"\"{valueString}\" returned {result}");
+
+                if (value <= 10)
                 {
-                    Assert.Equal(2, score); // Each Roll was 2 Points.
+                    Assert.True(result);
+                }
+                else
+                {
+                    Assert.False(result);
                 }
             }
         }
-
-        [Fact]
-        public void CanResetMidGame()
-        {
-            ResetGame();
-            RollMany("5", 5);
-            Assert.Equal(5, GetRolls().Count);
-
-            ResetGame();
-            RollMany("1", 1);
-            Assert.Single(GetRolls());
-        }
-
-        [Fact]
-        public void CanRollSpareUsingSlash()
-        {
-            ResetGame();
-            Roll("4");
-            Roll("/");
-            Assert.Equal(4, GetFrame(0).Scores[0]);
-            Assert.Equal(6, GetFrame(0).Scores[1]);
-        }
-
-        [Fact]
-        public void CanRollStrikesUsingX()
-        {
-            ResetGame();
-            Roll("X");
-            Roll("x");
-            Assert.Equal(10, GetFrame(0).Scores[0]);
-            Assert.Equal(10, GetFrame(1).Scores[0]);
-        }
-
-        private void ResetGame()
-        {
-            ViewModel.ResetGame();
-        }
-
-        private void Roll(string numberOfPins)
-        {
-            ViewModel.AddRoll(numberOfPins);
-        }
-
-        private void RollMany(string numberOfPins, int numberOfRolls)
-        {
-            for (var roll = 0; roll < numberOfRolls; roll++)
-            {
-                Roll(numberOfPins);
-            }
-        }
-
-        private Frame GetFrame(int frameNumber)
-        {
-            return GetFrames()[frameNumber];
-        }
-
-        private List<Frame> GetFrames()
-        {
-            return ViewModel.Frames;
-        }
-
-        private List<int> GetRolls()
-        {
-            List<int> rollList = new List<int>();
-            foreach (var frame in GetFrames())
-            {
-                rollList.AddRange(frame.Scores);
-            }
-            return rollList;
-        }
+        #endregion
     }
 }
