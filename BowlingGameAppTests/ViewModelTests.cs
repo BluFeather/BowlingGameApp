@@ -1,4 +1,5 @@
-﻿using BowlingGameApp.ViewModel;
+﻿using BowlingGameApp.Model;
+using BowlingGameApp.ViewModel;
 using Xunit.Abstractions;
 
 namespace BowlingGameAppTests
@@ -103,6 +104,36 @@ namespace BowlingGameAppTests
                 ViewModel.AddRoll("/");
                 Output.WriteLine($"{frames[frame]}");
                 Assert.True(ViewModel.Frames[frame].IsSpare());
+            }
+        }
+        #endregion
+
+        #region Expected Value Tests
+        [Fact]
+        public void ExpectedValuesIfGutterGame()
+        {
+            int rollValues = 0;
+
+            ViewModel.ResetGame();
+            RollMany(0, 50);
+
+            var frames = ViewModel.Frames;
+            for (int frame = 0; frame < 10; frame++)
+            {
+                Frame currentFrame = frames[frame];
+
+                Output.WriteLine($"{currentFrame}");
+                Assert.True(currentFrame.Scores.Count == 2);
+                Assert.Equal(rollValues, currentFrame.Scores[0]);
+                Assert.Equal(rollValues, currentFrame.Scores[1]);
+            }
+        }
+
+        private void RollMany(int pointsPerRoll, int numberOfRolls)
+        {
+            for (int roll = 0; roll < numberOfRolls; roll++)
+            {
+                ViewModel.AddRoll($"{pointsPerRoll}");
             }
         }
         #endregion
