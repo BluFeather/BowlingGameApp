@@ -19,6 +19,19 @@ namespace BowlingGameApp.View.UserControls
             set => SetValue(FramesProperty, value);
         }
 
+        public List<FrameViewModel> FrameViewModels
+        {
+            get
+            {
+                List<FrameViewModel> frameViewModels = new();
+                foreach (var frame in Frames)
+                {
+                    frameViewModels.Add(new FrameViewModel(frame));
+                }
+                return frameViewModels;
+            }
+        }
+
         private static readonly DependencyProperty FramesProperty =
             DependencyProperty.Register(
                 name: "Frames",
