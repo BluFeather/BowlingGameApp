@@ -1,8 +1,6 @@
 ﻿using BowlingGameApp.Model;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Media.Animation;
 
 namespace BowlingGameApp.ViewModel
 {
@@ -19,8 +17,6 @@ namespace BowlingGameApp.ViewModel
         {
             get => GameInstance.Frames;
         }
-
-        private int CurrentRoll => GameInstance.CurrentRoll;
 
         public int CurrentFrameIndex => GameInstance.FrameIndex;
 
