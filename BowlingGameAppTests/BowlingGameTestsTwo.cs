@@ -316,6 +316,17 @@ namespace BowlingGameAppTests
             RollMany(1, 2);
             Assert.True(GetRolls().Count == 2);
         }
+
+        [Fact]
+        public void CanGetScoreAtAnyTime()
+        {
+            for (var roll = 0; roll < 21; roll++)
+            {
+                Roll(5);
+                Output.WriteLine($"Score on roll {roll}: {Game.Score}");
+                Assert.True(Game.Score > 0);
+            }
+        }
         #endregion
 
         private void Roll(int pointsEachRoll)
