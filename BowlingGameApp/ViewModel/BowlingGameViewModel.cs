@@ -1,6 +1,5 @@
 ﻿using BowlingGameApp.Model;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace BowlingGameApp.ViewModel
 {
@@ -13,13 +12,28 @@ namespace BowlingGameApp.ViewModel
 
         private BowlingGame GameInstance { get; }
 
+        /// <summary>
+        /// List of Frame objects composing a full Bowling Game's Scorecard.
+        /// </summary>
         public List<Frame> Frames
         {
             get => GameInstance.Frames;
         }
 
-        public int CurrentFrameIndex => GameInstance.FrameIndex;
+        /// <summary>
+        /// Current Frame in play.
+        /// </summary>
+        public int CurrentFrameIndex
+        {
+            get => GameInstance.FrameIndex;
+        }
 
+        /// <summary>
+        /// Converts a string to a value the Bowling Game can use.
+        /// Adds the result of a roll to the game's score.
+        /// </summary>
+        /// <param name="roll">Number of pins knocked down. "X" converts to a roll of 10 points. "/" converts to remaining pins.</param>
+        /// <returns>bool indicating whether or not the roll was considered valid and added to the current frame.</returns>
         public bool AddRoll(string roll)
         {
             if (int.TryParse(roll, out var score))
@@ -43,6 +57,9 @@ namespace BowlingGameApp.ViewModel
             return false;
         }
 
+        /// <summary>
+        /// Readies this game for a new match.
+        /// </summary>
         public void ResetGame()
         {
             GameInstance.NewGame();
