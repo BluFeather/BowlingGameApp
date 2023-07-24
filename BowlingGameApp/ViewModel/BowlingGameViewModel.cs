@@ -18,23 +18,25 @@ namespace BowlingGameApp.ViewModel
             get => GameInstance.Frames;
         }
         
-        public void AddRoll(string roll)
+        public bool AddRoll(string roll)
         {
             if (int.TryParse(roll, out var score))
             {
-                GameInstance.AddRoll(score);
+                return GameInstance.AddRoll(score);
             }
             
             if (string.Compare(roll, "/") == 0)
             {
                 var remainingPins = GameInstance.RemainingPins;
-                GameInstance.AddRoll(remainingPins);
+                return GameInstance.AddRoll(remainingPins);
             }
 
             if (string.Compare(roll, "X", true) == 0)
             {
-                GameInstance.AddRoll(10);
+                return GameInstance.AddRoll(10);
             }
+
+            return false;
         }
 
         public void ResetGame()
