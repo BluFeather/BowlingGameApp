@@ -32,9 +32,25 @@ namespace BowlingGameApp.Model
         public List<Frame> Frames { get; protected set; } = new List<Frame>();
 
         /// <summary>
+        /// Index of the current frame in play.
+        /// </summary>
+        public int FrameIndex { get; protected set; } = 0;
+
+        /// <summary>
+        /// The player's current score.
+        /// </summary>
+        /// <returns>Integer representation of the current score.</returns>
+        public int Score => CurrentFrame.OverallScore;
+
+        /// <summary>
         /// Returns number of remaining pins in this frame.
         /// </summary>
         public int RemainingPins => CurrentFrame.RemainingPins;
+
+        /// <summary>
+        /// Zero-Based Integer representing the current roll to be scored in this frame.
+        /// </summary>
+        public int CurrentRoll => CurrentFrame.CurrentRoll;
 
         /// <summary>
         /// Readies this game for a new match.
@@ -42,7 +58,7 @@ namespace BowlingGameApp.Model
         public void NewGame()
         {
             ResetFrames();
-            frameIndex = 0;
+            FrameIndex = 0;
         }
 
         /// <summary>
@@ -67,15 +83,7 @@ namespace BowlingGameApp.Model
             return true;
         }
 
-        /// <summary>
-        /// The player's current score.
-        /// </summary>
-        /// <returns>Integer representation of the current score.</returns>
-        public int Score => CurrentFrame.OverallScore;
-
-        private int frameIndex = 0;
-
-        private Frame CurrentFrame => Frames[frameIndex];
+        private Frame CurrentFrame => Frames[FrameIndex];
 
         private void ResetFrames()
         {
@@ -88,7 +96,7 @@ namespace BowlingGameApp.Model
 
         private void GoToNextFrame()
         {
-            frameIndex++;
+            FrameIndex++;
         }
     }
 }

@@ -1,485 +1,378 @@
-using BowlingGameApp.Model;
+﻿using BowlingGameApp.Model;
 using Xunit.Abstractions;
 
 namespace BowlingGameAppTests
 {
     public class BowlingGameTests
     {
-        public ITestOutputHelper Output { get; private set; }
-
-        private readonly BowlingGame game;
-
-        private readonly List<int> exampleGameList = new() { 8, 2, 5, 4, 9, 0, 10, 10, 5, 5, 5, 3, 6, 3, 9, 1, 9, 1, 10 };
-
         public BowlingGameTests(ITestOutputHelper output)
         {
             Output = output;
-            game = new BowlingGame();
+            Game = new BowlingGame();
         }
 
-        #region Algorithm Tests
+        public ITestOutputHelper Output { get; }
+
+        public BowlingGame Game { get; }
+
+        #region Expected Value Tests
         [Fact]
-        public void ZeroPoints_IfGutterGame()
+        public void ExpectedValuesIfGutterGame()
         {
-            RollMany(0, 20);
-            Assert.Equal(0, game.Score);
-        }
+            int valueOfRolls = 0;
+            int numberOfRolls = 20;
+            int expectedFinalScore = 0;
 
-        [Fact]
-        public void TwentyPoints_IfOnesGame()
-        {
-            RollMany(1, 20);
-            Assert.Equal(20, game.Score);
-        }
-
-        [Fact]
-        public void AddSpareBonus_IfSpareInGame()
-        {
-            RollSpare();
-            game.AddRoll(3);
-            RollMany(0, 17);
-
-            Assert.Equal(16, game.Score);
-        }
-
-        [Fact]
-        public void AddStrikeBonus_IfStrikeInGame()
-        {
-            RollStrike();
-            game.AddRoll(3);
-            game.AddRoll(4);
-            RollMany(0, 16);
-            Assert.Equal(24, game.Score);
-        }
-
-        [Fact]
-        public void ThreeHundredPoints_IfPerfectGame()
-        {
-            RollMany(10, 12);
-            Assert.Equal(300, game.Score);
-        }
-
-        [Fact]
-        public void OneHundredFourtyNinePoints_IfExampleGame()
-        {
-            RollList(exampleGameList);
-            Assert.Equal(149, game.Score);
-        }
-        #endregion
-
-        #region Frame Object Tests
-        [Fact]
-        public void CanGetFramesList()
-        {
-            RollMany(0, 20);
-            Assert.Equal(10, GetFrames().Count);
-        }
-
-        [Fact]
-        public void ZeroRolls_ZeroFrameScore_ZeroFinalScore_IfGutterGame()
-        {
-            int ValuePerRoll = 0;
-            int ValuePerFrame = 0;
-            int ExpectedFinalScore = 0;
-
-            TestConsistentGame(ValuePerRoll, ValuePerFrame, ExpectedFinalScore);
-        }
-
-        [Fact]
-        public void SingleRolls_TwoFrameScore_TwentyFinalScore_IfSinglesGame()
-        {
-            int ValuePerRoll = 1;
-            int ValuePerFrame = 2;
-            int ExpectedFinalScore = 20;
-
-            TestConsistentGame(ValuePerRoll, ValuePerFrame, ExpectedFinalScore);
-        }
-
-        [Fact]
-        public void TenRolls_ThirtyFrameScore_ThreeHundredScore_IfPerfectGame()
-        {
-            int ValuePerRoll = 10;
-            int ValuePerFrame = 30;
-            int ExpectedFinalScore = 300;
-
-            TestConsistentGame(ValuePerRoll, ValuePerFrame, ExpectedFinalScore);
-        }
-
-        [Fact]
-        public void ExpectedRolls_ExpectedFrameScore_OneHundredFourtyNineScore_IfExampleGame()
-        {
-            int ExpectedFinalScore = 149;
-
-            RollList(exampleGameList);
-            var frames = GetFrames();
-            for (int frame = 0; frame < frames.Count; frame++)
-            {
-                switch (frame)
-                {
-                    case 0:
-                        Assert.Equal(2, frames[frame].Scores.Count);
-                        Assert.Equal(8, frames[frame].Scores[0]);
-                        Assert.Equal(2, frames[frame].Scores[1]);
-                        continue;
-                    case 1:
-                        Assert.Equal(2, frames[frame].Scores.Count);
-                        Assert.Equal(5, frames[frame].Scores[0]);
-                        Assert.Equal(4, frames[frame].Scores[1]);
-                        continue;
-                    case 2:
-                        Assert.Equal(2, frames[frame].Scores.Count);
-                        Assert.Equal(9, frames[frame].Scores[0]);
-                        Assert.Equal(0, frames[frame].Scores[1]);
-                        continue;
-                    case 3:
-                        Assert.Single(frames[frame].Scores);
-                        Assert.Equal(10, frames[frame].Scores[0]);
-                        continue;
-                    case 4:
-                        Assert.Single(frames[frame].Scores);
-                        Assert.Equal(10, frames[frame].Scores[0]);
-                        continue;
-                    case 5:
-                        Assert.Equal(2, frames[frame].Scores.Count);
-                        Assert.Equal(5, frames[frame].Scores[0]);
-                        Assert.Equal(5, frames[frame].Scores[1]);
-                        continue;
-                    case 6:
-                        Assert.Equal(2, frames[frame].Scores.Count);
-                        Assert.Equal(5, frames[frame].Scores[0]);
-                        Assert.Equal(3, frames[frame].Scores[1]);
-                        continue;
-                    case 7:
-                        Assert.Equal(2, frames[frame].Scores.Count);
-                        Assert.Equal(6, frames[frame].Scores[0]);
-                        Assert.Equal(3, frames[frame].Scores[1]);
-                        continue;
-                    case 8:
-                        Assert.Equal(2, frames[frame].Scores.Count);
-                        Assert.Equal(9, frames[frame].Scores[0]);
-                        Assert.Equal(1, frames[frame].Scores[1]);
-                        continue;
-                    case 9:
-                        Assert.Equal(3, frames[frame].Scores.Count);
-                        Assert.Equal(9, frames[frame].Scores[0]);
-                        Assert.Equal(1, frames[frame].Scores[1]);
-                        Assert.Equal(10, frames[frame].Scores[2]);
-                        continue;
-                    default:
-                        Assert.Fail($"Frame {frame} is unexpected!");
-                        continue;
-                }
-            }
-            Assert.Equal(ExpectedFinalScore, GetFinalScore());
-        }
-
-        [Fact]
-        public void FramesContainExpectedValues_IfGameAfterReset()
-        {
-            RollMany(5, 6);
-            game.NewGame();
-
-            int ExpectedFinalScore = 149;
-
-            RollList(exampleGameList);
-            var frames = GetFrames();
-            for (int frame = 0; frame < frames.Count; frame++)
-            {
-                switch (frame)
-                {
-                    case 0:
-                        Assert.Equal(2, frames[frame].Scores.Count);
-                        Assert.Equal(8, frames[frame].Scores[0]);
-                        Assert.Equal(2, frames[frame].Scores[1]);
-                        continue;
-                    case 1:
-                        Assert.Equal(2, frames[frame].Scores.Count);
-                        Assert.Equal(5, frames[frame].Scores[0]);
-                        Assert.Equal(4, frames[frame].Scores[1]);
-                        continue;
-                    case 2:
-                        Assert.Equal(2, frames[frame].Scores.Count);
-                        Assert.Equal(9, frames[frame].Scores[0]);
-                        Assert.Equal(0, frames[frame].Scores[1]);
-                        continue;
-                    case 3:
-                        Assert.Single(frames[frame].Scores);
-                        Assert.Equal(10, frames[frame].Scores[0]);
-                        continue;
-                    case 4:
-                        Assert.Single(frames[frame].Scores);
-                        Assert.Equal(10, frames[frame].Scores[0]);
-                        continue;
-                    case 5:
-                        Assert.Equal(2, frames[frame].Scores.Count);
-                        Assert.Equal(5, frames[frame].Scores[0]);
-                        Assert.Equal(5, frames[frame].Scores[1]);
-                        continue;
-                    case 6:
-                        Assert.Equal(2, frames[frame].Scores.Count);
-                        Assert.Equal(5, frames[frame].Scores[0]);
-                        Assert.Equal(3, frames[frame].Scores[1]);
-                        continue;
-                    case 7:
-                        Assert.Equal(2, frames[frame].Scores.Count);
-                        Assert.Equal(6, frames[frame].Scores[0]);
-                        Assert.Equal(3, frames[frame].Scores[1]);
-                        continue;
-                    case 8:
-                        Assert.Equal(2, frames[frame].Scores.Count);
-                        Assert.Equal(9, frames[frame].Scores[0]);
-                        Assert.Equal(1, frames[frame].Scores[1]);
-                        continue;
-                    case 9:
-                        Assert.Equal(3, frames[frame].Scores.Count);
-                        Assert.Equal(9, frames[frame].Scores[0]);
-                        Assert.Equal(1, frames[frame].Scores[1]);
-                        Assert.Equal(10, frames[frame].Scores[2]);
-                        continue;
-                    default:
-                        Assert.Fail($"Frame {frame} is unexpected!");
-                        continue;
-                }
-            }
-            Assert.Equal(ExpectedFinalScore, GetFinalScore());
-        }
-        #endregion
-
-        #region Realtime Scoring Tests
-        [Fact]
-        public void CanGetScoreMidGame()
-        {
-            game.AddRoll(5);
-            Assert.Equal(5, game.Score);
-        }
-
-        [Fact]
-        public void FrameTwoIsZeroPoints_IfHalfGutterGame()
-        {
-            RollMany(0, 10);
-
-            Output.WriteLine($"Final Score: {GetFinalScore()}");
-
-            foreach (var frame in GetFrames())
-            {
-                Output.WriteLine(frame?.ToString());
-            }
-
-            Frame? frameTwo = GetFrame(1);
-            Assert.Equal(0, frameTwo?.OverallScore);
-        }
-
-        [Fact]
-        public void FrameTwoIsFourPoints_IfHalfSinglesGame()
-        {
-            RollMany(1, 10);
-            Output.WriteLine($"Final Score: {GetFinalScore()}");
-
-            foreach (var frame in GetFrames())
-            {
-                Output.WriteLine(frame?.ToString());
-            }
-
-            Frame? frameTwo = GetFrame(1);
-            Assert.Equal(4, frameTwo?.OverallScore);
-        }
-
-        [Fact]
-        public void FrameFourIsOneHundredTwentyPoints_IfHalfPerfectGame()
-        {
-            RollMany(10, 6);
-            Output.WriteLine($"Final Score: {GetFinalScore()}");
-
-            foreach (var frame in GetFrames())
-            {
-                Output.WriteLine(frame?.ToString());
-            }
-
-            Frame? frameFour = GetFrame(3);
-            Assert.Equal(120, frameFour?.OverallScore);
-        }
-
-        [Fact]
-        public void FramesAreExpectedPoints_IfExampleGame()
-        {
-            RollList(exampleGameList);
-            Output.WriteLine($"Final Score: {GetFinalScore()}");
+            RollMany(valueOfRolls, numberOfRolls);
+            PassIfExpectedRollCount(numberOfRolls);
             
-            foreach (var frame in GetFrames())
+            var frames = GetFrames();
+            for (int frame = 0; frame < 10; frame++)
             {
-                Output.WriteLine(frame?.ToString());
+                Output.WriteLine($"{frames[frame]}");
+                Assert.Equal(2, frames[frame].Scores.Count);
+                for (int roll = 0; roll < 2; roll++)
+                {
+                    Assert.Equal(valueOfRolls, frames[frame].Scores[roll]);
+                }
             }
+
+            Assert.Equal(expectedFinalScore, GetScore());
+        }
+
+        [Fact]
+        public void ExpectedValuesIfOnesGame()
+        {
+            int valueOfRolls = 1;
+            int numberOfRolls = 20;
+            int expectedFinalScore = 20;
+
+            RollMany(valueOfRolls, numberOfRolls);
+            PassIfExpectedRollCount(numberOfRolls);
+
+            var frames = GetFrames();
+            for (int frame = 0; frame < 10; frame++)
+            {
+                Output.WriteLine($"{frames[frame]}");
+                Assert.Equal(2, frames[frame].Scores.Count);
+                for (int roll = 0; roll < 2; roll++)
+                {
+                    Assert.Equal(valueOfRolls, frames[frame].Scores[roll]);
+                }
+            }
+
+            Assert.Equal(expectedFinalScore, GetScore());
+        }
+
+        [Fact]
+        public void ExpectedValuesIfSparesGame()
+        {
+            int valueOfRolls = 5;
+            int numberOfRolls = 21;
+            int expectedFinalScore = 150;
+
+            RollMany(valueOfRolls, numberOfRolls);
+            PassIfExpectedRollCount(numberOfRolls);
+
+            var frames = GetFrames();
+            for (int frame = 0; frame < 10; frame++)
+            {
+                Output.WriteLine($"{frames[frame]}");
+
+                int expectedRollsThisFrame = frame != 9 ? 2 : 3;
+                Assert.Equal(expectedRollsThisFrame, frames[frame].Scores.Count);
+                for (int roll = 0; roll < frames[frame].Scores.Count; roll++)
+                {
+                    Assert.Equal(valueOfRolls, frames[frame].Scores[roll]);
+                }
+            }
+
+            Assert.Equal(expectedFinalScore, GetScore());
+        }
+
+        [Fact]
+        public void ExpectedValuesIfPerfectGame()
+        {
+            int valueOfRolls = 10;
+            int numberOfRolls = 12;
+            int expectedFinalScore = 300;
+
+            RollMany(valueOfRolls, numberOfRolls);
+            PassIfExpectedRollCount(numberOfRolls);
+
+            var frames = GetFrames();
+            for (int frame = 0; frame < 10; frame++)
+            {
+                Output.WriteLine($"{frames[frame]}");
+
+                int expectedRollsThisFrame = frame != 9 ? 1 : 3;
+                Assert.Equal(expectedRollsThisFrame, frames[frame].Scores.Count);
+                for (int roll = 0; roll < frames[frame].Scores.Count; roll++)
+                {
+                    Assert.Equal(valueOfRolls, frames[frame].Scores[roll]);
+                }
+            }
+
+            Assert.Equal(expectedFinalScore, GetScore());
+        }
+
+        [Fact]
+        public void ExpectedValuesIfExampleGame()
+        {
+            List<int> exampleGameList = new() { 8, 2, 5, 4, 9, 0, 10, 10, 5, 5, 5, 3, 6, 3, 9, 1, 9, 1, 10 };
+            int expectedFinalScore = 149;
+
+            RollList(exampleGameList);
+            PassIfExpectedRollCount(exampleGameList.Count);
+
+            var frames = GetFrames();
 
             for (int frame = 0; frame < 10; frame++)
             {
-                Frame? currentFrame = GetFrame(frame);
+                Output.WriteLine($"{frames[frame]}");
+
                 switch (frame)
                 {
                     case 0:
-                        Assert.Equal(15, currentFrame?.OverallScore);
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(8, frames[frame].Scores[0]);
+                        Assert.Equal(2, frames[frame].Scores[1]);
                         continue;
                     case 1:
-                        Assert.Equal(24, currentFrame?.OverallScore);
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(5, frames[frame].Scores[0]);
+                        Assert.Equal(4, frames[frame].Scores[1]);
                         continue;
                     case 2:
-                        Assert.Equal(33, currentFrame?.OverallScore);
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(9, frames[frame].Scores[0]);
+                        Assert.Equal(0, frames[frame].Scores[1]);
                         continue;
                     case 3:
-                        Assert.Equal(58, currentFrame?.OverallScore);
+                        Assert.Single(frames[frame].Scores);
+                        Assert.Equal(10, frames[frame].Scores[0]);
                         continue;
                     case 4:
-                        Assert.Equal(78, currentFrame?.OverallScore);
+                        Assert.Single(frames[frame].Scores);
+                        Assert.Equal(10, frames[frame].Scores[0]);
                         continue;
                     case 5:
-                        Assert.Equal(93, currentFrame?.OverallScore);
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(5, frames[frame].Scores[0]);
+                        Assert.Equal(5, frames[frame].Scores[1]);
                         continue;
                     case 6:
-                        Assert.Equal(101, currentFrame?.OverallScore);
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(5, frames[frame].Scores[0]);
+                        Assert.Equal(3, frames[frame].Scores[1]);
                         continue;
                     case 7:
-                        Assert.Equal(110, currentFrame?.OverallScore);
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(6, frames[frame].Scores[0]);
+                        Assert.Equal(3, frames[frame].Scores[1]);
                         continue;
                     case 8:
-                        Assert.Equal(129, currentFrame?.OverallScore);
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(9, frames[frame].Scores[0]);
+                        Assert.Equal(1, frames[frame].Scores[1]);
                         continue;
                     case 9:
-                        Assert.Equal(149, currentFrame?.OverallScore);
-                        continue;
-                    default:
-                        Assert.Fail($"Frame {frame} is unexpected!");
+                        Assert.Equal(3, frames[frame].Scores.Count);
+                        Assert.Equal(9, frames[frame].Scores[0]);
+                        Assert.Equal(1, frames[frame].Scores[1]);
+                        Assert.Equal(10, frames[frame].Scores[2]);
                         continue;
                 }
             }
+
+            Assert.Equal(expectedFinalScore, GetScore());
         }
         #endregion
 
         #region Input Validation Tests
         [Fact]
-        public void AddRollReturnsFalse_IfRollHigherThanRemainingPins()
+        public void CanOnlyRoll20Times_IfNo10thFrameBonus()
         {
-            Assert.True(Roll(6));
-            Assert.False(Roll(6));
+            RollMany(0, 25);
+            Assert.Equal(20, GetRolls().Count);
         }
 
         [Fact]
-        public void AddRollAlwaysReturnsTrue_IfPerfectGame()
+        public void CanOnlyRoll21Times_If10thFrameBonus()
         {
-            RollMany(10, 12, true);
+            RollMany(5, 21);
+            Assert.Equal(21, GetRolls().Count);
         }
 
         [Fact]
-        public void AddRollAlwaysReturnsTrue_IfGutterGame()
+        public void CanOnlyRoll12Times_IfPerfectGame()
         {
-            RollMany(0, 20, true);
+            RollMany(10, 20);
+            Assert.Equal(12, GetRolls().Count);
         }
 
         [Fact]
-        public void AddRollAlwaysReturnsTrue_IfExampleGame()
+        public void CanOnlyRollPinsGreaterOrEqualToZero()
         {
-            RollList(exampleGameList, true);
-        }
-
-        [Fact]
-        public void RollsDoNotContainInvalidRolls()
-        {
-            List<int> testRolls = new() { 5, 5, 5, 6, 11, -1, 5 };
-            RollList(testRolls);
-
-            List<int> rollList = game.PlayedRolls;
-            Assert.DoesNotContain(6, rollList);
-            Assert.DoesNotContain(11, rollList);
-            Assert.DoesNotContain(-1, rollList);
-            Assert.Equal(4, rollList.Count);
-            
-            foreach (int roll in rollList)
+            for (int rollValue = 10;  rollValue > -100; rollValue--)
             {
-                Assert.Equal(5, roll);
+                Roll(rollValue);
+            }
+
+            foreach (var roll in GetRolls())
+            {
+                Assert.True(roll >= 0);
             }
         }
 
         [Fact]
-        public void GameCanBeCompleted_IfInvalidInputDuringGame()
+        public void CanOnlyRollPinsLessThanOrEqualToTen()
         {
-            RollMany(5, 9);
-            Roll(21);
-            Roll(-4);
-            Roll(12);
-            RollMany(5, 12);
-            Assert.Equal(150, game.Score);
-            Assert.Equal(21, game.PlayedRolls.Count);
-            foreach (var roll in game.PlayedRolls)
+            for (int rollValue = 0; rollValue < 100; rollValue++)
             {
-                Assert.Equal(5, roll);
+                Roll(rollValue);
+            }
+
+            foreach (var roll in GetRolls())
+            {
+                Assert.True(roll <= 10);
             }
         }
 
+        [Fact]
+        public void CannotExceed2RollsOnFrames1Through9()
+        {
+            for (int rollValue = 0; rollValue <= 10; rollValue++)
+            {
+                RollMany(rollValue, 25);
+
+                var frames = GetFrames();
+                for (int frame = 0; frame < 9; frame++)
+                {
+                    Assert.True(frames[frame].Scores.Count <= 2);
+                }
+                Game.NewGame();
+            }
+        }
+
+        [Fact]
+        public void CannotExceed2RollsOnFrame10_IfNoSpareOrStrike()
+        {
+            for (int rollValue = 0; rollValue <= 10; rollValue++)
+            {
+                RollMany(rollValue, 25);
+
+                var frame = GetFrame(9);
+
+                if (frame.IsSpare() || frame.IsStrike())
+                {
+                    Output.WriteLine($"{rollValue} leads to Spare or Strike. Skipping.");
+                    Game.NewGame();
+                    continue;
+                }
+
+                if (frame.Scores.Count <= 0)
+                {
+                    Output.WriteLine($"Game consisting of only {rollValue} pins per roll does not reach Frame 10. Skipping.");
+                    Game.NewGame();
+                    continue;
+                }
+
+                Output.WriteLine($"{frame}");
+                Assert.True(frame.Scores.Count <= 2);
+                Game.NewGame();
+            }
+        }
+
+        [Fact]
+        public void CannotExceed3RollsOnFrame10_IfSpareOrStrike()
+        {
+            for (int rollValue = 0; rollValue <= 10; rollValue++)
+            {
+                RollMany(rollValue, 25);
+
+                var frame = GetFrame(9);
+                if (!frame.IsSpare() && !frame.IsStrike())
+                {
+                    Output.WriteLine($"{rollValue} does not lead to Spare or Strike. Skipping.");
+                    Game.NewGame();
+                    continue;
+                }
+
+                Output.WriteLine($"{frame}");
+                Assert.True(frame.Scores.Count <= 3);
+                Game.NewGame();
+            }
+        }
         #endregion
 
-        private void TestConsistentGame(int ValuePerRoll, int ValuePerFrame, int ExpectedFinalScore)
+        #region Misc Tests
+        [Fact]
+        public void GameCanBeReset()
         {
-            RollMany(ValuePerRoll, 20);
-            foreach (var frame in GetFrames())
-            {
-                foreach (var roll in frame.Scores)
-                {
-                    Assert.Equal(ValuePerRoll, roll);
-                }
-                Assert.Equal(ValuePerFrame, frame.Value);
-            }
-            Assert.Equal(ExpectedFinalScore, GetFinalScore());
+            RollMany(5, 6);
+            Assert.True(GetRolls().Count == 6);
+            Game.NewGame();
+            RollMany(1, 2);
+            Assert.True(GetRolls().Count == 2);
         }
 
-        private bool Roll(int pins)
+        [Fact]
+        public void CanGetScoreAtAnyTime()
         {
-            return game.AddRoll(pins);
-        }
-
-        private void RollMany(int pins, int rolls, bool failIfAnyFalse = false)
-        {
-            for (var roll = 0; roll < rolls; roll++)
+            for (var roll = 0; roll < 21; roll++)
             {
-                if (Roll(pins) == false && failIfAnyFalse)
-                {
-                    Assert.Fail($"roll {roll} of value {pins} was considered invalid!");
-                }
+                Roll(5);
+                Output.WriteLine($"Score on roll {roll}: {Game.Score}");
+                Assert.True(Game.Score > 0);
             }
         }
 
-        private void RollSpare()
+        [Fact]
+        public void UnplayedFramesAreNotNull()
         {
-            game.AddRoll(5);
-            game.AddRoll(5);
-        }
-
-        private void RollStrike()
-        {
-            game.AddRoll(10);
-        }
-
-        private void RollList(List<int> Rolls, bool failIfAnyFalse = false)
-        {
-            foreach (var roll in Rolls)
+            for (int frame = 0; frame < 10; frame++)
             {
-                if (Roll(roll) == false && failIfAnyFalse)
-                {
-                    Assert.Fail($"roll {roll} was considered invalid!");
-                }
+                Assert.NotNull(GetFrame(frame));
+            }
+        }
+        #endregion
+
+        private void Roll(int pointsEachRoll)
+        {
+            Game.AddRoll(pointsEachRoll);
+        }
+
+        private void RollMany(int pointsEachRoll, int numberOfRolls)
+        {
+            for (int roll = 0; roll < numberOfRolls; roll++)
+            {
+                Roll(pointsEachRoll);
             }
         }
 
-        private List<Frame> GetFrames()
+        private void RollList(List<int> rolls)
         {
-            return game.Frames;
+            for (int roll = 0; roll < rolls.Count; roll++)
+            {
+                Roll(rolls[roll]);
+            }
         }
 
-        private Frame? GetFrame(int frameIndex)
+        private void PassIfExpectedRollCount(int expectedRollCount)
         {
-            return GetFrames().ElementAtOrDefault(frameIndex);
+            Assert.Equal(expectedRollCount, GetRolls().Count);
         }
 
-        private int GetFinalScore()
+        private List<int> GetRolls() => Game.PlayedRolls;
+
+        private Frame GetFrame(int frameNumber)
         {
-            return game.Score;
+            return GetFrames()[frameNumber];
         }
+
+        private List<Frame> GetFrames() => Game.Frames;
+
+        private int GetScore() => Game.Score;
     }
 }

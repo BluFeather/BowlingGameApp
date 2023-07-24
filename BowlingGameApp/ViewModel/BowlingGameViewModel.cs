@@ -1,6 +1,6 @@
 ﻿using BowlingGameApp.Model;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BowlingGameApp.ViewModel
 {
@@ -17,29 +17,44 @@ namespace BowlingGameApp.ViewModel
         {
             get => GameInstance.Frames;
         }
-        
-        public void AddRoll(string roll)
+
+        public int CurrentFrameIndex => GameInstance.FrameIndex;
+
+        public bool AddRoll(string roll)
         {
             if (int.TryParse(roll, out var score))
             {
-                GameInstance.AddRoll(score);
+                return GameInstance.AddRoll(score);
             }
             
             if (string.Compare(roll, "/") == 0)
             {
+                if (GameInstance.CurrentRoll == 0) return false;
+
                 var remainingPins = GameInstance.RemainingPins;
-                GameInstance.AddRoll(remainingPins);
+                return GameInstance.AddRoll(remainingPins);
             }
 
             if (string.Compare(roll, "X", true) == 0)
             {
-                GameInstance.AddRoll(10);
+                return GameInstance.AddRoll(10);
             }
+
+            return false;
         }
 
         public void ResetGame()
         {
             GameInstance.NewGame();
+        }
+
+        public string GetRollForFrame(int frame, int rollNumber)
+        {
+            if (Frames[frame].Scores.Count - 1 < rollNumber)
+            {
+                return string.Empty;
+            }
+            return $"{Frames[frame].Scores.ElementAtOrDefault(0)}";
         }
     }
 }
