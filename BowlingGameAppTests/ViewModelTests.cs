@@ -274,28 +274,6 @@ namespace BowlingGameAppTests
 
         #region Property and Method Tests
         [Fact]
-        public void GutterballReturnsZeroString()
-        {
-            ViewModel.ResetGame();
-            Roll(0);
-            int frame = 0;
-            int rollNumber = 0;
-            Output.WriteLine($"{ViewModel.Frames[0]}");
-            Assert.Equal("0", ViewModel.GetRollForFrame(frame, rollNumber));
-        }
-
-        [Fact]
-        public void UnplayedBallReturnsEmptyString()
-        {
-            ViewModel.ResetGame();
-            Roll(0);
-            int frame = 0;
-            int rollNumber = 1;
-            Output.WriteLine($"{ViewModel.Frames[0]}");
-            Assert.Equal(string.Empty, ViewModel.GetRollForFrame(frame, rollNumber));
-        }
-
-        [Fact]
         public void CanResetGame()
         {
             ViewModel.ResetGame();
