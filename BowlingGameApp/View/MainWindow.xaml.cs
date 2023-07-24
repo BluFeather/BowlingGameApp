@@ -1,6 +1,7 @@
 ﻿using BowlingGameApp.Model;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 
 namespace BowlingGameApp
@@ -62,8 +63,16 @@ namespace BowlingGameApp
                     scorecardEntries.Add(frame.Scores.Count >= 2 ? $"{frame.Scores[1]}" : string.Empty);
                 }
                 
-                if (frameIndex == 9)
+                if (frame.IsFinalFrame)
                 {
+                    // Roll 3 is a spare.
+                    if (frame.IsStrike() &&
+                        frame.Scores.ElementAtOrDefault(1) != 10 &&
+                        frame.Scores.ElementAtOrDefault(1) + frame.Scores.ElementAtOrDefault(2) == 10)
+                    {
+                        scorecardEntries.Add("/");
+                    }
+
                     scorecardEntries.Add(frame.Scores.Count >= 3 ? $"{frame.Scores[2]}" : string.Empty);
                 }
             }
