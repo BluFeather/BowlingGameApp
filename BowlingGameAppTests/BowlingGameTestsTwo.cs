@@ -263,8 +263,13 @@ namespace BowlingGameAppTests
                 RollMany(rollValue, 25);
 
                 var frame = GetFrame(9);
-                if (frame.IsSpare() || frame.IsStrike()) continue;
                 Output.WriteLine($"{frame}");
+                if (frame.IsSpare() || frame.IsStrike())
+                {
+                    Output.WriteLine($"Contains Spare or Strike. Skipping.");
+                    Game.NewGame();
+                    continue;
+                }
                 Assert.True(frame.Scores.Count <= 2);
                 Game.NewGame();
             }
