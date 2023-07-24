@@ -274,6 +274,27 @@ namespace BowlingGameAppTests
                 Game.NewGame();
             }
         }
+
+        [Fact]
+        public void CannotExceed3RollsOnFrame10_IfSpareOrStrike()
+        {
+            for (int rollValue = 0; rollValue <= 10; rollValue++)
+            {
+                RollMany(rollValue, 25);
+
+                var frame = GetFrame(9);
+                if (!frame.IsSpare() && !frame.IsStrike())
+                {
+                    Output.WriteLine($"{rollValue} does not lead to Spare or Strike. Skipping.");
+                    Game.NewGame();
+                    continue;
+                }
+
+                Output.WriteLine($"{frame}");
+                Assert.True(frame.Scores.Count <= 3);
+                Game.NewGame();
+            }
+        }
         #endregion
 
         private void Roll(int pointsEachRoll)
