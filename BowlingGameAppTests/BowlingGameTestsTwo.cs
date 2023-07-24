@@ -327,6 +327,15 @@ namespace BowlingGameAppTests
                 Assert.True(Game.Score > 0);
             }
         }
+
+        [Fact]
+        public void UnplayedFramesAreNotNull()
+        {
+            for (int frame = 0; frame < 10; frame++)
+            {
+                Assert.NotNull(GetFrame(frame));
+            }
+        }
         #endregion
 
         private void Roll(int pointsEachRoll)
