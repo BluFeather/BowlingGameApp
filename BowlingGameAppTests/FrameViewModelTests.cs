@@ -9,20 +9,29 @@ namespace BowlingGameAppTests
         public FrameViewModelTests(ITestOutputHelper output)
         {
             Output = output;
-            BowlingGame Game = new BowlingGame();
-            Frame = new FrameViewModel(Game.Frames[1]);
         }
 
         public ITestOutputHelper Output { get; }
 
-        public FrameViewModel Frame { get; }
-
         [Fact]
         public void UnplayedRollReturnsEmptyString()
         {
+            BowlingGame Game = new BowlingGame();
+            var Frame = new FrameViewModel(Game.Frames[1]);
+
             Assert.Equal(string.Empty, Frame.RollOne);
             Assert.Equal(string.Empty, Frame.RollTwo);
             Assert.Equal(string.Empty, Frame.RollThree);
+        }
+
+        [Fact]
+        public void GutterballReturnsZeroString()
+        {
+            BowlingGame Game = new BowlingGame();
+            Game.AddRoll(0);
+            var Frame = new FrameViewModel(Game.Frames[0]);
+
+            Assert.Equal("0", Frame.RollOne);
         }
     }
 }
