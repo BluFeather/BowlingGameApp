@@ -13,6 +13,9 @@ namespace BowlingGameApp.ViewModel
 
         protected Frame Frame { get; }
 
+        /// <summary>
+        /// Position of this frame in a scorecard. Numbering begins at 1.
+        /// </summary>
         public string FrameNumber
         {
             get
@@ -21,6 +24,9 @@ namespace BowlingGameApp.ViewModel
             }
         }
 
+        /// <summary>
+        /// Value of this frame's first roll. String is empty if there is no roll.
+        /// </summary>
         public string RollOne
         {
             get
@@ -29,6 +35,9 @@ namespace BowlingGameApp.ViewModel
             }
         }
 
+        /// <summary>
+        /// Value of this frame's second roll. String is empty if there is no roll.
+        /// </summary>
         public string RollTwo
         {
             get
@@ -37,6 +46,9 @@ namespace BowlingGameApp.ViewModel
             }
         }
 
+        /// <summary>
+        /// Value of this frame's third roll. String is empty if there is no roll. Only used in the final frame.
+        /// </summary>
         public string RollThree
         {
             get
