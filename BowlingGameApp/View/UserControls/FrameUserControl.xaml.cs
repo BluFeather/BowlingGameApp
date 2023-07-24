@@ -1,28 +1,65 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace BowlingGameApp.View.UserControls
 {
-    /// <summary>
-    /// Interaction logic for FrameUserControl.xaml
-    /// </summary>
     public partial class FrameUserControl : UserControl
     {
         public FrameUserControl()
         {
             InitializeComponent();
         }
+
+        public string FrameNumber
+        {
+            get => (string)GetValue(FrameNumberProperty);
+            set => SetValue(FrameNumberProperty, value);
+        }
+
+        public string RollOne
+        {
+            get => (string)GetValue(RollOneProperty);
+            set => SetValue(RollOneProperty, value);
+        }
+
+        public string RollTwo
+        {
+            get => (string)GetValue(RollTwoProperty);
+            set => SetValue(RollTwoProperty, value);
+        }
+
+        public string OverallScore
+        {
+            get => (string)GetValue(OverallScoreProperty);
+            set => SetValue(OverallScoreProperty, value);
+        }
+
+        private static readonly DependencyProperty FrameNumberProperty =
+            DependencyProperty.Register(
+                name: "FrameNumber",
+                propertyType: typeof(string),
+                ownerType: typeof(FrameUserControl),
+                typeMetadata: new FrameworkPropertyMetadata(default(string)));
+
+        private static readonly DependencyProperty RollOneProperty =
+            DependencyProperty.Register(
+                name: "RollOne",
+                propertyType: typeof(string),
+                ownerType: typeof(FrameUserControl),
+                typeMetadata: new FrameworkPropertyMetadata(default(string)));
+
+        private static readonly DependencyProperty RollTwoProperty =
+            DependencyProperty.Register(
+                name: "RollTwo",
+                propertyType: typeof(string),
+                ownerType: typeof(FrameUserControl),
+                typeMetadata: new FrameworkPropertyMetadata(default(string)));
+
+        private static readonly DependencyProperty OverallScoreProperty =
+            DependencyProperty.Register(
+                name: "OverallScore",
+                propertyType: typeof(string),
+                ownerType: typeof(FrameUserControl),
+                typeMetadata: new FrameworkPropertyMetadata(default(string)));
     }
 }
