@@ -4,9 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BowlingGameApp"
+        xmlns:uc="clr-namespace:BowlingGameApp.View.UserControls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="Bowling Scorecard App" Height="450" Width="1050"
+        SizeToContent="WidthAndHeight">
+    <StackPanel Margin="10">
+        <uc:Scorecard x:Name="Scorecard"/>
+        <uc:RollButtonsUserControl x:Name="RollButtons" HorizontalAlignment="Center" Margin="10"/>
+        <Button Content="Reset Game" Click="ResetGame_OnClick" Margin="10"/>
+    </StackPanel>
 </Window>

@@ -53,6 +53,11 @@ namespace BowlingGameApp.Model
         public int CurrentRoll => CurrentFrame.CurrentRoll;
 
         /// <summary>
+        /// Indicates whether or not there are any remaining rolls to play in this game.
+        /// </summary>
+        public bool IsComplete => CurrentFrame.IsFinalFrame && CurrentFrame.FrameIsComplete;
+
+        /// <summary>
         /// Readies this game for a new match.
         /// </summary>
         public void NewGame()
