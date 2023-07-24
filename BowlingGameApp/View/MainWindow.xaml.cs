@@ -12,25 +12,21 @@ namespace BowlingGameApp
         {
             InitializeComponent();
             Game = BowlingGameInstance.GameInstance;
+            RollSparesGame();
+        }
+
+        private BowlingGame Game { get; }
+
+        public List<Frame> Frames
+        {
+            get => Game.Frames;
+        }
+
+        private void RollSparesGame()
+        {
             for (int roll = 0; roll < 21; roll++)
             {
                 Game.AddRoll(5);
-            }
-        }
-
-        public BowlingGame Game { get; }
-
-        public List<FrameViewModel> Frames
-        {
-            get
-            {
-                List<FrameViewModel> frames = new List<FrameViewModel>();
-                foreach (var frame in Game.Frames)
-                {
-                    Debug.WriteLine(frame);
-                    frames.Add(new FrameViewModel(frame));
-                }
-                return frames;
             }
         }
     }
