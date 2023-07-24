@@ -294,6 +294,19 @@ namespace BowlingGameAppTests
             Output.WriteLine($"{ViewModel.Frames[0]}");
             Assert.Equal(string.Empty, ViewModel.GetRollForFrame(frame, rollNumber));
         }
+
+        [Fact]
+        public void CanResetGame()
+        {
+            ViewModel.ResetGame();
+            RollMany(5, 7);
+            Output.WriteLine($"Frame 2 before reset.\n{ViewModel.Frames[2]}");
+            Assert.Equal("5", ViewModel.GetRollForFrame(2, 1));
+
+            ViewModel.ResetGame();
+            Output.WriteLine($"Frame 2 after reset.\n{ViewModel.Frames[2]}");
+            Assert.Equal(string.Empty, ViewModel.GetRollForFrame(2, 1));
+        }
         #endregion
 
         private void Roll(int pointsForRoll)
