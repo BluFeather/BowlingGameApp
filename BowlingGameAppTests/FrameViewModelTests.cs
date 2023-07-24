@@ -54,6 +54,16 @@ namespace BowlingGameAppTests
             Assert.Equal(string.Empty, $"{Frame.RunningScore}");
         }
 
+        [Fact]
+        public void RunningScoreIsBlankString_IfMissingBonuses()
+        {
+            var game = NewGame();
+            RollMany(game, 10, 3);
+            var Frame = NewFrame(game.Frames[2]);
+
+            Assert.Equal(string.Empty, $"{Frame.RunningScore}");
+        }
+
         private BowlingGame NewGame() => new BowlingGame();
 
         private FrameViewModel NewFrame(Frame frame) => new FrameViewModel(frame);
