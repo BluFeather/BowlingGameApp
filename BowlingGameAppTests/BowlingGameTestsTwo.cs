@@ -240,7 +240,7 @@ namespace BowlingGameAppTests
         }
 
         [Fact]
-        public void CannotExceed10PinsOnFrames1Through9()
+        public void CannotExceed2RollsOnFrames1Through9()
         {
             for (int rollValue = 0; rollValue < 10; rollValue++)
             {
@@ -254,6 +254,9 @@ namespace BowlingGameAppTests
                 Game.NewGame();
             }
         }
+
+        [Fact]
+        public void CannotExceed
         #endregion
 
         private void Roll(int pointsEachRoll)
