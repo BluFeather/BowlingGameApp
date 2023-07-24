@@ -1,4 +1,5 @@
 ﻿using BowlingGameApp.Model;
+using System.IO.Pipes;
 using Xunit.Abstractions;
 
 namespace BowlingGameAppTests
@@ -115,6 +116,77 @@ namespace BowlingGameAppTests
 
             Assert.Equal(expectedFinalScore, GetScore());
         }
+
+        [Fact]
+        public void ExpectedValuesIfExampleGame()
+        {
+            List<int> exampleGameList = new() { 8, 2, 5, 4, 9, 0, 10, 10, 5, 5, 5, 3, 6, 3, 9, 1, 9, 1, 10 };
+            int expectedFinalScore = 149;
+            RollList(exampleGameList);
+            PassIfExpectedRollCount(exampleGameList.Count);
+
+            var frames = GetFrames();
+
+            for (int frame = 0; frame < 10; frame++)
+            {
+                Output.WriteLine($"{frames[frame]}");
+
+                switch (frame)
+                {
+                    case 0:
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(8, frames[frame].Scores[0]);
+                        Assert.Equal(2, frames[frame].Scores[1]);
+                        continue;
+                    case 1:
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(5, frames[frame].Scores[0]);
+                        Assert.Equal(4, frames[frame].Scores[1]);
+                        continue;
+                    case 2:
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(9, frames[frame].Scores[0]);
+                        Assert.Equal(0, frames[frame].Scores[1]);
+                        continue;
+                    case 3:
+                        Assert.Single(frames[frame].Scores);
+                        Assert.Equal(10, frames[frame].Scores[0]);
+                        continue;
+                    case 4:
+                        Assert.Single(frames[frame].Scores);
+                        Assert.Equal(10, frames[frame].Scores[0]);
+                        continue;
+                    case 5:
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(5, frames[frame].Scores[0]);
+                        Assert.Equal(5, frames[frame].Scores[1]);
+                        continue;
+                    case 6:
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(5, frames[frame].Scores[0]);
+                        Assert.Equal(3, frames[frame].Scores[1]);
+                        continue;
+                    case 7:
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(6, frames[frame].Scores[0]);
+                        Assert.Equal(3, frames[frame].Scores[1]);
+                        continue;
+                    case 8:
+                        Assert.Equal(2, frames[frame].Scores.Count);
+                        Assert.Equal(9, frames[frame].Scores[0]);
+                        Assert.Equal(1, frames[frame].Scores[1]);
+                        continue;
+                    case 9:
+                        Assert.Equal(3, frames[frame].Scores.Count);
+                        Assert.Equal(9, frames[frame].Scores[0]);
+                        Assert.Equal(1, frames[frame].Scores[1]);
+                        Assert.Equal(10, frames[frame].Scores[2]);
+                        continue;
+                }
+            }
+
+            Assert.Equal(expectedFinalScore, GetScore());
+        }
         #endregion
 
         private void Roll(int pointsEachRoll)
@@ -127,6 +199,14 @@ namespace BowlingGameAppTests
             for (int roll = 0; roll < numberOfRolls; roll++)
             {
                 Roll(pointsEachRoll);
+            }
+        }
+
+        private void RollList(List<int> rolls)
+        {
+            for (int roll = 0; roll < rolls.Count; roll++)
+            {
+                Roll(rolls[roll]);
             }
         }
 
