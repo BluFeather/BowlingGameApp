@@ -29,7 +29,6 @@ namespace BowlingGameAppTests
         {
             BowlingGame Game = new BowlingGame();
             var Frame = new FrameViewModel(Game.Frames[0]);
-
             Game.AddRoll(0);
 
             Assert.Equal("0", Frame.RollOne);
@@ -43,6 +42,16 @@ namespace BowlingGameAppTests
             var Frame = NewFrame(game.Frames[1]);
 
             Assert.Equal("30", $"{Frame.RunningScore}");
+        }
+
+        [Fact]
+        public void RunningScoreIsBlankString_IfUnfinishedFrame()
+        {
+            var game = NewGame();
+            RollMany(game, 5, 5);
+            var Frame = NewFrame(game.Frames[2]);
+
+            Assert.Equal(string.Empty, $"{Frame.RunningScore}");
         }
 
         private BowlingGame NewGame() => new BowlingGame();

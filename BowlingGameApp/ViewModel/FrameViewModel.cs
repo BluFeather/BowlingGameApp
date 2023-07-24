@@ -18,7 +18,7 @@ namespace BowlingGameApp.ViewModel
 
         public string RollThree => GetRollForFrame(2);
 
-        public string RunningScore => $"{Frame.OverallScore}";
+        public string RunningScore => Frame.FrameIsComplete ? $"{Frame.OverallScore}" : string.Empty;
 
         private string GetRollForFrame(int rollNumber)
         {
