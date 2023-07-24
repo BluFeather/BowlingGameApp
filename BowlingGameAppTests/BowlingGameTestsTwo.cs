@@ -1,5 +1,4 @@
 ﻿using BowlingGameApp.Model;
-using System.IO.Pipes;
 using Xunit.Abstractions;
 
 namespace BowlingGameAppTests
@@ -122,6 +121,7 @@ namespace BowlingGameAppTests
         {
             List<int> exampleGameList = new() { 8, 2, 5, 4, 9, 0, 10, 10, 5, 5, 5, 3, 6, 3, 9, 1, 9, 1, 10 };
             int expectedFinalScore = 149;
+
             RollList(exampleGameList);
             PassIfExpectedRollCount(exampleGameList.Count);
 
@@ -186,6 +186,15 @@ namespace BowlingGameAppTests
             }
 
             Assert.Equal(expectedFinalScore, GetScore());
+        }
+        #endregion
+
+        #region Input Validation
+        [Fact]
+        public void CanOnlyRoll20Times_IfNo10thFrameBonus()
+        {
+            RollMany(0, 25);
+            Assert.Equal(20, GetRolls().Count);
         }
         #endregion
 

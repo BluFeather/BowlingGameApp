@@ -55,7 +55,7 @@ namespace BowlingGameApp.Model
         /// <returns>bool indicating whether or not the rollValue was considered valid.</returns>
         public bool TryAddRoll(int rollValue)
         {
-            if (rollValue > RemainingPins) return false;
+            if (rollValue > RemainingPins || FrameIsComplete) return false;
             Scores.Add(rollValue);
             RemainingPins -= rollValue;
 
@@ -98,7 +98,18 @@ namespace BowlingGameApp.Model
         /// <summary>
         /// Indicates whether or not any rolls are remaining for this frame.
         /// </summary>
-        public bool FrameIsComplete => Scores.Count >= 2 || Value == 10;
+        public bool FrameIsComplete
+        {
+            get
+            {
+                if (IsFinalFrame && ThirdRollNeededForLastFrame)
+                {
+                    return Scores.Count >= 3;
+                }
+
+                return Scores.Count >= 2 || Value == 10;
+            }
+        }
 
         /// <summary>
         /// Indicates whether or not this is the last frame in a bowling game.
