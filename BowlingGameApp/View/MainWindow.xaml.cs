@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using BowlingGameApp.Model;
+using System.Diagnostics;
 using System.Windows;
 
 namespace BowlingGameApp
@@ -9,11 +10,14 @@ namespace BowlingGameApp
         {
             InitializeComponent();
             RollButtons.ScoreReceived += OnScoreReceived;
+            Game = BowlingGameInstance.GameInstance;
         }
+
+        private BowlingGame Game { get; }
 
         private void OnScoreReceived(object? sender, int value)
         {
-            Debug.WriteLine($"Clicked: {value}");
+            Game.AddRoll(value);
         }
     }
 }
