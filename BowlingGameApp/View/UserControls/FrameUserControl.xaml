@@ -24,11 +24,11 @@
 
         <TextBox Grid.Row="1" Grid.Column="0"
                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                     Text="{Binding RollOne, RelativeSource={RelativeSource AncestorType=local:FrameUserControl}}"/>
+                     Text="{Binding RollOne, RelativeSource={RelativeSource AncestorType=local:FrameUserControl}, Mode=OneWay}"/>
 
         <TextBox Grid.Row="1" Grid.Column="1"
                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                     Text="{Binding RollTwo, RelativeSource={RelativeSource AncestorType=local:FrameUserControl}}"/>
+                     Text="{Binding RollTwo, RelativeSource={RelativeSource AncestorType=local:FrameUserControl}, Mode=OneWay}"/>
 
         <TextBlock Grid.Row="2" Grid.ColumnSpan="2"
                        TextAlignment="Center" VerticalAlignment="Center"

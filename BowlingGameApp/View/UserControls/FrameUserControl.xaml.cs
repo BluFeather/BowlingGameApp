@@ -19,27 +19,27 @@ namespace BowlingGameApp.View.UserControls
 
         public string FrameNumber
         {
-            get => Frame.FrameNumber;
+            get => Frame?.FrameNumber;
         }
 
         public string RollOne
         {
-            get => Frame.RollOne;
+            get => Frame?.RollOne;
         }
 
         public string RollTwo
         {
-            get => Frame.RollTwo;
+            get => Frame?.RollTwo;
         }
 
         public string RollThree
         {
-            get => Frame.RollThree;
+            get => Frame?.RollThree;
         }
 
         public string RunningScore
         {
-            get => Frame.RunningScore;
+            get => Frame?.RunningScore;
         }
 
         public static readonly DependencyProperty FrameViewModelProperty =
