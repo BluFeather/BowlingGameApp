@@ -82,87 +82,108 @@
         <!--Frame Rolls-->
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="1" Grid.Column="0">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="#"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding RollOne, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="1" Grid.Column="1">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="#"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding RollTwo, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="1" Grid.Column="2">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="#"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding RollThree, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="1" Grid.Column="3">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="#"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding RollFour, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="1" Grid.Column="4">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="#"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding RollFive, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="1" Grid.Column="5">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="#"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding RollSix, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="1" Grid.Column="6">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="#"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding RollSeven, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="1" Grid.Column="7">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="#"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding RollEight, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="1" Grid.Column="8">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="#"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding RollNine, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="1" Grid.Column="9">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="#"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding RollTen, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="1" Grid.Column="10">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="#"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding RollEleven, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="1" Grid.Column="11">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="#"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding RollTwelve, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="1" Grid.Column="12">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="#"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding RollThirteen, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="1" Grid.Column="13">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="#"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding RollFourteen, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="1" Grid.Column="14">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="#"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding RollFifteen, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="1" Grid.Column="15">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="#"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding RollSixteen, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="1" Grid.Column="16">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="#"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding RollSeventeen, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="1" Grid.Column="17">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="#"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding RollEighteen, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="1" Grid.Column="18">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="#"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding RollNineteen, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="1" Grid.Column="19">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="#"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding RollTwenty, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="1" Grid.Column="20">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="#"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding RollTwentyOne, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         
         <!--Frame Running Scores-->

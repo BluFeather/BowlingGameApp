@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace BowlingGameApp.View.UserControls
@@ -348,5 +349,30 @@ namespace BowlingGameApp.View.UserControls
 
         public static readonly DependencyProperty FrameTenRunningValueProperty =
             DependencyProperty.Register("FrameTenRunningValue", typeof(string), typeof(Scorecard), new PropertyMetadata(default(string)));
+
+        public void SetRolls(List<string> rollList)
+        {
+            RollOne = rollList[0];
+            RollTwo = rollList[1];
+            RollThree = rollList[2];
+            RollFour = rollList[3];
+            RollFive = rollList[4];
+            RollSix = rollList[5];
+            RollSeven = rollList[6];
+            RollEight = rollList[7];
+            RollNine = rollList[8];
+            RollTen = rollList[9];
+            RollEleven = rollList[10];
+            RollTwelve = rollList[11];
+            RollThirteen = rollList[12];
+            RollFourteen = rollList[13];
+            RollFifteen = rollList[14];
+            RollSixteen = rollList[15];
+            RollSeventeen = rollList[16];
+            RollEighteen = rollList[17];
+            RollNineteen = rollList[18];
+            RollTwenty = rollList[19];
+            RollTwentyOne = rollList[20];
+        }
     }
 }

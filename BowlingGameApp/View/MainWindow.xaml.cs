@@ -18,16 +18,24 @@ namespace BowlingGameApp
         private void OnScoreReceived(object? sender, int value)
         {
             Game.AddRoll(value);
+            UpdateScorecard();
         }
 
         private void UpdateScorecard()
         {
             List<Frame> frames = Game.Frames;
-            for (int i = 0; i < frames.Count; i++)
+            List<string> scorecardEntries = new List<string>();
+            for (int frame = 0; frame < frames.Count; frame++)
             {
-                List<int> scorecardEntries = new List<int>();
+                scorecardEntries.Add(frames[frame].Scores.Count >= 1 ? $"{frames[frame].Scores[0]}" : string.Empty);
+                scorecardEntries.Add(frames[frame].Scores.Count >= 2 ? $"{frames[frame].Scores[1]}" : string.Empty);
 
+                if (frame == 9)
+                {
+                    scorecardEntries.Add(frames[frame].Scores.Count >= 3 ? $"{frames[frame].Scores[2]}" : string.Empty);
+                }
             }
+            Scorecard.SetRolls(scorecardEntries);
         }
     }
 }
