@@ -55,6 +55,27 @@ namespace BowlingGameApp.Model
         public int CurrentRoll => Scores.Count;
 
         /// <summary>
+        /// Indicates whether or not any rolls are remaining for this frame.
+        /// </summary>
+        public bool FrameIsComplete
+        {
+            get
+            {
+                if (IsFinalFrame && ThirdRollNeededForLastFrame)
+                {
+                    return Scores.Count >= 3;
+                }
+
+                return Scores.Count >= 2 || Value == 10;
+            }
+        }
+
+        /// <summary>
+        /// Indicates whether or not this is the last frame in a bowling game.
+        /// </summary>
+        public bool IsFinalFrame { get; protected set; } = false;
+
+        /// <summary>
         /// Attempts to add the value of a roll to this frame.
         /// </summary>
         /// <param name="rollValue">Points to be awarded for this roll.</param>
@@ -100,27 +121,6 @@ namespace BowlingGameApp.Model
             if (IsStrike()) return false;
             return Scores.ElementAtOrDefault(0) + Scores.ElementAtOrDefault(1) == 10;
         }
-
-        /// <summary>
-        /// Indicates whether or not any rolls are remaining for this frame.
-        /// </summary>
-        public bool FrameIsComplete
-        {
-            get
-            {
-                if (IsFinalFrame && ThirdRollNeededForLastFrame)
-                {
-                    return Scores.Count >= 3;
-                }
-
-                return Scores.Count >= 2 || Value == 10;
-            }
-        }
-
-        /// <summary>
-        /// Indicates whether or not this is the last frame in a bowling game.
-        /// </summary>
-        public bool IsFinalFrame { get; protected set; } = false;
 
         /// <summary>
         /// Verbose string describing the contents of this Frame. Useful for debug outputs.

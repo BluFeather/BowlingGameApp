@@ -32,6 +32,12 @@ namespace BowlingGameApp.Model
         public List<Frame> Frames { get; protected set; } = new List<Frame>();
 
         /// <summary>
+        /// The player's current score.
+        /// </summary>
+        /// <returns>Integer representation of the current score.</returns>
+        public int Score => CurrentFrame.OverallScore;
+
+        /// <summary>
         /// Returns number of remaining pins in this frame.
         /// </summary>
         public int RemainingPins => CurrentFrame.RemainingPins;
@@ -71,12 +77,6 @@ namespace BowlingGameApp.Model
             GoToNextFrame();
             return true;
         }
-
-        /// <summary>
-        /// The player's current score.
-        /// </summary>
-        /// <returns>Integer representation of the current score.</returns>
-        public int Score => CurrentFrame.OverallScore;
 
         private int frameIndex = 0;
 

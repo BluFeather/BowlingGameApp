@@ -91,6 +91,20 @@ namespace BowlingGameAppTests
                 Assert.True(frames[frame].Scores[1] == 1);
             }
         }
+
+        [Fact]
+        public void EnteringSlashAsSecondRollInAnyFrameResultsInSpare()
+        {
+            ViewModel.ResetGame();
+            var frames = ViewModel.Frames;
+            for (int frame = 0; frame < 10; frame++)
+            {
+                ViewModel.AddRoll($"{frame}");
+                ViewModel.AddRoll("/");
+                Output.WriteLine($"{frames[frame]}");
+                Assert.True(ViewModel.Frames[frame].IsSpare());
+            }
+        }
         #endregion
     }
 }
