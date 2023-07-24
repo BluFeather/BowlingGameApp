@@ -196,6 +196,20 @@ namespace BowlingGameAppTests
             RollMany(0, 25);
             Assert.Equal(20, GetRolls().Count);
         }
+
+        [Fact]
+        public void CanOnlyRoll21Times_If10thFrameBonus()
+        {
+            RollMany(5, 21);
+            Assert.Equal(21, GetRolls().Count);
+        }
+
+        [Fact]
+        public void CanOnlyRoll12Times_IfPerfectGame()
+        {
+            RollMany(10, 20);
+            Assert.Equal(12, GetRolls().Count);
+        }
         #endregion
 
         private void Roll(int pointsEachRoll)
