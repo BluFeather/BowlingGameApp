@@ -1,5 +1,4 @@
 ﻿using BowlingGameApp.Model;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace BowlingGameApp.ViewModel
@@ -57,6 +56,10 @@ namespace BowlingGameApp.ViewModel
             }
         }
 
+        /// <summary>
+        /// Total score by the conclusion of this frame.
+        /// Empty until there are no rolls left for this frame and the frame's bonuses have been awarded.
+        /// </summary>
         public string RunningScore
         {
             get
