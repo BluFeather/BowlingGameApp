@@ -58,6 +58,10 @@ namespace BowlingGameApp
                 {
                     scorecardEntries.Add("/");
                 }
+                else if (frame.IsFinalFrame && frame.IsStrike() && frame.Scores.ElementAtOrDefault(1) == 10)
+                {
+                    scorecardEntries.Add("X");
+                }
                 else
                 {
                     scorecardEntries.Add(frame.Scores.Count >= 2 ? $"{frame.Scores[1]}" : string.Empty);
