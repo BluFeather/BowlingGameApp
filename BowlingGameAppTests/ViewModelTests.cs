@@ -1,6 +1,5 @@
 ﻿using BowlingGameApp.Model;
 using BowlingGameApp.ViewModel;
-using System.Net.Sockets;
 using Xunit.Abstractions;
 
 namespace BowlingGameAppTests
@@ -270,6 +269,18 @@ namespace BowlingGameAppTests
                         continue;
                 }
             }
+        }
+        #endregion
+
+        #region Property and Method Tests
+        [Fact]
+        public void GutterballReturnsZeroString()
+        {
+            ViewModel.ResetGame();
+            Roll(0);
+            int frame = 0;
+            int rollNumber = 0;
+            Assert.Equal("0", ViewModel.GetRollForFrame(frame, rollNumber));
         }
         #endregion
 
