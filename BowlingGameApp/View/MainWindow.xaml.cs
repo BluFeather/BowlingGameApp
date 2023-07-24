@@ -52,9 +52,16 @@ namespace BowlingGameApp
                 {
                     scorecardEntries.Add(frame.Scores.Count >= 1 ? $"{frame.Scores[0]}" : string.Empty);
                 }
-                
-                scorecardEntries.Add(frame.Scores.Count >= 2 ? $"{frame.Scores[1]}" : string.Empty);
 
+                if (frame.IsSpare())
+                {
+                    scorecardEntries.Add("/");
+                }
+                else
+                {
+                    scorecardEntries.Add(frame.Scores.Count >= 2 ? $"{frame.Scores[1]}" : string.Empty);
+                }
+                
                 if (frameIndex == 9)
                 {
                     scorecardEntries.Add(frame.Scores.Count >= 3 ? $"{frame.Scores[2]}" : string.Empty);
