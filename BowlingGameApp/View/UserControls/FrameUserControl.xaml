@@ -16,9 +16,11 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
+            <ColumnDefinition Width="1*"
+                              x:Name="ThirdColumn"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.ColumnSpan="2"
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="3"
                        TextAlignment="Center" VerticalAlignment="Center"
                        Text="{Binding FrameNumber, RelativeSource={RelativeSource AncestorType=local:FrameUserControl}}"/>
 
@@ -30,7 +32,11 @@
                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                      Text="{Binding RollTwo, RelativeSource={RelativeSource AncestorType=local:FrameUserControl}, Mode=OneWay}"/>
 
-        <TextBlock Grid.Row="2" Grid.ColumnSpan="2"
+        <TextBox Grid.Row="1" Grid.Column="2"
+                     VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                     Text="{Binding RollThree, RelativeSource={RelativeSource AncestorType=local:FrameUserControl}, Mode=OneWay}"/>
+
+        <TextBlock Grid.Row="2" Grid.ColumnSpan="3"
                        TextAlignment="Center" VerticalAlignment="Center"
                        Text="{Binding RunningScore, RelativeSource={RelativeSource AncestorType=local:FrameUserControl}}"/>
     </Grid>

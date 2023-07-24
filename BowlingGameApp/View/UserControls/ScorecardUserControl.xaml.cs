@@ -12,6 +12,7 @@ namespace BowlingGameApp.View.UserControls
         {
             InitializeComponent();
             Game = BowlingGameInstance.GameInstance;
+            RollSparesGame();
         }
 
         protected BowlingGame Game { get; }
@@ -31,6 +32,14 @@ namespace BowlingGameApp.View.UserControls
                     frameViewModels.Add(new FrameViewModel(frame));
                 }
                 return frameViewModels;
+            }
+        }
+
+        private void RollSparesGame()
+        {
+            for (int roll = 0; roll < 21; roll++)
+            {
+                Game.AddRoll(5);
             }
         }
     }
