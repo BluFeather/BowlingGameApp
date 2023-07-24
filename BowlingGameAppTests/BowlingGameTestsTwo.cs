@@ -216,7 +216,6 @@ namespace BowlingGameAppTests
         {
             for (int rollValue = 10;  rollValue > -100; rollValue--)
             {
-                Output.WriteLine($"{rollValue}");
                 Roll(rollValue);
             }
 
@@ -231,7 +230,6 @@ namespace BowlingGameAppTests
         {
             for (int rollValue = 0; rollValue < 100; rollValue++)
             {
-                Output.WriteLine($"{rollValue}");
                 Roll(rollValue);
             }
 
@@ -240,11 +238,27 @@ namespace BowlingGameAppTests
                 Assert.True(roll <= 10);
             }
         }
+
+        [Fact]
+        public void CannotExceed10PinsOnFrames1Through9()
+        {
+            for (int rollValue = 0; rollValue < 10; rollValue++)
+            {
+                RollMany(rollValue, 25);
+
+                var frames = GetFrames();
+                for (int frame = 0; frame < 9; frame++)
+                {
+                    Assert.True(frames[frame].Scores.Count <= 2);
+                }
+                Game.NewGame();
+            }
+        }
         #endregion
 
         private void Roll(int pointsEachRoll)
         {
-            Output.WriteLine($"{pointsEachRoll} returned {Game.AddRoll(pointsEachRoll)}");
+            Game.AddRoll(pointsEachRoll);
         }
 
         private void RollMany(int pointsEachRoll, int numberOfRolls)
