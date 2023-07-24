@@ -90,9 +90,30 @@ namespace BowlingGameAppTests
             Assert.Equal(expectedFinalScore, GetScore());
         }
 
-        private void PassIfExpectedRollCount(int expectedRollCount)
+        [Fact]
+        public void ExpectedValuesIfPerfectGame()
         {
-            Assert.Equal(expectedRollCount, GetRolls().Count);
+            int valueOfRolls = 10;
+            int numberOfRolls = 12;
+            int expectedFinalScore = 300;
+
+            RollMany(valueOfRolls, numberOfRolls);
+            PassIfExpectedRollCount(numberOfRolls);
+
+            var frames = GetFrames();
+            for (int frame = 0; frame < 10; frame++)
+            {
+                Output.WriteLine($"{frames[frame]}");
+
+                int expectedRollsThisFrame = frame != 9 ? 1 : 3;
+                Assert.Equal(expectedRollsThisFrame, frames[frame].Scores.Count);
+                for (int roll = 0; roll < frames[frame].Scores.Count; roll++)
+                {
+                    Assert.Equal(valueOfRolls, frames[frame].Scores[roll]);
+                }
+            }
+
+            Assert.Equal(expectedFinalScore, GetScore());
         }
         #endregion
 
@@ -107,6 +128,11 @@ namespace BowlingGameAppTests
             {
                 Roll(pointsEachRoll);
             }
+        }
+
+        private void PassIfExpectedRollCount(int expectedRollCount)
+        {
+            Assert.Equal(expectedRollCount, GetRolls().Count);
         }
 
         private List<int> GetRolls() => Game.PlayedRolls;
