@@ -12,8 +12,9 @@ namespace BowlingGameApp.Model
         /// Frame that will contain a running total consisting of this frame's value on top of the previous frame's value.
         /// </summary>
         /// <param name="previousFrame">Frame to refer to when calculating a running total.</param>
-        public Frame(bool isFinalFrame, Frame? previousFrame)
+        public Frame(int frameNumber, bool isFinalFrame, Frame? previousFrame)
         {
+            FrameNumber = frameNumber;
             IsFinalFrame = isFinalFrame;
             this.previousFrame = previousFrame;
         }
@@ -70,9 +71,28 @@ namespace BowlingGameApp.Model
         }
 
         /// <summary>
+        /// Position of this frame in a scorecard. Numbering begins at 1.
+        /// </summary>
+        public int FrameNumber { get; protected set; } = 0;
+
+        /// <summary>
         /// Indicates whether or not this is the last frame in a bowling game.
         /// </summary>
         public bool IsFinalFrame { get; protected set; } = false;
+
+        /// <summary>
+        /// Indicates whether not not this frame needs bonus points for a Spare or Strike.
+        /// </summary>
+        public bool NeedsBonusPoints
+        {
+            get
+            {
+                if (!IsSpare() && !IsStrike()) return false;
+                if (IsSpare() && Bonuses.Count >= 1) return false;
+                if (IsStrike() && Bonuses.Count >= 2) return false;
+                return true;
+            }
+        }
 
         /// <summary>
         /// Attempts to add the value of a roll to this frame.
@@ -98,7 +118,7 @@ namespace BowlingGameApp.Model
         /// <param name="rollValue">bonus points to be added to this frame's value.</param>
         public void AddBonusPoints(int rollValue)
         {
-            if (!NeedsBonusPoints()) return;
+            if (!NeedsBonusPoints) return;
             Bonuses.Add(rollValue);
         }
 
@@ -135,13 +155,5 @@ namespace BowlingGameApp.Model
         private List<int> Bonuses { get; set; } = new List<int>();
 
         private bool ThirdRollNeededForLastFrame => IsFinalFrame && IsStrike() || IsSpare() && Scores.Count <= 2;
-
-        private bool NeedsBonusPoints()
-        {
-            if (!IsSpare() && !IsStrike()) return false;
-            if (IsSpare() && Bonuses.Count >= 1) return false;
-            if (IsStrike() && Bonuses.Count >= 2) return false;
-            return true;
-        }
     }
 }
