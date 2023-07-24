@@ -1,28 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+using System.Diagnostics;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace BowlingGameApp.View.UserControls
 {
-    /// <summary>
-    /// Interaction logic for RollButtons.xaml
-    /// </summary>
     public partial class RollButtons : UserControl
     {
         public RollButtons()
         {
             InitializeComponent();
         }
+
+        public event EventHandler<int> ScoreReceived;
+
+        protected virtual void OnScoreReceived(int value)
+        {
+            Debug.WriteLine($"Clicked: {value}");
+            ScoreReceived?.Invoke(this, value);
+        }
+
+        private void ZeroButton_OnClick(object sender, System.Windows.RoutedEventArgs e) => OnScoreReceived(0);
+        private void OneButton_OnClick(object sender, System.Windows.RoutedEventArgs e) => OnScoreReceived(1);
+        private void TwoButton_OnClick(object sender, System.Windows.RoutedEventArgs e) => OnScoreReceived(2);
+        private void ThreeButton_OnClick(object sender, System.Windows.RoutedEventArgs e) => OnScoreReceived(3);
+        private void FourButton_OnClick(object sender, System.Windows.RoutedEventArgs e) => OnScoreReceived(4);
+        private void FiveButton_OnClick(object sender, System.Windows.RoutedEventArgs e) => OnScoreReceived(5);
+        private void SixButton_OnClick(object sender, System.Windows.RoutedEventArgs e) => OnScoreReceived(6);
+        private void SevenButton_OnClick(object sender, System.Windows.RoutedEventArgs e) => OnScoreReceived(7);
+        private void EightButton_OnClick(object sender, System.Windows.RoutedEventArgs e) => OnScoreReceived(8);
+        private void NineButton_OnClick(object sender, System.Windows.RoutedEventArgs e) => OnScoreReceived(9);
+        private void TenButton_OnClick(object sender, System.Windows.RoutedEventArgs e) => OnScoreReceived(10);
     }
 }

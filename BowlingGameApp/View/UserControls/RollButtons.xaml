@@ -9,26 +9,37 @@
 
     <StackPanel Orientation="Horizontal">
         <Button Width="50" Height="50" Margin="2.5"
-                    Content="0"/>
+                Content="0"
+                Click="ZeroButton_OnClick"/>
         <Button Width="50" Height="50" Margin="2.5"
-                    Content="1"/>
+                Content="1"
+                Click="OneButton_OnClick"/>
         <Button Width="50" Height="50" Margin="2.5"
-                    Content="2"/>
+                Content="2"
+                Click="TwoButton_OnClick"/>
         <Button Width="50" Height="50" Margin="2.5"
-                    Content="3"/>
+                Content="3"
+                Click="ThreeButton_OnClick"/>
         <Button Width="50" Height="50" Margin="2.5"
-                    Content="4"/>
+                Content="4"
+                Click="FourButton_OnClick"/>
         <Button Width="50" Height="50" Margin="2.5"
-                    Content="5"/>
+                Content="5"
+                Click="FiveButton_OnClick"/>
         <Button Width="50" Height="50" Margin="2.5"
-                    Content="6"/>
+                Content="6"
+                Click="SixButton_OnClick"/>
         <Button Width="50" Height="50" Margin="2.5"
-                    Content="7"/>
+                Content="7"
+                Click="SevenButton_OnClick"/>
         <Button Width="50" Height="50" Margin="2.5"
-                    Content="8"/>
+                Content="8"
+                Click="EightButton_OnClick"/>
         <Button Width="50" Height="50" Margin="2.5"
-                    Content="9"/>
+                Content="9"
+                Click="NineButton_OnClick"/>
         <Button Width="50" Height="50" Margin="2.5"
-                    Content="10"/>
+                Content="10"
+                Click="TenButton_OnClick"/>
     </StackPanel>
 </UserControl>
