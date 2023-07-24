@@ -1,5 +1,5 @@
 ﻿using BowlingGameApp.Model;
-using System.Diagnostics;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace BowlingGameApp
@@ -18,6 +18,16 @@ namespace BowlingGameApp
         private void OnScoreReceived(object? sender, int value)
         {
             Game.AddRoll(value);
+        }
+
+        private void UpdateScorecard()
+        {
+            List<Frame> frames = Game.Frames;
+            for (int i = 0; i < frames.Count; i++)
+            {
+                List<int> scorecardEntries = new List<int>();
+
+            }
         }
     }
 }

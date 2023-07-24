@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:BowlingGameApp"
         xmlns:uc="clr-namespace:BowlingGameApp.View.UserControls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="MainWindow" Height="450" Width="1050"
         SizeToContent="WidthAndHeight">
     <StackPanel>
         <uc:RollButtonsUserControl x:Name="RollButtons"/>
-        <uc:Scorecard x:Name="Scorecard" BorderBrush="Black" BorderThickness="1"/>
+        <uc:Scorecard x:Name="Scorecard"/>
     </StackPanel>
 </Window>
