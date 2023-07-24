@@ -37,6 +37,11 @@ namespace BowlingGameApp.Model
         public int RemainingPins => CurrentFrame.RemainingPins;
 
         /// <summary>
+        /// Zero-Based Integer representing the current roll to be scored in this frame.
+        /// </summary>
+        public int CurrentRoll => CurrentFrame.CurrentRoll;
+
+        /// <summary>
         /// Readies this game for a new match.
         /// </summary>
         public void NewGame()

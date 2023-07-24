@@ -73,6 +73,24 @@ namespace BowlingGameAppTests
             Assert.True(ViewModel.Frames[1].Scores[0] == 10);
             Assert.True(ViewModel.Frames[2].Scores.Count == 0);
         }
+
+        [Fact]
+        public void EnteringSlashAsFirstRollInAnyFrameIsRejected()
+        {
+            ViewModel.ResetGame();
+            var frames = ViewModel.Frames;
+            for (int frame = 0; frame < 10; frame++)
+            {
+                ViewModel.AddRoll("/");
+                Assert.Empty(frames[frame].Scores);
+
+                ViewModel.AddRoll("1");
+                ViewModel.AddRoll("1");
+                Assert.Equal(2, frames[frame].Scores.Count);
+                Assert.True(frames[frame].Scores[0] == 1);
+                Assert.True(frames[frame].Scores[1] == 1);
+            }
+        }
         #endregion
     }
 }

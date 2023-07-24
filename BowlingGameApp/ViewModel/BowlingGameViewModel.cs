@@ -17,6 +17,8 @@ namespace BowlingGameApp.ViewModel
         {
             get => GameInstance.Frames;
         }
+
+        private int CurrentRoll => GameInstance.CurrentRoll;
         
         public bool AddRoll(string roll)
         {
@@ -27,6 +29,8 @@ namespace BowlingGameApp.ViewModel
             
             if (string.Compare(roll, "/") == 0)
             {
+                if (GameInstance.CurrentRoll == 0) return false;
+
                 var remainingPins = GameInstance.RemainingPins;
                 return GameInstance.AddRoll(remainingPins);
             }

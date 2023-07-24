@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Navigation;
 
 namespace BowlingGameApp.Model
 {
@@ -47,6 +48,11 @@ namespace BowlingGameApp.Model
         /// Number of pins remaining in this frame.
         /// </summary>
         public int RemainingPins { get; protected set; } = 10;
+
+        /// <summary>
+        /// Zero-Based Integer representing the current roll to be scored in this frame.
+        /// </summary>
+        public int CurrentRoll => Scores.Count;
 
         /// <summary>
         /// Attempts to add the value of a roll to this frame.
