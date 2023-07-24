@@ -189,43 +189,53 @@
         <!--Frame Running Scores-->
         <Border BorderThickness="1" BorderBrush="Black" 
                 Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="###"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding FrameOneRunningValue, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="###"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding FrameTwoRunningValue, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="###"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding FrameThreeRunningValue, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="2" Grid.Column="6" Grid.ColumnSpan="2">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="###"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding FrameFourRunningValue, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="2" Grid.Column="8" Grid.ColumnSpan="2">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="###"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding FrameFiveRunningValue, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="2" Grid.Column="10" Grid.ColumnSpan="2">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="###"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding FrameSixRunningValue, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="2" Grid.Column="12" Grid.ColumnSpan="2">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="###"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding FrameSevenRunningValue, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="2" Grid.Column="14" Grid.ColumnSpan="2">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="###"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding FrameEightRunningValue, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="2" Grid.Column="16" Grid.ColumnSpan="2">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="###"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding FrameNineRunningValue, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
         <Border BorderThickness="1" BorderBrush="Black"
                 Grid.Row="2" Grid.Column="18" Grid.ColumnSpan="3">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="###"/>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding FrameTenRunningValue, RelativeSource={RelativeSource AncestorType=local:Scorecard}}"/>
         </Border>
     </Grid>
 </UserControl>

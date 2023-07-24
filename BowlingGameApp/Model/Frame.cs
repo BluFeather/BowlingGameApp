@@ -66,7 +66,7 @@ namespace BowlingGameApp.Model
                     return Scores.Count >= 3;
                 }
 
-                return Scores.Count >= 2 || Value == 10;
+                return Scores.Count >= 2 || IsSpare() || IsStrike();
             }
         }
 
@@ -81,7 +81,7 @@ namespace BowlingGameApp.Model
         public bool IsFinalFrame { get; protected set; } = false;
 
         /// <summary>
-        /// Indicates whether not not this frame needs bonus points for a Spare or Strike.
+        /// Indicates whether or not this frame needs bonus points for a Spare or Strike.
         /// </summary>
         public bool NeedsBonusPoints
         {
@@ -91,6 +91,17 @@ namespace BowlingGameApp.Model
                 if (IsSpare() && Bonuses.Count >= 1) return false;
                 if (IsStrike() && Bonuses.Count >= 2) return false;
                 return true;
+            }
+        }
+
+        /// <summary>
+        /// Indicates whether or not the running total in this frame is ready for display.
+        /// </summary>
+        public bool RunningTotalIsFinal
+        {
+            get
+            {
+                return FrameIsComplete && !NeedsBonusPoints;
             }
         }
 

@@ -374,5 +374,19 @@ namespace BowlingGameApp.View.UserControls
             RollTwenty = rollList[19];
             RollTwentyOne = rollList[20];
         }
+
+        public void SetRunningValues(List<string> valueList)
+        {
+            FrameOneRunningValue = valueList[0];
+            FrameTwoRunningValue = valueList[1];
+            FrameThreeRunningValue = valueList[2];
+            FrameFourRunningValue = valueList[3];
+            FrameFiveRunningValue = valueList[4];
+            FrameSixRunningValue = valueList[5];
+            FrameSevenRunningValue = valueList[6];
+            FrameEightRunningValue = valueList[7];
+            FrameNineRunningValue = valueList[8];
+            FrameTenRunningValue = valueList[9];
+        }
     }
 }

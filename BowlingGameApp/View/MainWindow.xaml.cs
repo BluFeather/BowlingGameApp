@@ -1,5 +1,6 @@
 ﻿using BowlingGameApp.Model;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 
 namespace BowlingGameApp
@@ -18,14 +19,15 @@ namespace BowlingGameApp
         private void OnScoreReceived(object? sender, int value)
         {
             Game.AddRoll(value);
-            UpdateScorecard();
+            UpdateScorecardRolls();
+            UpdateScorecardRunningValues();
         }
 
-        private void UpdateScorecard()
+        private void UpdateScorecardRolls()
         {
             List<Frame> frames = Game.Frames;
-            List<string> scorecardEntries = new List<string>();
-            for (int frame = 0; frame < frames.Count; frame++)
+            List<string> scorecardEntries = new();
+            for (int frame = 0; frame < 10; frame++)
             {
                 scorecardEntries.Add(frames[frame].Scores.Count >= 1 ? $"{frames[frame].Scores[0]}" : string.Empty);
                 scorecardEntries.Add(frames[frame].Scores.Count >= 2 ? $"{frames[frame].Scores[1]}" : string.Empty);
@@ -36,6 +38,18 @@ namespace BowlingGameApp
                 }
             }
             Scorecard.SetRolls(scorecardEntries);
+        }
+
+        private void UpdateScorecardRunningValues()
+        {
+            List<Frame> frames = Game.Frames;
+            List<string> runningValuesList = new();
+            for (int frameIndex = 0; frameIndex < 10; frameIndex++)
+            {
+                Frame frame = frames[frameIndex];
+                runningValuesList.Add(frame.RunningTotalIsFinal ? $"{frame.OverallScore}" : string.Empty);
+            }
+            Scorecard.SetRunningValues(runningValuesList);
         }
     }
 }
