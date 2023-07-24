@@ -8,10 +8,10 @@
              d:DesignHeight="100" d:DesignWidth="1000">
     
     <ItemsControl Height="100" Width="1000"
-                  ItemsSource="{Binding Frames, RelativeSource={RelativeSource AncestorType=local:ScorecardUserControl}}">
+                  ItemsSource="{Binding FrameViewModels, RelativeSource={RelativeSource AncestorType=local:ScorecardUserControl}}">
         <ItemsControl.ItemTemplate>
             <DataTemplate>
-                <local:FrameUserControl Frame="{Binding Frame}"/>
+                <local:FrameUserControl Frame="{Binding}"/>
             </DataTemplate>
         </ItemsControl.ItemTemplate>
         <ItemsControl.ItemsPanel>

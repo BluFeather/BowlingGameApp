@@ -1,6 +1,4 @@
-﻿using BowlingGameApp.Model;
-using System.Collections.Generic;
-using System.Windows;
+﻿using System.Windows;
 
 namespace BowlingGameApp
 {
@@ -9,23 +7,6 @@ namespace BowlingGameApp
         public MainWindow()
         {
             InitializeComponent();
-            Game = BowlingGameInstance.GameInstance;
-            RollSparesGame();
-        }
-
-        private BowlingGame Game { get; }
-
-        public List<Frame> Frames
-        {
-            get => Game.Frames;
-        }
-
-        private void RollSparesGame()
-        {
-            for (int roll = 0; roll < 21; roll++)
-            {
-                Game.AddRoll(5);
-            }
         }
     }
 }

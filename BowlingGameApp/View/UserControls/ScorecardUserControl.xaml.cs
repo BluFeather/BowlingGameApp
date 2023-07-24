@@ -1,6 +1,6 @@
-﻿using BowlingGameApp.ViewModel;
+﻿using BowlingGameApp.Model;
+using BowlingGameApp.ViewModel;
 using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Controls;
 using Frame = BowlingGameApp.Model.Frame;
 
@@ -11,12 +11,14 @@ namespace BowlingGameApp.View.UserControls
         public ScorecardUserControl()
         {
             InitializeComponent();
+            Game = BowlingGameInstance.GameInstance;
         }
+
+        protected BowlingGame Game { get; }
 
         public List<Frame> Frames
         {
-            get => (List<Frame>)GetValue(FramesProperty);
-            set => SetValue(FramesProperty, value);
+            get => Game.Frames;
         }
 
         public List<FrameViewModel> FrameViewModels
@@ -31,12 +33,5 @@ namespace BowlingGameApp.View.UserControls
                 return frameViewModels;
             }
         }
-
-        private static readonly DependencyProperty FramesProperty =
-            DependencyProperty.Register(
-                name: "Frames",
-                propertyType: typeof(List<Frame>),
-                ownerType: typeof(ScorecardUserControl),
-                typeMetadata: new FrameworkPropertyMetadata(default(List<Frame>)));
     }
 }
