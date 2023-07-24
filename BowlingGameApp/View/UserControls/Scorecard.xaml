@@ -17,6 +17,7 @@
             <local:FrameUserControl FrameNumber="7"/>
             <local:FrameUserControl FrameNumber="8"/>
             <local:FrameUserControl FrameNumber="9"/>
+            <local:FrameUserControl FrameNumber="10"/>
         </StackPanel>
     </Grid>
 </UserControl>
