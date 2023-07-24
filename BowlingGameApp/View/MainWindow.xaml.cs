@@ -23,6 +23,13 @@ namespace BowlingGameApp
             UpdateScorecardRunningValues();
         }
 
+        private void ResetGame_OnClick(object sender, RoutedEventArgs e)
+        {
+            Game.NewGame();
+            UpdateScorecardRolls();
+            UpdateScorecardRunningValues();
+        }
+
         private void UpdateScorecardRolls()
         {
             List<Frame> frames = Game.Frames;

@@ -11,5 +11,6 @@
     <StackPanel>
         <uc:RollButtonsUserControl x:Name="RollButtons"/>
         <uc:Scorecard x:Name="Scorecard"/>
+        <Button Content="Reset Game" Click="ResetGame_OnClick"/>
     </StackPanel>
 </Window>
