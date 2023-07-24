@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 
 namespace BowlingGameApp
 {
@@ -12,7 +13,7 @@ namespace BowlingGameApp
 
         private void OnScoreReceived(object? sender, int value)
         {
-            
+            Debug.WriteLine($"Clicked: {value}");
         }
     }
 }

@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Windows.Controls;
 
 namespace BowlingGameApp.View.UserControls
 {
-    public partial class RollButtons : UserControl
+    public partial class RollButtonsUserControl : UserControl
     {
-        public RollButtons()
+        public RollButtonsUserControl()
         {
             InitializeComponent();
         }
 
-        public event EventHandler<int> ScoreReceived;
+        public event EventHandler<int>? ScoreReceived;
 
         protected virtual void OnScoreReceived(int value)
         {
