@@ -242,7 +242,7 @@ namespace BowlingGameAppTests
         [Fact]
         public void CannotExceed2RollsOnFrames1Through9()
         {
-            for (int rollValue = 0; rollValue < 10; rollValue++)
+            for (int rollValue = 0; rollValue <= 10; rollValue++)
             {
                 RollMany(rollValue, 25);
 
@@ -256,7 +256,19 @@ namespace BowlingGameAppTests
         }
 
         [Fact]
-        public void CannotExceed
+        public void CannotExceed2RollsOnFrame10_IfNoSpareOrStrike()
+        {
+            for (int rollValue = 0; rollValue <= 10; rollValue++)
+            {
+                RollMany(rollValue, 25);
+
+                var frame = GetFrame(9);
+                if (frame.IsSpare() || frame.IsStrike()) continue;
+                Output.WriteLine($"{frame}");
+                Assert.True(frame.Scores.Count <= 2);
+                Game.NewGame();
+            }
+        }
         #endregion
 
         private void Roll(int pointsEachRoll)
@@ -286,6 +298,11 @@ namespace BowlingGameAppTests
         }
 
         private List<int> GetRolls() => Game.PlayedRolls;
+
+        private Frame GetFrame(int frameNumber)
+        {
+            return GetFrames()[frameNumber];
+        }
 
         private List<Frame> GetFrames() => Game.Frames;
 
