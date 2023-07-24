@@ -47,6 +47,6 @@ namespace BowlingGameApp.View.UserControls
                 name: "Frame",
                 propertyType: typeof(FrameViewModel),
                 ownerType: typeof(FrameUserControl),
-                typeMetadata: new FrameworkPropertyMetadata(typeof(FrameViewModel)));
+                typeMetadata: new FrameworkPropertyMetadata(default(FrameViewModel)));
     }
 }

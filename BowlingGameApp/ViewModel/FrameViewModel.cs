@@ -10,7 +10,7 @@ namespace BowlingGameApp.ViewModel
             Frame = frame;
         }
 
-        protected Frame Frame { get; }
+        public Frame Frame { get; }
 
         /// <summary>
         /// Position of this frame in a scorecard. Numbering begins at 1.

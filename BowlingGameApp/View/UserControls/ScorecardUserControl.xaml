@@ -5,8 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BowlingGameApp.View.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+             d:DesignHeight="100" d:DesignWidth="1000">
+    
+    <ItemsControl Height="100" Width="1000"
+                  ItemsSource="{Binding Frames, RelativeSource={RelativeSource AncestorType=local:ScorecardUserControl}}">
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <local:FrameUserControl Frame="{Binding Frame}"/>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <StackPanel Orientation="Horizontal"/>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+    </ItemsControl>
 </UserControl>
