@@ -210,11 +210,26 @@ namespace BowlingGameAppTests
             RollMany(10, 20);
             Assert.Equal(12, GetRolls().Count);
         }
+
+        [Fact]
+        public void CanOnlyRollPinsGreaterOrEqualToZero()
+        {
+            for (int rollValue = 10;  rollValue > -100; rollValue--)
+            {
+                Output.WriteLine($"{rollValue}");
+                Roll(rollValue);
+            }
+
+            foreach (var roll in GetRolls())
+            {
+                Assert.True(roll >= 0);
+            }
+        }
         #endregion
 
         private void Roll(int pointsEachRoll)
         {
-            Game.AddRoll(pointsEachRoll);
+            Output.WriteLine($"{pointsEachRoll} returned {Game.AddRoll(pointsEachRoll)}");
         }
 
         private void RollMany(int pointsEachRoll, int numberOfRolls)
