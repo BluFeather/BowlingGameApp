@@ -225,6 +225,21 @@ namespace BowlingGameAppTests
                 Assert.True(roll >= 0);
             }
         }
+
+        [Fact]
+        public void CanOnlyRollPinsLessThanOrEqualToTen()
+        {
+            for (int rollValue = 0; rollValue < 100; rollValue++)
+            {
+                Output.WriteLine($"{rollValue}");
+                Roll(rollValue);
+            }
+
+            foreach (var roll in GetRolls())
+            {
+                Assert.True(roll <= 10);
+            }
+        }
         #endregion
 
         private void Roll(int pointsEachRoll)
