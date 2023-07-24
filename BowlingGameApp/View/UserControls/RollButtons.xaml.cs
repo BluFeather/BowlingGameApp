@@ -15,7 +15,6 @@ namespace BowlingGameApp.View.UserControls
 
         protected virtual void OnScoreReceived(int value)
         {
-            Debug.WriteLine($"Clicked: {value}");
             ScoreReceived?.Invoke(this, value);
         }
 
