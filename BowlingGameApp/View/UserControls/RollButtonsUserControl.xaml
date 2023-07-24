@@ -9,37 +9,37 @@
 
     <StackPanel Orientation="Horizontal">
         <Button Width="50" Height="50" Margin="2.5"
-                Content="0"
+                Content="0" IsEnabled="{Binding ButtonZeroIsEnabled, RelativeSource={RelativeSource AncestorType=local:RollButtonsUserControl}}"
                 Click="ZeroButton_OnClick"/>
         <Button Width="50" Height="50" Margin="2.5"
-                Content="1"
+                Content="1" IsEnabled="{Binding ButtonOneIsEnabled, RelativeSource={RelativeSource AncestorType=local:RollButtonsUserControl}}"
                 Click="OneButton_OnClick"/>
         <Button Width="50" Height="50" Margin="2.5"
-                Content="2"
+                Content="2" IsEnabled="{Binding ButtonTwoIsEnabled, RelativeSource={RelativeSource AncestorType=local:RollButtonsUserControl}}"
                 Click="TwoButton_OnClick"/>
         <Button Width="50" Height="50" Margin="2.5"
-                Content="3"
+                Content="3" IsEnabled="{Binding ButtonThreeIsEnabled, RelativeSource={RelativeSource AncestorType=local:RollButtonsUserControl}}"
                 Click="ThreeButton_OnClick"/>
         <Button Width="50" Height="50" Margin="2.5"
-                Content="4"
+                Content="4" IsEnabled="{Binding ButtonFourIsEnabled, RelativeSource={RelativeSource AncestorType=local:RollButtonsUserControl}}"
                 Click="FourButton_OnClick"/>
         <Button Width="50" Height="50" Margin="2.5"
-                Content="5"
+                Content="5" IsEnabled="{Binding ButtonFiveIsEnabled, RelativeSource={RelativeSource AncestorType=local:RollButtonsUserControl}}"
                 Click="FiveButton_OnClick"/>
         <Button Width="50" Height="50" Margin="2.5"
-                Content="6"
+                Content="6" IsEnabled="{Binding ButtonSixIsEnabled, RelativeSource={RelativeSource AncestorType=local:RollButtonsUserControl}}"
                 Click="SixButton_OnClick"/>
         <Button Width="50" Height="50" Margin="2.5"
-                Content="7"
+                Content="7" IsEnabled="{Binding ButtonSevenIsEnabled, RelativeSource={RelativeSource AncestorType=local:RollButtonsUserControl}}"
                 Click="SevenButton_OnClick"/>
         <Button Width="50" Height="50" Margin="2.5"
-                Content="8"
+                Content="8" IsEnabled="{Binding ButtonEightIsEnabled, RelativeSource={RelativeSource AncestorType=local:RollButtonsUserControl}}"
                 Click="EightButton_OnClick"/>
         <Button Width="50" Height="50" Margin="2.5"
-                Content="9"
+                Content="9" IsEnabled="{Binding ButtonNineIsEnabled, RelativeSource={RelativeSource AncestorType=local:RollButtonsUserControl}}"
                 Click="NineButton_OnClick"/>
         <Button Width="50" Height="50" Margin="2.5"
-                Content="10"
+                Content="10" IsEnabled="{Binding ButtonTenIsEnabled, RelativeSource={RelativeSource AncestorType=local:RollButtonsUserControl}}"
                 Click="TenButton_OnClick"/>
     </StackPanel>
 </UserControl>

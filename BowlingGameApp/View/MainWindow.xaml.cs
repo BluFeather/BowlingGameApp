@@ -12,6 +12,7 @@ namespace BowlingGameApp
             InitializeComponent();
             RollButtons.ScoreReceived += OnScoreReceived;
             Game = BowlingGameInstance.GameInstance;
+            UpdateControls();
         }
 
         private BowlingGame Game { get; }
@@ -19,15 +20,20 @@ namespace BowlingGameApp
         private void OnScoreReceived(object? sender, int value)
         {
             Game.AddRoll(value);
-            UpdateScorecardRolls();
-            UpdateScorecardRunningValues();
+            UpdateControls();
         }
 
         private void ResetGame_OnClick(object sender, RoutedEventArgs e)
         {
             Game.NewGame();
+            UpdateControls();
+        }
+
+        private void UpdateControls()
+        {
             UpdateScorecardRolls();
             UpdateScorecardRunningValues();
+            UdpateValidInputs();
         }
 
         private void UpdateScorecardRolls()
@@ -57,6 +63,12 @@ namespace BowlingGameApp
                 runningValuesList.Add(frame.RunningTotalIsFinal ? $"{frame.OverallScore}" : string.Empty);
             }
             Scorecard.SetRunningValues(runningValuesList);
+        }
+
+        private void UdpateValidInputs()
+        {
+            Debug.WriteLine($"Remaining Pins: {Game.RemainingPins}");
+            RollButtons.SetMaxEnabledButton(Game.RemainingPins);
         }
     }
 }
