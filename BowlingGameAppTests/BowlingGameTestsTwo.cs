@@ -189,7 +189,7 @@ namespace BowlingGameAppTests
         }
         #endregion
 
-        #region Input Validation
+        #region Input Validation Tests
         [Fact]
         public void CanOnlyRoll20Times_IfNo10thFrameBonus()
         {
@@ -306,7 +306,7 @@ namespace BowlingGameAppTests
         }
         #endregion
 
-        #region
+        #region Misc Tests
         [Fact]
         public void GameCanBeReset()
         {
