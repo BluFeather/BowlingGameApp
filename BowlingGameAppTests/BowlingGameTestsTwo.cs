@@ -306,6 +306,18 @@ namespace BowlingGameAppTests
         }
         #endregion
 
+        #region
+        [Fact]
+        public void GameCanBeReset()
+        {
+            RollMany(5, 6);
+            Assert.True(GetRolls().Count == 6);
+            Game.NewGame();
+            RollMany(1, 2);
+            Assert.True(GetRolls().Count == 2);
+        }
+        #endregion
+
         private void Roll(int pointsEachRoll)
         {
             Game.AddRoll(pointsEachRoll);
