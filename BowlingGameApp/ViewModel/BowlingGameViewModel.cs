@@ -47,14 +47,5 @@ namespace BowlingGameApp.ViewModel
         {
             GameInstance.NewGame();
         }
-
-        public string GetRollForFrame(int frame, int rollNumber)
-        {
-            if (Frames[frame].Scores.Count - 1 < rollNumber)
-            {
-                return string.Empty;
-            }
-            return $"{Frames[frame].Scores.ElementAtOrDefault(0)}";
-        }
     }
 }

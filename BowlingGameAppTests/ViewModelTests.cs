@@ -279,11 +279,12 @@ namespace BowlingGameAppTests
             ViewModel.ResetGame();
             RollMany(5, 7);
             Output.WriteLine($"Frame 2 before reset.\n{ViewModel.Frames[2]}");
-            Assert.Equal("5", ViewModel.GetRollForFrame(2, 1));
+            Assert.Equal("5", $"{ViewModel.Frames[2].Scores[0]}");
 
             ViewModel.ResetGame();
+            RollMany(2, 7);
             Output.WriteLine($"Frame 2 after reset.\n{ViewModel.Frames[2]}");
-            Assert.Equal(string.Empty, ViewModel.GetRollForFrame(2, 1));
+            Assert.Equal("2", $"{ViewModel.Frames[2].Scores[0]}");
         }
 
         [Fact]

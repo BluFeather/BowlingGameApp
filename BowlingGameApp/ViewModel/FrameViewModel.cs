@@ -1,12 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BowlingGameApp.Model;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BowlingGameApp.ViewModel
 {
-    internal class FrameViewModel
+    public class FrameViewModel
     {
+        public FrameViewModel(Frame frame)
+        {
+            Frame = frame;
+        }
+
+        protected Frame Frame { get; }
+
+        public string RollOne => GetRollForFrame(0);
+
+        public string RollTwo => GetRollForFrame(1);
+
+        public string RollThree => GetRollForFrame(2);
+
+        private string GetRollForFrame(int rollNumber)
+        {
+            if (Frame.Scores.Count - 1 < rollNumber)
+            {
+                return string.Empty;
+            }
+            return $"{Frame.Scores.ElementAtOrDefault(0)}";
+        }
     }
 }
