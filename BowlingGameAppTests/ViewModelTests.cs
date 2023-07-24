@@ -177,6 +177,33 @@ namespace BowlingGameAppTests
                 Assert.Equal(rollValues, currentFrame.Scores[1]);
             }
         }
+
+        [Fact]
+        public void ExpectedValuesIfPerfectGame()
+        {
+            int rollValues = 10;
+
+            ViewModel.ResetGame();
+            RollMany(rollValues, 50);
+
+            var frames = ViewModel.Frames;
+            for (int frame = 0; frame < 10; frame++)
+            {
+                Frame currentFrame = frames[frame];
+                Output.WriteLine($"{currentFrame}");
+                if (frame == 9)
+                {
+                    Assert.True(currentFrame.Scores.Count == 3);
+                    Assert.Equal(rollValues, currentFrame.Scores[2]);
+                }
+                else
+                {
+                    Assert.True(currentFrame.Scores.Count == 1);
+                }
+
+                Assert.Equal(rollValues, currentFrame.Scores[0]);
+            }
+        }
         #endregion
 
         private void RollMany(int pointsPerRoll, int numberOfRolls)
