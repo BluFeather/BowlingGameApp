@@ -1,5 +1,6 @@
 ﻿using BowlingGameApp.Model;
 using BowlingGameApp.ViewModel;
+using System.Net.Sockets;
 using Xunit.Abstractions;
 
 namespace BowlingGameAppTests
@@ -144,6 +145,34 @@ namespace BowlingGameAppTests
 
                 Output.WriteLine($"{currentFrame}");
                 Assert.True(currentFrame.Scores.Count == 2);
+                Assert.Equal(rollValues, currentFrame.Scores[0]);
+                Assert.Equal(rollValues, currentFrame.Scores[1]);
+            }
+        }
+
+        [Fact]
+        public void ExpectedValuesIfSparesGame()
+        {
+            int rollValues = 5;
+
+            ViewModel.ResetGame();
+            RollMany(rollValues, 50);
+
+            var frames = ViewModel.Frames;
+            for (int frame = 0; frame < 10; frame++)
+            {
+                Frame currentFrame = frames[frame];
+                Output.WriteLine($"{currentFrame}");
+                if (frame == 9)
+                {
+                    Assert.True(currentFrame.Scores.Count == 3);
+                    Assert.Equal(rollValues, currentFrame.Scores[2]);
+                }
+                else
+                {
+                    Assert.True(currentFrame.Scores.Count == 2);
+                }
+
                 Assert.Equal(rollValues, currentFrame.Scores[0]);
                 Assert.Equal(rollValues, currentFrame.Scores[1]);
             }
