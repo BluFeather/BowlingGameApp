@@ -18,6 +18,8 @@ namespace BowlingGameApp.ViewModel
 
         public string RollThree => GetRollForFrame(2);
 
+        public string RunningScore => $"{Frame.OverallScore}";
+
         private string GetRollForFrame(int rollNumber)
         {
             if (Frame.Scores.Count - 1 < rollNumber)

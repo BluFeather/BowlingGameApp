@@ -28,10 +28,38 @@ namespace BowlingGameAppTests
         public void GutterballReturnsZeroString()
         {
             BowlingGame Game = new BowlingGame();
-            Game.AddRoll(0);
             var Frame = new FrameViewModel(Game.Frames[0]);
 
+            Game.AddRoll(0);
+
             Assert.Equal("0", Frame.RollOne);
+        }
+
+        [Fact]
+        public void RunningScoreGivenFromPlayedFrames()
+        {
+            var game = NewGame();
+            RollMany(game, 5, 5);
+            var Frame = NewFrame(game.Frames[1]);
+
+            Assert.Equal("30", $"{Frame.RunningScore}");
+        }
+
+        private BowlingGame NewGame() => new BowlingGame();
+
+        private FrameViewModel NewFrame(Frame frame) => new FrameViewModel(frame);
+
+        private void Roll(BowlingGame game, int numberOfPins)
+        {
+            game.AddRoll(numberOfPins);
+        }
+
+        private void RollMany(BowlingGame game, int numberOfPins, int numberOfRolls)
+        {
+            for (int roll = 0; roll < numberOfRolls; roll++)
+            {
+                Roll(game, numberOfPins);
+            }
         }
     }
 }
