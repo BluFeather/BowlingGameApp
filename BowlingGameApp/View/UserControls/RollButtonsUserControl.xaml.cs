@@ -40,6 +40,21 @@ namespace BowlingGameApp.View.UserControls
             ButtonTenIsEnabled = isEnabledList[10];
         }
 
+        public void DisableButtons()
+        {
+            ButtonZeroIsEnabled = false;
+            ButtonOneIsEnabled = false;
+            ButtonTwoIsEnabled = false;
+            ButtonThreeIsEnabled = false;
+            ButtonFourIsEnabled = false;
+            ButtonFiveIsEnabled = false;
+            ButtonSixIsEnabled = false;
+            ButtonSevenIsEnabled = false;
+            ButtonEightIsEnabled = false;
+            ButtonNineIsEnabled = false;
+            ButtonTenIsEnabled = false;
+        }
+
         private void ZeroButton_OnClick(object sender, System.Windows.RoutedEventArgs e) => OnScoreReceived(0);
         private void OneButton_OnClick(object sender, System.Windows.RoutedEventArgs e) => OnScoreReceived(1);
         private void TwoButton_OnClick(object sender, System.Windows.RoutedEventArgs e) => OnScoreReceived(2);
@@ -51,7 +66,6 @@ namespace BowlingGameApp.View.UserControls
         private void EightButton_OnClick(object sender, System.Windows.RoutedEventArgs e) => OnScoreReceived(8);
         private void NineButton_OnClick(object sender, System.Windows.RoutedEventArgs e) => OnScoreReceived(9);
         private void TenButton_OnClick(object sender, System.Windows.RoutedEventArgs e) => OnScoreReceived(10);
-
 
         public bool ButtonZeroIsEnabled
         {

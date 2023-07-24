@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace BowlingGameApp.Model
@@ -66,7 +67,7 @@ namespace BowlingGameApp.Model
                     return Scores.Count >= 3;
                 }
 
-                return Scores.Count >= 2 || IsSpare() || IsStrike();
+                return Scores.Count >= 2 || IsStrike();
             }
         }
 
@@ -165,6 +166,6 @@ namespace BowlingGameApp.Model
 
         private List<int> Bonuses { get; set; } = new List<int>();
 
-        private bool ThirdRollNeededForLastFrame => IsFinalFrame && IsStrike() || IsSpare() && Scores.Count <= 2;
+        private bool ThirdRollNeededForLastFrame => IsFinalFrame && IsStrike() || IsSpare();
     }
 }

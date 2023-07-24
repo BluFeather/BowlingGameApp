@@ -33,7 +33,7 @@ namespace BowlingGameApp
         {
             UpdateScorecardRolls();
             UpdateScorecardRunningValues();
-            UdpateValidInputs();
+            UpdateValidInputs();
         }
 
         private void UpdateScorecardRolls()
@@ -67,9 +67,13 @@ namespace BowlingGameApp
             Scorecard.SetRunningValues(runningValuesList);
         }
 
-        private void UdpateValidInputs()
+        private void UpdateValidInputs()
         {
-            Debug.WriteLine($"Remaining Pins: {Game.RemainingPins}");
+            if (Game.IsComplete)
+            {
+                RollButtons.DisableButtons();
+                return;
+            }
             RollButtons.SetMaxEnabledButton(Game.RemainingPins);
         }
     }
