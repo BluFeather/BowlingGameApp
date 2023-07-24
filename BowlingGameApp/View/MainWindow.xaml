@@ -8,9 +8,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="1050"
         SizeToContent="WidthAndHeight">
-    <StackPanel>
-        <uc:RollButtonsUserControl x:Name="RollButtons"/>
+    <StackPanel Margin="10">
         <uc:Scorecard x:Name="Scorecard"/>
-        <Button Content="Reset Game" Click="ResetGame_OnClick"/>
+        <uc:RollButtonsUserControl x:Name="RollButtons" HorizontalAlignment="Center" Margin="10"/>
+        <Button Content="Reset Game" Click="ResetGame_OnClick" Margin="10"/>
     </StackPanel>
 </Window>
