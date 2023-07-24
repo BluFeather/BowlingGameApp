@@ -1,4 +1,5 @@
 ﻿using BowlingGameApp.Model;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace BowlingGameApp.ViewModel
@@ -11,6 +12,14 @@ namespace BowlingGameApp.ViewModel
         }
 
         protected Frame Frame { get; }
+
+        public string FrameNumber
+        {
+            get
+            {
+                return $"{Frame.FrameNumber}";
+            }
+        }
 
         public string RollOne
         {

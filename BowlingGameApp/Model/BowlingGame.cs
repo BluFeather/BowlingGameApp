@@ -90,7 +90,7 @@ namespace BowlingGameApp.Model
             Frames.Clear();
             for (int frame = 0; frame < 10; frame++)
             {
-                Frames.Add(new Frame(frame == 9, Frames.ElementAtOrDefault(frame - 1)));
+                Frames.Add(new Frame(frame + 1, frame == 9, Frames.ElementAtOrDefault(frame - 1)));
             }
         }
 

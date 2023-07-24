@@ -64,6 +64,15 @@ namespace BowlingGameAppTests
             Assert.Equal(string.Empty, $"{Frame.RunningScore}");
         }
 
+        [Fact]
+        public void CanGetFrameNumber()
+        {
+            var game = NewGame();
+            var frame = NewFrame(game.Frames[4]);
+
+            Assert.Equal($"5", frame.FrameNumber);
+        }
+
         private BowlingGame NewGame() => new BowlingGame();
 
         private FrameViewModel NewFrame(Frame frame) => new FrameViewModel(frame);

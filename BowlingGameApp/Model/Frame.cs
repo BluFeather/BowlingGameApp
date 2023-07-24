@@ -12,8 +12,9 @@ namespace BowlingGameApp.Model
         /// Frame that will contain a running total consisting of this frame's value on top of the previous frame's value.
         /// </summary>
         /// <param name="previousFrame">Frame to refer to when calculating a running total.</param>
-        public Frame(bool isFinalFrame, Frame? previousFrame)
+        public Frame(int frameNumber, bool isFinalFrame, Frame? previousFrame)
         {
+            FrameNumber = frameNumber;
             IsFinalFrame = isFinalFrame;
             this.previousFrame = previousFrame;
         }
@@ -68,6 +69,11 @@ namespace BowlingGameApp.Model
                 return Scores.Count >= 2 || Value == 10;
             }
         }
+
+        /// <summary>
+        /// Position of this frame in a scorecard. Numbering begins at 1.
+        /// </summary>
+        public int FrameNumber { get; protected set; } = 0;
 
         /// <summary>
         /// Indicates whether or not this is the last frame in a bowling game.
