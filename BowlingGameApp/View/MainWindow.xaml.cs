@@ -1,7 +1,5 @@
 ﻿using BowlingGameApp.Model;
-using BowlingGameApp.ViewModel;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows;
 
 namespace BowlingGameApp
