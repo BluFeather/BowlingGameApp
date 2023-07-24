@@ -65,12 +65,21 @@ namespace BowlingGameApp
                 
                 if (frame.IsFinalFrame)
                 {
+                    Debug.WriteLine(frame);
                     // Roll 3 is a spare.
                     if (frame.IsStrike() &&
                         frame.Scores.ElementAtOrDefault(1) != 10 &&
                         frame.Scores.ElementAtOrDefault(1) + frame.Scores.ElementAtOrDefault(2) == 10)
                     {
                         scorecardEntries.Add("/");
+                    }
+
+                    // Roll 3 is a strike.
+                    if (frame.Scores.ElementAtOrDefault(2) == 10 &&
+                        (frame.IsSpare() ||
+                        frame.Scores.ElementAtOrDefault(0) + frame.Scores.ElementAtOrDefault(1) == 20))
+                    {
+                        scorecardEntries.Add("X");
                     }
 
                     scorecardEntries.Add(frame.Scores.Count >= 3 ? $"{frame.Scores[2]}" : string.Empty);
